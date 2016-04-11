@@ -3,9 +3,9 @@ package yunjingl.cmu.edu.drwaker.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.hardware.camera2.CameraManager;
 import android.nfc.Tag;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import yunjingl.cmu.edu.drwaker.R;
 
 public class SelfieActivity extends AppCompatActivity {
-    private android.hardware.Camera mCamera = openFrontFacingCamera();
+    private Camera mCamera = openFrontFacingCamera();
     private CameraPreview mPreview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +50,16 @@ public class SelfieActivity extends AppCompatActivity {
     }
 
     //method to open the front camera
-    private android.hardware.Camera openFrontFacingCamera(){
+    private Camera openFrontFacingCamera(){
         int cameraCount = 0;
-        android.hardware.Camera camera = null;
-        android.hardware.Camera.CameraInfo  cameraInfo = new  android.hardware.Camera.CameraInfo();
-        cameraCount = android.hardware.Camera.getNumberOfCameras();
+        Camera camera = null;
+        Camera.CameraInfo  cameraInfo = new  Camera.CameraInfo();
+        cameraCount =Camera.getNumberOfCameras();
         for(int camIndex=0; camIndex<cameraCount; camIndex++){
-            android.hardware.Camera.getCameraInfo(camIndex,cameraInfo);
-            if(cameraInfo.facing== android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT){
+            Camera.getCameraInfo(camIndex,cameraInfo);
+            if(cameraInfo.facing== Camera.CameraInfo.CAMERA_FACING_FRONT){
                 try {
-                    camera= android.hardware.Camera.open(camIndex);
+                    camera= Camera.open(camIndex);
                 }catch(RuntimeException e){
 //                    Log.e("Camera fail to open"+e.getLocalizedMessage());
                 }
@@ -68,8 +68,8 @@ public class SelfieActivity extends AppCompatActivity {
         return camera;
     }
 
-    public android.hardware.Camera getCameraInstance(){
-        android.hardware.Camera c=null;
+    public Camera getCameraInstance(){
+        Camera c=null;
         try{
             c=openFrontFacingCamera();
         }
@@ -83,9 +83,9 @@ public class SelfieActivity extends AppCompatActivity {
     private class CameraPreview extends SurfaceView implements SurfaceHolder.Callback{
 
         private SurfaceHolder mHolder;
-        private android.hardware.Camera mCamera;
+        private Camera mCamera;
 
-        public CameraPreview(Context context, android.hardware.Camera camera){
+        public CameraPreview(Context context, Camera camera){
             super(context);
             mCamera=camera;
             // Install a SurfaceHolder.Callback so we get notified when the
@@ -147,9 +147,9 @@ public class SelfieActivity extends AppCompatActivity {
 
     //set a listener for face detection events
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    class MyFaceDetectionListener implements android.hardware.Camera.FaceDetectionListener {
+    class MyFaceDetectionListener implements Camera.FaceDetectionListener {
         @Override
-        public void onFaceDetection(android.hardware.Camera.Face[] faces, android.hardware.Camera camera) {
+        public void onFaceDetection(Camera.Face[] faces, Camera camera) {
             if (faces.length > 0){
                 Log.d("FaceDetection", "face detected: "+ faces.length +
                         " Face 1 Location X: " + faces[0].rect.centerX() +
@@ -162,7 +162,7 @@ public class SelfieActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void startFaceDetection(){
         // Try starting Face Detection
-        android.hardware.Camera.Parameters params = mCamera.getParameters();
+        Camera.Parameters params = mCamera.getParameters();
 
         // start face detection only *after* preview has started
         if (params.getMaxNumDetectedFaces() > 0){
