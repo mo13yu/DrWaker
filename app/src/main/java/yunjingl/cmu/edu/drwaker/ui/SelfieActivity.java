@@ -3,7 +3,11 @@ package yunjingl.cmu.edu.drwaker.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.camera2.CameraManager;
+import android.media.FaceDetector;
 import android.nfc.Tag;
 import android.hardware.Camera;
 import android.os.Build;
@@ -24,6 +28,11 @@ import yunjingl.cmu.edu.drwaker.R;
 public class SelfieActivity extends AppCompatActivity {
     private Camera mCamera = openFrontFacingCamera();
     private CameraPreview mPreview;
+    public Bitmap bmp_image;
+    Matrix matrix=new Matrix();
+    private FaceDetector.Face[] face;
+    private int face_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +58,50 @@ public class SelfieActivity extends AppCompatActivity {
         );
     }
 
+    Camera.PictureCallback mpicture = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            try{
+                BitmapFactory.Options bitmap_options = new BitmapFactory.Options();
+                bitmap_options.inPreferredConfig = Bitmap.Config.RGB_565;
+                bmp_image=BitmapFactory.decodeByteArray(data, 0, data.length, bitmap_options);
+
+                bmp_image=Bitmap.createBitmap(bmp_image, 0, 0, bmp_image.getWidth(), bmp_image.getHeight(), matrix, true);
+            }
+            catch(Exception e){}
+        }
+    };
+
+    public void face_detection(){
+        FaceDetector detector = new FaceDetector (bmp_image.getWidth(), bmp_image.getHeight(), 1);
+        face=new FaceDetector.Face[1];
+        face_count= detector.findFaces(bmp_image,face);
+
+//        FaceDetector detector = new FaceDetector.Builder(getApplicationContext())
+//                .setTrackingEnabled(false)
+//                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+//                .build();
+//        SparseArray<Face> faces = faceDetector.detect(frame);
+//        float smilingProbability;
+//        float leftEyeOpenProbability;
+//        float rightEyeOpenProbability;
+//        float eulerY;
+//        float eulerZ;
+//        for( int i = 0; i < mFaces.size(); i++ ) {
+//            Face face = mFaces.valueAt(i);
+//
+//            smilingProbability = face.getIsSmilingProbability();
+//            leftEyeOpenProbability = face.getIsLeftEyeOpenProbability();
+//            rightEyeOpenProbability = face.getIsRightEyeOpenProbability();
+//            eulerY = face.getEulerY();
+//            eulerZ = face.getEulerZ();
+//
+//            Log.e( "Tuts+ Face Detection", "Smiling: " + smilingProbability );
+//            Log.e( "Tuts+ Face Detection", "Left eye open: " + leftEyeOpenProbability );
+//            Log.e( "Tuts+ Face Detection", "Right eye open: " + rightEyeOpenProbability );
+//            Log.e( "Tuts+ Face Detection", "Euler Y: " + eulerY );
+//            Log.e( "Tuts+ Face Detection", "Euler Z: " + eulerZ );
+    }
     //method to open the front camera
     private Camera openFrontFacingCamera(){
         int cameraCount = 0;
