@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button test=(Button)findViewById(R.id.test);
+        Button test=(Button)findViewById(R.id.map);
         test.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
-                Intent intent=new Intent(getApplicationContext(),Settings.class);
+                Intent intent=new Intent(getApplicationContext(),SetLocation.class);
                 startActivity(intent);
             }
         });

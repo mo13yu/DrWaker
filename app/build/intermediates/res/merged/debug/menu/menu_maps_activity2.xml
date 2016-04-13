@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="yunjingl.cmu.edu.drwaker.ui.MapsActivity2">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
+<!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/src/main/res/menu/menu_maps_activity2.xml -->

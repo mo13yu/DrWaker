@@ -84,10 +84,10 @@
         <item>PM</item>
     </string-array>
     <string-array name="tune">
-    <item>Kiss the rain</item>
-    <item>Poker Face</item>
+        <item>Kiss the rain</item>
+        <item>Poker Face</item>
 
-</string-array>
+    </string-array>
     <string-array name="location">
         <item>Home</item>
         <item>Office</item>
