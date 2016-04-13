@@ -1,14 +1,18 @@
 package yunjingl.cmu.edu.drwaker.ui;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
-import android.hardware.camera2.CameraManager;
+import android.graphics.Paint;
+import android.graphics.PointF;
 import android.media.FaceDetector;
-import android.nfc.Tag;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +24,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.media.FaceDetector.Face;
+import android.widget.ImageView;
 
 import java.io.IOException;
 
@@ -28,10 +34,13 @@ import yunjingl.cmu.edu.drwaker.R;
 public class SelfieActivity extends AppCompatActivity {
     private Camera mCamera = openFrontFacingCamera();
     private CameraPreview mPreview;
-    public Bitmap bmp_image;
+    public Bitmap bmp_image, canvasBitmap;
     Matrix matrix=new Matrix();
     private FaceDetector.Face[] face;
     private int face_count;
+    Canvas canvas=new Canvas();
+    float myEyesDistance;
+    ImageView drawMask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +50,52 @@ public class SelfieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selfie);
 
         mPreview=new CameraPreview(this, mCamera);
-        FrameLayout preview=(FrameLayout) findViewById(R.id.camera_preview);
+        final FrameLayout preview=(FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
-        Button captureButton = (Button) findViewById(R.id.button_capture);
+        final Button captureButton = (Button) findViewById(R.id.button_capture);
+        captureButton.setText("Test");
+
+        drawMask = new ImageView(getApplicationContext());
+        matrix.postRotate(270);
+
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
+//                        startActivity(intent);
+                        if(captureButton.getText()=="Take Picture") { //in Preview Mode
+
+                            // get an image from the camera
+                            mCamera.takePicture(null, null, mpicture);
+                            captureButton.setText("Unlock");
+                        }
+                        else if(captureButton.getText()=="Unlock") { //in Mask Mode
+                            if(face_count>0) {
+                                preview.removeView(drawMask);
+
+                                //if detect the user's eyes are open then return to main activity.
+                                Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                AlertDialog.Builder builder=new AlertDialog.Builder(SelfieActivity.this);
+                                builder.setTitle("Try again!");
+                                builder.setMessage("No face detected");
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mCamera.startPreview();
+                                        captureButton.setText("Take Picture");
+                                    }
+                                }).create();
+                                builder.show();
+//                                mCamera.startPreview();
+//                                captureButton.setText("Take Picture");
+                            }
+
+                        }
                     }
                 }
         );
@@ -67,6 +110,11 @@ public class SelfieActivity extends AppCompatActivity {
                 bmp_image=BitmapFactory.decodeByteArray(data, 0, data.length, bitmap_options);
 
                 bmp_image=Bitmap.createBitmap(bmp_image, 0, 0, bmp_image.getWidth(), bmp_image.getHeight(), matrix, true);
+                face_detection();
+                canvasBitmap = Bitmap.createBitmap(bmp_image.getWidth(), bmp_image.getHeight(),Bitmap.Config.ARGB_8888);
+                canvas=new Canvas(canvasBitmap);
+                draw(canvas);
+
             }
             catch(Exception e){}
         }
@@ -102,6 +150,28 @@ public class SelfieActivity extends AppCompatActivity {
 //            Log.e( "Tuts+ Face Detection", "Euler Y: " + eulerY );
 //            Log.e( "Tuts+ Face Detection", "Euler Z: " + eulerZ );
     }
+
+    private void draw(Canvas canvas){
+        canvas.drawBitmap(bmp_image, 0, 0, null);
+
+        Paint myPaint = new Paint();
+        myPaint.setColor(Color.GREEN);
+        myPaint.setStyle(Paint.Style.STROKE);
+        myPaint.setStrokeWidth(3);
+
+
+            FaceDetector.Face faces = face[0];
+            PointF myMidPoint = new PointF();
+            faces.getMidPoint(myMidPoint);
+            myEyesDistance = faces.eyesDistance();
+            canvas.drawRect(
+                    (int)(myMidPoint.x - myEyesDistance*2),
+                    (int)(myMidPoint.y - myEyesDistance*2),
+                    (int)(myMidPoint.x + myEyesDistance*2),
+                    (int)(myMidPoint.y + myEyesDistance*2),
+                    myPaint);
+
+    }
     //method to open the front camera
     private Camera openFrontFacingCamera(){
         int cameraCount = 0;
@@ -119,6 +189,19 @@ public class SelfieActivity extends AppCompatActivity {
             }
         }
         return camera;
+    }
+
+    protected void onPause() {
+        super.onPause();
+        releaseCamera();              // release the camera immediately on pause event
+    }
+
+    private void releaseCamera(){
+        if (mCamera != null){
+            mCamera.stopPreview();
+            mCamera.release();        // release the camera for other applications
+            mCamera = null;
+        }
     }
 
     public Camera getCameraInstance(){
