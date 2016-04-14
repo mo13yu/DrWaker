@@ -65,7 +65,7 @@ public class SelfieActivity extends AppCompatActivity {
                     public void onClick(View v) {
 //                        Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
 //                        startActivity(intent);
-                        if(captureButton.getText()=="Take Picture") { //in Preview Mode
+                        if(captureButton.getText()=="Test") { //in Preview Mode
 
                             // get an image from the camera
                             mCamera.takePicture(null, null, mpicture);
@@ -87,7 +87,7 @@ public class SelfieActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         mCamera.startPreview();
-                                        captureButton.setText("Take Picture");
+                                        captureButton.setText("Test");
                                     }
                                 }).create();
                                 builder.show();
