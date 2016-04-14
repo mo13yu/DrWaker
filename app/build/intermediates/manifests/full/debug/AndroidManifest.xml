@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="yunjingl.cmu.edu.drwaker"
-    android:installLocation="preferExternal"
+    android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -67,6 +67,13 @@
             android:label="@string/title_activity_selfie"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name="yunjingl.cmu.edu.drwaker.entities.AlarmReceiver" />
+
+        <service
+            android:name="yunjingl.cmu.edu.drwaker.entities.RingtonePlayingService"
+            android:enabled="true" >
+        </service>
     </application>
 
 </manifest>
