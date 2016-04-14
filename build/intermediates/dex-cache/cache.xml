@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="04de44f90606c77f3b28cf44861f306290505aac">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-7a5b1a407102c37d6bc2ff3031ffc889163d843b.jar" />
-    </item>
-    <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-ef1d0cd4770f313a11706bbc17c7d0a8b3656c26.jar" />
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-beb3b897c16478be975662664bfb85d7d06b9559.jar" />
     </item>
     <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-c97bb7a78d3dcd984d4d256346d7f1100c75f279.jar" />
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-15aa1e602ac3696abc2e49c39329601be3531e2f.jar" />
     </item>
     <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/jars/classes.jar"
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-8e4fe4c87cc465f2608ac222e0b15be20b3c5dbb.jar" />
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-27f74681a24e69078b17f3baa6d3a68cf6a92e35.jar" />
     </item>
     <item
-        jar="/Users/yapengli/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-9224e265478dc345d62d88bd32453d77a77b1cd6.jar" />
-    </item>
-    <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-8ac7f5ffd512cd3c6e92d6dfabd35673840ee32d.jar" />
-    </item>
-    <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-259d2358b94a6dc06fc247aadec58de656822535.jar" />
-    </item>
-    <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-38e6091f9e9f1337542816b11eff671dbae80595.jar" />
-    </item>
-    <item
-        jar="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/pre-dexed/debug/classes-cab7f3b069653fe3ac7cfc0e9f653c51dd0edfd3.jar" />
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-c94a586f65e10e84554c7c64293a4614a12da42d.jar" />
+    </item>
+    <item
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-a9bca695fe852a33fae17e6c03b7eec9e2200db5.jar" />
+    </item>
+    <item
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-8709857ffa92c9540433dbf00717d50e97098637.jar" />
+    </item>
+    <item
+        jar="/Users/amychen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-348bf0e6dae17b521ac68876bca9658ab7f90d4d.jar" />
+    </item>
+    <item
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-66db2d2b3b6a9d148a92a601792fe55c3c5dc8d9.jar" />
+    </item>
+    <item
+        jar="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/build/intermediates/pre-dexed/debug/classes-ce172864da7cab04d6349bdc5bbcf2ebc528c90a.jar" />
     </item>
 
 </items>

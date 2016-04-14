@@ -3,8 +3,10 @@ package yunjingl.cmu.edu.drwaker.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,9 +26,17 @@ public class SetLocation extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_location);
 
+        // Set up "OK" button
+        Button findloc =(Button)findViewById(R.id.button_findloc);
+        findloc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View viewParam) {
+                Log.d("map", ((EditText)findViewById(R.id.text_findloc)).getText().toString());
+            }
+        });
+
         // Set up "Save" button
-        Button save=(Button)findViewById(R.id.save);
-        save.setOnClickListener(new View.OnClickListener() {
+        Button saveloc  =(Button)findViewById(R.id.button_saveloc);
+        saveloc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
                 Intent intent = new Intent(getApplicationContext(), Settings.class);
                 startActivity(intent);
