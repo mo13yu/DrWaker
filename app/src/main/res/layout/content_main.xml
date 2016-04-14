@@ -18,36 +18,34 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_above="@+id/test"
+            android:layout_height="fill_parent"
             android:id="@+id/linearLayout"
-            android:layout_weight="0.20">
+            android:layout_weight="1">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="AM"
                 android:id="@+id/textView7"
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp" />
+                android:layout_weight="1" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="07:15"
                 android:id="@+id/textView8"
-                android:textSize="45dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp" />
+                android:textSize="40dp"
+                android:layout_weight="1" />
 
             <Switch
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/switch1"
                 android:checked="false"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="50dp" />
+                android:layout_marginRight="10dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,40 +54,34 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="71dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Map"
                 android:id="@+id/map"
-                android:layout_alignTop="@+id/okmath"
-                 />
+                android:layout_weight="1" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Math"
                 android:id="@+id/math"
-                android:layout_gravity="center_vertical"
-                android:layout_below="@+id/linearLayout"
-                 />
+                android:layout_weight="1" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Selfie"
                 android:id="@+id/selfie"
-                android:layout_gravity="center_vertical"
-                android:layout_below="@+id/linearLayout"
-                />
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Add New"
+                android:id="@+id/okmath"
+                android:layout_weight="1" />
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New"
-            android:id="@+id/okmath"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="49dp"
-            android:layout_weight="0.20" />
     </LinearLayout>
 
 </RelativeLayout>

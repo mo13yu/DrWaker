@@ -13,27 +13,26 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:weightSum="1"
-        android:layout_alignParentTop="true">
+        android:weightSum="1">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="38dp">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="38dp"
                 android:text="Done"
-                android:id="@+id/done" />
+                android:id="@+id/done"
+                android:layout_weight="1" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="38dp"
                 android:text="Delete"
                 android:id="@+id/delete"
-                android:layout_marginLeft="130dp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
@@ -51,24 +50,24 @@
             android:layout_gravity="center_horizontal">
 
             <Spinner
-                android:layout_width="106dp"
-                android:layout_height="26dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/hour"
-
                 android:spinnerMode="dropdown" />
             <!--android:entries="@array/hour"-->
             <Spinner
-                android:layout_width="106dp"
-                android:layout_height="26dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/minute"
-
                 android:spinnerMode="dropdown" />
 
             <Spinner
-                android:layout_width="106dp"
-                android:layout_height="26dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/ampm"
-
                 android:spinnerMode="dropdown" />
         </LinearLayout>
 
@@ -83,28 +82,28 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="38dp">
 
             <Spinner
-                android:layout_width="120dp"
-                android:layout_height="30dp"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
                 android:id="@+id/tune"
-
                 android:spinnerMode="dropdown" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="Test"
-                android:id="@+id/testbutton"
-                android:layout_marginTop="7dp" />
+                android:id="@+id/testbutton" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="Record"
-                android:id="@+id/recordbutton"
-                android:layout_marginTop="7dp" />
+                android:id="@+id/recordbutton" />
         </LinearLayout>
 
         <TextView
@@ -113,7 +112,6 @@
             android:text="Choose Wake Up Method"
             android:id="@+id/textView"
             android:textSize="20dp"
-            android:textStyle="normal"
             android:layout_marginTop="10dp" />
 
         <RadioButton
@@ -148,7 +146,6 @@
                 android:text="Repeat"
                 android:id="@+id/textView2"
                 android:textSize="20dp"
-                android:textStyle="normal"
                 android:layout_marginTop="10dp" />
 
             <RadioButton
@@ -201,11 +198,6 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -214,34 +206,36 @@
                 android:text="Location"
                 android:id="@+id/textView4"
                 android:textSize="20dp"
-                android:textStyle="normal"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/switch2"
-                android:layout_marginLeft="200dp"
                 android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:checked="true" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="38dp">
 
             <Spinner
-                android:layout_width="147dp"
+                android:layout_width="0dp"
                 android:layout_height="38dp"
+                android:layout_weight="1"
                 android:id="@+id/location"
-
-                android:spinnerMode="dropdown"
-                android:layout_marginTop="0dp" />
+                android:spinnerMode="dropdown" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
                 android:text="New Location"
                 android:id="@+id/newlocbutton" />
         </LinearLayout>
