@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-ldrtl-v23/values-ldrtl-v23.xml -->
+    <!-- From: file:/Users/yapengli/Desktop/AndroidProject/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-ldrtl-v23/values-ldrtl-v23.xml -->
     <eat-comment/>
     <style name="Base.Widget.AppCompat.Spinner.Underlined" parent="android:Widget.Material.Spinner.Underlined"/>
 </resources>

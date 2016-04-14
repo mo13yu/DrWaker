@@ -2724,7 +2724,6 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int menu_main=0x7f0e0000;
-        public static final int menu_maps_activity2=0x7f0e0001;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
