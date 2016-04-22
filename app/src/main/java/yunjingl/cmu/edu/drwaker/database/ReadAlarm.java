@@ -8,7 +8,7 @@ import yunjingl.cmu.edu.drwaker.entities.ClockTime;
 /**
  * Created by yunjing on 4/13/16.
  */
-public class Read {
+public class ReadAlarm {
     public ClockTime readCalender(int id){
 
         return new ClockTime();
