@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initializeAlarms();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void initialize(){
+    public void initializeAlarms(){
+        
 
     }
     @Override
