@@ -69,6 +69,22 @@ public class Alarm {
         this.wake_up_method = wake_up_method;
     }
 
+    public Math getMath() {
+        return math;
+    }
+
+    public void setMath(Math math) {
+        this.math = math;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public Alarm(){
         super();
     }

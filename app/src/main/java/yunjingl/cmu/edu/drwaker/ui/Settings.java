@@ -26,7 +26,7 @@ import java.util.List;
 
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
-import yunjingl.cmu.edu.drwaker.entities.Alarm;
+//import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
 public class Settings extends AppCompatActivity {
 
@@ -34,17 +34,28 @@ public class Settings extends AppCompatActivity {
     String ringtone;
     int inputhour;
     int inputminute;
+    int locationid;
+    String wake_up_method;
+    String tag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        final String method=(getIntent().getExtras()).getString("create_or_update");
         //final Alarm newAlarm=getAlarm();
         Button done=(Button)findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
-                Alarm newAlarm = getAlarm();
-                SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
+                if(method.equals("create")){
+                    SetAlarm.createAlarm(inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                }else if(method.equals("update")){
+                    int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
+                    SetAlarm.updateAlarm(alarmid,inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                }
+                //Alarm newAlarm = getAlarm();
+                //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
