@@ -30,10 +30,13 @@ public class MathActivity extends AppCompatActivity {
         okmath.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
 
+                final Intent myIntent = new Intent(MathActivity.this, RingtonePlayingService.class);
                 result=Integer.parseInt(((EditText) findViewById(R.id.editText)).getText().toString());
                 if(result==12){
-                    Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(intent);
+                    myIntent.putExtra("extra", "off");
+                    startService(myIntent);
+                    // sendBroadcast(myIntent);
+                    finish();
 
                 }
                 else{

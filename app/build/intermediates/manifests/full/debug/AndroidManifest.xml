@@ -50,6 +50,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="yunjingl.cmu.edu.drwaker.ui.AlarmReceiver" />
+
+        <service
+            android:name="yunjingl.cmu.edu.drwaker.ui.RingtonePlayingService"
+            android:enabled="true" >
+        </service>
+
         <activity
             android:name="yunjingl.cmu.edu.drwaker.ui.Settings"
             android:label="@string/title_activity_settings"
@@ -67,13 +75,6 @@
             android:label="@string/title_activity_selfie"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <receiver android:name="yunjingl.cmu.edu.drwaker.entities.AlarmReceiver" />
-
-        <service
-            android:name="yunjingl.cmu.edu.drwaker.entities.RingtonePlayingService"
-            android:enabled="true" >
-        </service>
     </application>
 
 </manifest>

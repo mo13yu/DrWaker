@@ -16,6 +16,17 @@
         <item>10</item>
         <item>11</item>
         <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
     </string-array>
     <string-array name="minute">
         <item>00</item>
@@ -85,7 +96,8 @@
     </string-array>
     <string-array name="tune">
         <item>Kiss the rain</item>
-        <item>Poker Face</item>
+        <item>River that flows in you</item>
+        <item>I just wanna run</item>
 
     </string-array>
     <string-array name="location">

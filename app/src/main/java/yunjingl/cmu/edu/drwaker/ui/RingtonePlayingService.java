@@ -28,6 +28,7 @@ public class RingtonePlayingService extends Service {
         Log.e("in ring", "in ring");
 
         String state=intent.getExtras().getString("extra");
+        String ringtone=intent.getExtras().getString("ring_tone");
 
         assert state!=null;
         if(state.equals("on")){
@@ -43,7 +44,8 @@ public class RingtonePlayingService extends Service {
 
 
         if (!this.isRunning&&id==1){
-            ring=MediaPlayer.create(this, R.raw.kiss_the_rain);
+            ring=createRing(ringtone);
+           // ring=MediaPlayer.create(this, R.raw.kiss_the_rain);
             ring.start();
             this.isRunning=true;
             this.id=0;
@@ -60,6 +62,15 @@ public class RingtonePlayingService extends Service {
             this.id=0;
         }
         return START_NOT_STICKY;
+    }
+    public MediaPlayer createRing(String ringname){
+        if(ringname.equals("Kiss the rain")){
+            return MediaPlayer.create(getApplicationContext(), R.raw.kiss_the_rain);
+        }else if(ringname.equals("River that flows in you")){
+            return MediaPlayer.create(getApplicationContext(), R.raw.river);
+        }else{
+            return MediaPlayer.create(getApplicationContext(), R.raw.i_just_wanna_run);
+        }
     }
 }
 

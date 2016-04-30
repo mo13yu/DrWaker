@@ -45,6 +45,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".ui.AlarmReceiver" />
+        <service
+            android:name=".ui.RingtonePlayingService"
+            android:enabled="true" >
+        </service>
+
         <activity
             android:name=".ui.Settings"
             android:label="@string/title_activity_settings"
@@ -63,12 +69,6 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        
-        <receiver android:name=".entities.AlarmReceiver"/>
-        <service android:name=".entities.RingtonePlayingService"
-            android:enabled="true">
-
-        </service>
 
     </application>
 
