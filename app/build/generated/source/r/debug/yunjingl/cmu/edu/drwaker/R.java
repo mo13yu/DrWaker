@@ -2487,7 +2487,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0e0062;
         public static final int action_mode_bar_stub=0x7f0e0061;
         public static final int action_mode_close_button=0x7f0e0047;
-        public static final int action_settings=0x7f0e00ad;
+        public static final int action_settings=0x7f0e00ae;
         public static final int activity_chooser_view_content=0x7f0e0048;
         public static final int add=0x7f0e0075;
         public static final int adjust_height=0x7f0e0032;
@@ -2526,6 +2526,7 @@ containing a value of this type.
         public static final int design_navigation_view=0x7f0e009a;
         public static final int disableHome=0x7f0e000e;
         public static final int done=0x7f0e0086;
+        public static final int edit=0x7f0e00ad;
         public static final int editText=0x7f0e0079;
         public static final int edit_query=0x7f0e0067;
         public static final int end=0x7f0e0020;

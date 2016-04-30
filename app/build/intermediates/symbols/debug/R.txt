@@ -659,7 +659,7 @@ int id action_menu_presenter 0x7f0e0003
 int id action_mode_bar 0x7f0e0062
 int id action_mode_bar_stub 0x7f0e0061
 int id action_mode_close_button 0x7f0e0047
-int id action_settings 0x7f0e00ad
+int id action_settings 0x7f0e00ae
 int id activity_chooser_view_content 0x7f0e0048
 int id add 0x7f0e0075
 int id adjust_height 0x7f0e0032
@@ -698,6 +698,7 @@ int id design_menu_item_text 0x7f0e009b
 int id design_navigation_view 0x7f0e009a
 int id disableHome 0x7f0e000e
 int id done 0x7f0e0086
+int id edit 0x7f0e00ad
 int id editText 0x7f0e0079
 int id edit_query 0x7f0e0067
 int id end 0x7f0e0020

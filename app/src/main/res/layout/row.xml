@@ -15,4 +15,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/remove"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/edit"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/remove"
+        android:layout_toStartOf="@+id/remove" />
 </RelativeLayout>
