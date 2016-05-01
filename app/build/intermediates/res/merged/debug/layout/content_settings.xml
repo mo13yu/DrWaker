@@ -57,12 +57,6 @@
                 android:id="@+id/minute"
                 android:spinnerMode="dropdown" />
 
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/ampm"
-                android:spinnerMode="dropdown" />
         </LinearLayout>
 
         <TextView
@@ -205,4 +199,8 @@
     </LinearLayout>
 
 </RelativeLayout>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/src/main/res/layout/content_settings.xml -->
+=======
+<!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/src/main/res/layout/content_settings.xml -->
+>>>>>>> origin/master

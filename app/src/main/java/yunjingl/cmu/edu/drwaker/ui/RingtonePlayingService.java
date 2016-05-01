@@ -37,7 +37,7 @@ public class RingtonePlayingService extends Service {
         if(loc_switch){
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
-            //TODO: startring=SetLocation.compare(la,lo);
+            new SetLocation().nearLocation(la,lo);
         }
 
         if(startring){

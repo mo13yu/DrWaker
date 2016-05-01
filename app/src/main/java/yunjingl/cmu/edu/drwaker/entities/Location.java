@@ -48,13 +48,29 @@ public class Location {
         this.tag = tag;
     }
 
+<<<<<<< HEAD
+    public Double getLatitude() {
+        return latlng.latitude;
+    }
+
+    public Double getLongitude() {
+=======
     public double getLatitude() {
         return latlng.latitude;
     }
 
     public double getLongitude() {
+>>>>>>> origin/master
         return latlng.longitude;
     }
+
+//    public String getLatitude() {
+//        return Double.toString(latlng.latitude);
+//    }
+//
+//    public String getLongitude() {
+//        return Double.toString(latlng.longitude);
+//    }
 
     // Print information of Location
     public void print() {
