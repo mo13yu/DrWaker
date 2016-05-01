@@ -31,13 +31,13 @@ public abstract class ProxyAlarm {
     }
 
     public void addToDB(Alarm newalarm){
-//        try{
-//            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
-//                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-//                    cal.getFirstdate(), cal.getPayoffdate());}              //ToDo:need add mathID,on/off,locationID
-//        catch(DatabaseException e){
-//            e.fix(e.getErrNo());
-//        }
+        try{
+            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());}              //ToDo:need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
     }
 
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
@@ -125,11 +125,11 @@ public abstract class ProxyAlarm {
     }
 
     public String getLatitude(int alarmno){
-        return alarms.get(alarmno).getLocation().getLatitude();
+        return Double.toString(alarms.get(alarmno).getLocation().getLatitude());
     }
 
     public String getLongitude(int alarmno){
-        return alarms.get(alarmno).getLocation().getLongitude();
+        return Double.toString(alarms.get(alarmno).getLocation().getLongitude());
     }
 
     public boolean isLocationSwitchOn(int alarmno){

@@ -70,7 +70,7 @@ public abstract class ProxyLocation {
         return locations.get(tag);
     }
 
-    public boolean nearLocation(Location location) {
+    public boolean nearLocation(String la,String lo) {
         //TODO: check if user is in the area
         return false;
     }

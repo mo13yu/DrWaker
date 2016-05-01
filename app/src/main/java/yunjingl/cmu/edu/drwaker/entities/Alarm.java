@@ -77,12 +77,20 @@ public class Alarm {
         this.math = math;
     }
 
+    public int getMathID(){
+        return math.mathid;
+    }
+
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public int getLocationID(){
+        return location.getLocid();
     }
 
     public boolean isLoc_switch() {
