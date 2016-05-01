@@ -56,7 +56,11 @@
     <string msgid="311697239335516384" name="common_open_on_phone">"ফোনে খুলুন"</string>
     <string msgid="3156914698180786012" name="common_signin_button_text">"সাইন ইন করুন"</string>
     <string msgid="1483290677806110088" name="common_signin_button_text_long">"Google এর মাধ্যমে সাইন ইন করুন"</string>
+<<<<<<< HEAD
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/values-bn-rBD/values-bn-rBD.xml -->
+=======
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/values-bn-rBD/values-bn-rBD.xml -->
+>>>>>>> origin/master
     <eat-comment/>
     <string msgid="8327680881775995150" name="mr_media_route_button_content_description">"কাস্ট করুন"</string>
     <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"ডিভাইসগুলি অনুসন্ধান করা হচ্ছে…"</string>
@@ -69,11 +73,19 @@
     <string msgid="5398645111664294430" name="mr_media_route_controller_stop">"কাস্ট করা বন্ধ করুন"</string>
     <string msgid="5441529851481176817" name="mr_system_route_name">"সিস্টেম"</string>
     <string msgid="7498112907524977311" name="mr_user_route_category_name">"ডিভাইসগুলি"</string>
+<<<<<<< HEAD
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-bn-rBD/location_strings.xml -->
+    <eat-comment/>
+    <string msgid="2132213647576279742" name="place_autocomplete_clear_button">"অনুসন্ধান মুছুন"</string>
+    <string msgid="4600782048316473865" name="place_autocomplete_search_hint">"অনুসন্ধান করুন"</string>
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-bn-rBD/values-bn-rBD.xml -->
+=======
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-bn-rBD/location_strings.xml -->
     <eat-comment/>
     <string msgid="2132213647576279742" name="place_autocomplete_clear_button">"অনুসন্ধান মুছুন"</string>
     <string msgid="4600782048316473865" name="place_autocomplete_search_hint">"অনুসন্ধান করুন"</string>
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-bn-rBD/values-bn-rBD.xml -->
+>>>>>>> origin/master
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"৯৯৯+"</string>
 </resources>

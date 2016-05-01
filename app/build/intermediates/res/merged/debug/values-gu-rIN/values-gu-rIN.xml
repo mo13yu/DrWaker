@@ -56,7 +56,11 @@
     <string msgid="311697239335516384" name="common_open_on_phone">"ફોનમાં ખોલો"</string>
     <string msgid="3156914698180786012" name="common_signin_button_text">"સાઇન ઇન કરો"</string>
     <string msgid="1483290677806110088" name="common_signin_button_text_long">"Google માં સાઇન ઇન કરો"</string>
+<<<<<<< HEAD
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/values-gu-rIN/values-gu-rIN.xml -->
+=======
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/res/values-gu-rIN/values-gu-rIN.xml -->
+>>>>>>> origin/master
     <eat-comment/>
     <string msgid="8327680881775995150" name="mr_media_route_button_content_description">"કાસ્ટ કરો"</string>
     <string msgid="7553005460920830010" name="mr_media_route_chooser_searching">"ઉપકરણો માટે શોધી રહ્યું છે…"</string>
@@ -69,11 +73,19 @@
     <string msgid="5398645111664294430" name="mr_media_route_controller_stop">"કાસ્ટ કરવાનું રોકો"</string>
     <string msgid="5441529851481176817" name="mr_system_route_name">"સિસ્ટમ"</string>
     <string msgid="7498112907524977311" name="mr_user_route_category_name">"ઉપકરણો"</string>
+<<<<<<< HEAD
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-gu-rIN/location_strings.xml -->
+    <eat-comment/>
+    <string msgid="2132213647576279742" name="place_autocomplete_clear_button">"શોધ સાફ કરો"</string>
+    <string msgid="4600782048316473865" name="place_autocomplete_search_hint">"શોધો"</string>
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-gu-rIN/values-gu-rIN.xml -->
+=======
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values-gu-rIN/location_strings.xml -->
     <eat-comment/>
     <string msgid="2132213647576279742" name="place_autocomplete_clear_button">"શોધ સાફ કરો"</string>
     <string msgid="4600782048316473865" name="place_autocomplete_search_hint">"શોધો"</string>
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-gu-rIN/values-gu-rIN.xml -->
+>>>>>>> origin/master
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

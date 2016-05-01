@@ -2,10 +2,8 @@ package yunjingl.cmu.edu.drwaker.adapter;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Set;
 
-import yunjingl.cmu.edu.drwaker.database.ReadAlarm;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
 /**

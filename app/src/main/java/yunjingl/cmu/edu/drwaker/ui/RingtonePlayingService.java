@@ -69,7 +69,7 @@ public class RingtonePlayingService extends Service {
                 this.isRunning=false;
                 this.id=0;
             }
-             
+
         }
         return START_NOT_STICKY;
 
