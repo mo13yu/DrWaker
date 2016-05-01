@@ -34,7 +34,6 @@
     </string-array>
     <string-array name="location">
         <item>Home</item>
-        <item>Office</item>
     </string-array>
     <string-array name="minute">
         <item>00</item>
@@ -102,7 +101,6 @@
         <item>Kiss the rain</item>
         <item>River that flows in you</item>
         <item>I just wanna run</item>
-
     </string-array>
     <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values/values.xml -->
     <eat-comment/>

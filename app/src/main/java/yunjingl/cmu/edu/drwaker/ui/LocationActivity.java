@@ -68,8 +68,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 SetLocation locations = new SetLocation();
                 if (mLocationOutput!=null) {
                     String tag = ((EditText) findViewById(R.id.text_loctag)).getText().toString();
+                    //TODO: maybe change it to custom exception handling?
                     if (tag.isEmpty()) {
-                        Log.i(TAG, "in here");
                         tag = "Location " + Integer.toString(locations.getAvailableID());
                     }
                     locations.createLocation(mLocationOutput, tag);

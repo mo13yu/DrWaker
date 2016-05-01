@@ -766,7 +766,7 @@ int id action_menu_presenter 0x7f0e0003
 int id action_mode_bar 0x7f0e007e
 int id action_mode_bar_stub 0x7f0e007d
 int id action_mode_close_button 0x7f0e0063
-int id action_settings 0x7f0e00df
+int id action_settings 0x7f0e00e0
 int id activity_chooser_view_content 0x7f0e0064
 int id add 0x7f0e0091
 int id adjust_height 0x7f0e0034
@@ -822,6 +822,7 @@ int id disconnect 0x7f0e00c6
 int id donate_with 0x7f0e0054
 int id donate_with_google 0x7f0e0055
 int id done 0x7f0e00a2
+int id edit 0x7f0e00df
 int id editText 0x7f0e0095
 int id edit_query 0x7f0e0083
 int id end 0x7f0e0021
@@ -859,6 +860,7 @@ int id line3 0x7f0e00d1
 int id listMode 0x7f0e000c
 int id list_item 0x7f0e0068
 int id location 0x7f0e00b1
+int id locswitch 0x7f0e00b0
 int id logo_only 0x7f0e0056
 int id map_frame 0x7f0e00a0
 int id match_parent 0x7f0e004f
@@ -941,7 +943,6 @@ int id stoptest 0x7f0e00aa
 int id strict_sandbox 0x7f0e004b
 int id submit_area 0x7f0e008c
 int id subtitle 0x7f0e00c2
-int id switch2 0x7f0e00b0
 int id tabMode 0x7f0e000e
 int id tag 0x7f0e00ae
 int id terrain 0x7f0e0038

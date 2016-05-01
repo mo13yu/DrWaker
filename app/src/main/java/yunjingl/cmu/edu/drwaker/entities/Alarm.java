@@ -10,10 +10,10 @@ public class Alarm {
     private Math math;
     private Location location;
     private String wake_up_method;
-    private String loc_switch;
+    private boolean loc_switch;
     private String tag;
     private String tone;
-    private String alarm_switch;
+    //private String alarm_switch;
 
     public Alarm(int alarmid,int hour,int minute){
         this.alarmid = alarmid;
@@ -85,11 +85,19 @@ public class Alarm {
         this.location = location;
     }
 
+    public boolean isLoc_switch() {
+        return loc_switch;
+    }
+
+    public void setLoc_switch(boolean loc_switch) {
+        this.loc_switch = loc_switch;
+    }
+
     public Alarm(){
         super();
     }
 
-    public Alarm(int alarmid, int hour,int minute,Math math, Location location, String wake_up_method, String loc_switch,
+    public Alarm(int alarmid, int hour,int minute,Math math, Location location, String wake_up_method, boolean loc_switch,
                  String tag, String tone, String alarm_switch) {
         this.alarmid = alarmid;
         this.hour=hour;
@@ -100,7 +108,7 @@ public class Alarm {
         this.loc_switch = loc_switch;
         this.tag = tag;
         this.tone = tone;
-        this.alarm_switch = alarm_switch;
+        //this.alarm_switch = alarm_switch;
     }
 
     protected class Math {

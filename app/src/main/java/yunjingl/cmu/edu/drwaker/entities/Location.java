@@ -48,6 +48,14 @@ public class Location {
         this.tag = tag;
     }
 
+    public String getLatitude() {
+        return Double.toString(latlng.latitude);
+    }
+
+    public String getLongitude() {
+        return Double.toString(latlng.longitude);
+    }
+
     // Print information of Location
     public void print() {
         System.out.printf("ID: %d\nTag: %s\nLatLng: (%f, %f)\n", locid, tag, latlng.latitude, latlng.longitude);

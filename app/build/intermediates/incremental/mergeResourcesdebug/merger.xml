@@ -1723,7 +1723,6 @@
         <item>Kiss the rain</item>
         <item>River that flows in you</item>
         <item>I just wanna run</item>
-
     </string-array><string-array name="hour">
         <item>00</item>
         <item>01</item>
@@ -1754,7 +1753,6 @@
         <item>PM</item>
     </string-array><string-array name="location">
         <item>Home</item>
-        <item>Office</item>
     </string-array></file><file path="/Users/amychen/Documents/Courses_CMU/18-641 Java Smart Phone Development/DrWaker/app/src/main/res/values/styles.xml" qualifiers=""><style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/><style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

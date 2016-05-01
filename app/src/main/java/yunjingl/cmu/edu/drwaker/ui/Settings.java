@@ -12,10 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import java.util.List;
 
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
+import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
 //import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
@@ -35,9 +38,11 @@ public class Settings extends AppCompatActivity {
     String ringtone;
     int inputhour;
     int inputminute;
-    int locationid;
+    //int locationid;
     String wake_up_method;
     String tag;
+    String locationtag;
+    boolean locationswitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +54,24 @@ public class Settings extends AppCompatActivity {
         Button done=(Button)findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
+                RadioGroup radioGroup=(RadioGroup) findViewById(R.id.wake_up);
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                RadioButton radioButton = (RadioButton) findViewById(selectedId);
+                wake_up_method=radioButton.getText().toString();
+                tag=((EditText) findViewById(R.id.tag)).getText().toString();
+
+                Switch loc_switch=(Switch) findViewById(R.id.locswitch);
+                loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        locationswitch=isChecked;
+                    }
+                });
                 if(method.equals("create")){
-                    //TODO: SetAlarm.createAlarm(inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                    new SetAlarm().createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){
                     int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
-                    //TODO: SetAlarm.updateAlarm(alarmid,inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                    new SetAlarm().updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }
                 //Alarm newAlarm = getAlarm();
                 //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
@@ -76,7 +94,7 @@ public class Settings extends AppCompatActivity {
                     if (temp.startsWith("0")) {
                         temp = temp.substring(1, temp.length());
                     }
-                    inputhour=Integer.parseInt(temp);
+                    inputhour = Integer.parseInt(temp);
                 }
 
                 //Toast.makeText(getBaseContext(),inthour,Toast.LENGTH_SHORT).show();
@@ -97,7 +115,7 @@ public class Settings extends AppCompatActivity {
                         temp = temp.substring(1, temp.length());
                     }
                 }
-                inputminute=Integer.parseInt(temp);
+                inputminute = Integer.parseInt(temp);
             }
 
             @Override
@@ -113,6 +131,26 @@ public class Settings extends AppCompatActivity {
                 TextView myview = (TextView) view;
                 if (myview != null) {
                     ringtone= myview.getText().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        Spinner location = (Spinner)findViewById(R.id.location);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.notifyDataSetChanged();
+        location.setAdapter(dataAdapter);
+        location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView myview = (TextView) view;
+                if (myview != null) {
+                    locationtag = myview.getText().toString();
                 }
             }
 
@@ -145,91 +183,14 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-//        this.context = this;
-//        Spinner hour = (Spinner)findViewById(R.id.hour);
-//        Spinner minute = (Spinner)findViewById(R.id.minute);
-//        Spinner ampm = (Spinner)findViewById(R.id.ampm);
-//        Spinner tune = (Spinner)findViewById(R.id.tune);
-//        hour.setAdapter(ArrayAdapter.createFromResource(this,R.array.hour, android.R.layout.simple_spinner_item));
-//        minute.setAdapter(ArrayAdapter.createFromResource(this,R.array.minute, android.R.layout.simple_spinner_item));
-//        ampm.setAdapter(ArrayAdapter.createFromResource(this,R.array.ampm, android.R.layout.simple_spinner_item));
-//        tune.setAdapter(ArrayAdapter.createFromResource(this, R.array.tune, android.R.layout.simple_spinner_item));
-//
-//        hour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                TextView myview = (TextView) view;
-//                String temp = myview.getText().toString();
-//                if(temp!=null){
-//                    if (temp.startsWith("0")) {
-//                        temp = temp.substring(1, temp.length());
-//                    }
-//                   // clockTime.setHour(Integer.parseInt(temp));
-//                }
-//
-//                //Toast.makeText(getBaseContext(),inthour,Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        minute.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                TextView myview = (TextView) view;
-//                String temp = myview.getText().toString();
-//                if(temp!=null) {
-//                    if (temp.startsWith("0")) {
-//                        temp = temp.substring(1, temp.length());
-//                    }
-//                }
-//               // clockTime.setMinute(Integer.parseInt(temp));
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        ampm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                TextView myview = (TextView) view;
-//                if(myview!=null)
-//                clockTime.setAmpm(myview.getText().toString());
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        tune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                TextView myview = (TextView) view;
-//                if(myview!=null)
-//                tunes = myview.getText().toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//
-//        Button newloc=(Button)findViewById(R.id.newlocbutton);
-//        newloc.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        Button newloc=(Button)findViewById(R.id.newlocbutton);
+        newloc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View viewParam) {
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+                startActivity(intent);
+            }
+        });
 //
 //
 //        final Intent myIntent = new Intent(this.context, AlarmReceiver.class);
@@ -272,25 +233,26 @@ public class Settings extends AppCompatActivity {
 //            }
 //        });
     }
-    public Alarm getAlarm(){
-        final Alarm resultAlarm=new Alarm();
-        resultAlarm.setHour(inputhour);
-        resultAlarm.setMinute(inputminute);
-        resultAlarm.setTone(ringtone);
 
-        RadioGroup radioGroup=(RadioGroup) findViewById(R.id.wake_up);
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = (RadioButton) findViewById(selectedId);
-        String wake_up=radioButton.getText().toString();
-        Log.e("wake up set", wake_up);
-        resultAlarm.setWake_up_method(wake_up);
-
-        //TODO: int id=SetAlarm.getAlarms().size()+1;
-        //TODO: resultAlarm.setAlarmid(id);
-
-        String tag=((EditText) findViewById(R.id.tag)).getText().toString();
-        resultAlarm.setTag(tag);
-        return resultAlarm;
-    }
+//    public Alarm getAlarm(){
+//        final Alarm resultAlarm=new Alarm();
+//        resultAlarm.setHour(inputhour);
+//        resultAlarm.setMinute(inputminute);
+//        resultAlarm.setTone(ringtone);
+//
+//        RadioGroup radioGroup=(RadioGroup) findViewById(R.id.wake_up);
+//        int selectedId = radioGroup.getCheckedRadioButtonId();
+//        RadioButton radioButton = (RadioButton) findViewById(selectedId);
+//        String wake_up=radioButton.getText().toString();
+//        Log.e("wake up set", wake_up);
+//        resultAlarm.setWake_up_method(wake_up);
+//
+//        int id=SetAlarm.getAlarms().size()+1;
+//        resultAlarm.setAlarmid(id);
+//
+//        String tag=((EditText) findViewById(R.id.tag)).getText().toString();
+//        resultAlarm.setTag(tag);
+//        return resultAlarm;
+//    }
 
 }

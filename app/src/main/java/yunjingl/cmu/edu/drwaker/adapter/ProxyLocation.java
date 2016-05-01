@@ -60,7 +60,7 @@ public abstract class ProxyLocation {
         ArrayList<String> tags = new ArrayList<String>();
         Set<String> st = locations.keySet();
         Iterator<String> itr = st.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             tags.add(locations.get(itr.next()).getTag());
         }
         return tags;
@@ -87,7 +87,7 @@ public abstract class ProxyLocation {
     public void updateLocation(int locid, LatLng latlng, String tag) {
         Set<String> st = locations.keySet();
         Iterator<String> itr = st.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             String currentTag = locations.get(itr.next()).getTag();
             if(locations.get(currentTag).getLocid()==locid) {
                 //TODO: update the values in the database
@@ -102,7 +102,7 @@ public abstract class ProxyLocation {
     public void printAllLocations() {
         Set<String> st = locations.keySet();
         Iterator<String> itr = st.iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             locations.get(itr.next()).print();
         }
     }
