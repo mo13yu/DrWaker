@@ -28,6 +28,8 @@ import java.util.List;
 
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
+import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
+import yunjingl.cmu.edu.drwaker.entities.Alarm;
 //import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
 public class Settings extends AppCompatActivity {
@@ -66,10 +68,10 @@ public class Settings extends AppCompatActivity {
                     }
                 });
                 if(method.equals("create")){
-                    SetAlarm.createAlarm(inputhour,inputminute,locationtag,locationswitch,wake_up_method,tag,ringtone);
+                    new SetAlarm().createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){
                     int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
-                    SetAlarm.updateAlarm(alarmid,inputhour,inputminute,locationtag,locationswitch,wake_up_method,tag,ringtone);
+                    new SetAlarm().updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }
                 //Alarm newAlarm = getAlarm();
                 //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
@@ -139,7 +141,7 @@ public class Settings extends AppCompatActivity {
         });
         Spinner location = (Spinner)findViewById(R.id.location);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, SetLocation.getAllLocations());
+                android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dataAdapter.notifyDataSetChanged();
         location.setAdapter(dataAdapter);
@@ -185,7 +187,7 @@ public class Settings extends AppCompatActivity {
         Button newloc=(Button)findViewById(R.id.newlocbutton);
         newloc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
-                Intent intent = new Intent(getApplicationContext(), SetLocation.class);
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivity(intent);
             }
         });
@@ -231,6 +233,7 @@ public class Settings extends AppCompatActivity {
 //            }
 //        });
     }
+
 //    public Alarm getAlarm(){
 //        final Alarm resultAlarm=new Alarm();
 //        resultAlarm.setHour(inputhour);

@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //        Button test=(Button)findViewById(R.id.map);
 //        test.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),SetLocation.class);
+//                Intent intent=new Intent(getApplicationContext(),LocationActivity.class);
 //                startActivity(intent);
 //            }
 //        });
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initializeAlarms(){
         calendars=new ArrayList<Calendar>();
-        Iterator<Integer> itr=SetAlarm.getIdSet().iterator();
+        Iterator<Integer> itr= new SetAlarm().getIdSet().iterator();
         while (itr.hasNext()){
 
             final int thisid=itr.next();
@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             int hour_sys = calendar.get(Calendar.HOUR_OF_DAY);
             int minute_sys = calendar.get(Calendar.MINUTE);
-            int hour=SetAlarm.getHour(thisid);
-            int minute=SetAlarm.getMinute(thisid);
+            int hour = new SetAlarm().getHour(thisid);
+            int minute =  new SetAlarm().getMinute(thisid);
             if(hour<hour_sys||(hour==hour_sys&&minute<minute_sys)){
                 calendar.set(Calendar.DAY_OF_MONTH, day+1);
             }else{
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ((LinearLayout) addView.getParent()).removeView(addView);
-                    SetAlarm.deleteAlarm(thisid);
+                    new SetAlarm().deleteAlarm(thisid);
 //                    alarms.remove(thisalarm.getAlarmid());
                 }
             });
@@ -143,22 +143,22 @@ public class MainActivity extends AppCompatActivity {
         pendingIntents = new ArrayList<PendingIntent>();
         final Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
 
-        itr=SetAlarm.getIdSet().iterator();
+        itr = new SetAlarm().getIdSet().iterator();
         int i=0;
         while (itr.hasNext()){
             int thisid=itr.next();
             myIntent.putExtra("extra", "on");
-            String wake_up=SetAlarm.getWakUpMethod(thisid);
+            String wake_up = new SetAlarm().getWakUpMethod(thisid);
             if(wake_up.equals("Math Calculation")){
                 myIntent.putExtra("wake_up_method", "math");
             }else if(wake_up.equals("Facial Recognization")){
                 myIntent.putExtra("wake_up_method", "facial");
             }
-            myIntent.putExtra("ring_tone",SetAlarm.getTone(thisid));
-            myIntent.putExtra("loc_switch",SetAlarm.isLocationSwitchOn(thisid));
-            if(SetAlarm.isLocationSwitchOn(thisid)){
-                myIntent.putExtra("loc_la",SetAlarm.getLatitude(thisid));
-                myIntent.putExtra("loc_lo",SetAlarm.getLongitude(thisid));
+            myIntent.putExtra("ring_tone",new SetAlarm().getTone(thisid));
+            myIntent.putExtra("loc_switch",new SetAlarm().isLocationSwitchOn(thisid));
+            if(new SetAlarm().isLocationSwitchOn(thisid)){
+                myIntent.putExtra("loc_la",new SetAlarm().getLatitude(thisid));
+                myIntent.putExtra("loc_lo",new SetAlarm().getLongitude(thisid));
             }
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, thisid, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);

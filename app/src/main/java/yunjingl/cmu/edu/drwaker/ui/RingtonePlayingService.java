@@ -37,7 +37,7 @@ public class RingtonePlayingService extends Service {
         if(loc_switch){
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
-            startring=SetLocation.compare(la,lo);
+            //TODO: startring=SetLocation.compare(la,lo);
         }
 
         if(startring){
@@ -69,7 +69,7 @@ public class RingtonePlayingService extends Service {
                 this.isRunning=false;
                 this.id=0;
             }
-             
+
         }
         return START_NOT_STICKY;
 

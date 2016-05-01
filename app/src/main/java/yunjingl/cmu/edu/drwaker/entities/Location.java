@@ -1,17 +1,27 @@
 package yunjingl.cmu.edu.drwaker.entities;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by yunjing on 4/13/16.
  */
 public class Location {
     private int locid;
-    private String latitude;
-    private String longitude;
+    //private String latitude;
+    //private String longitude;
+    private LatLng latlng;
+    private String tag;
 
-    public Location(int locid, String latitude, String longitude) {
+    public Location() {
+        locid = 0;
+        latlng = null;
+        tag = null;
+    }
+
+    public Location(int locid, LatLng latlng, String tag) {
         this.locid = locid;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latlng = latlng;
+        this.tag = tag;
     }
 
     public int getLocid() {
@@ -22,19 +32,32 @@ public class Location {
         this.locid = locid;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public LatLng getLatlng() {
+        return latlng;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setLatlng(LatLng latlng) {
+        this.latlng = latlng;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getLatitude() {
+        return Double.toString(latlng.latitude);
     }
 
     public String getLongitude() {
-        return longitude;
+        return Double.toString(latlng.longitude);
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    // Print information of Location
+    public void print() {
+        System.out.printf("ID: %d\nTag: %s\nLatLng: (%f, %f)\n", locid, tag, latlng.latitude, latlng.longitude);
     }
 }
