@@ -1,16 +1,21 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
+import android.content.Context;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
-
+import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 /**
  * Created by yunjing on 4/22/16.
  */
 public abstract class ProxyAlarm {
     private static LinkedHashMap<Integer,Alarm> alarms=new LinkedHashMap<Integer,Alarm>();
+    private static Context context;
+    private static AlarmDatabaseConnector alarmDatabaseConnector=new AlarmDatabaseConnector(context);
 
     public LinkedHashMap<Integer, Alarm> getAlarms() {
         return alarms;
@@ -21,11 +26,17 @@ public abstract class ProxyAlarm {
     }
 
     public void initializeAlarms(){
-        alarms = ReadAlarm.readAll();
+        //ToDo:alarms = ReadAlarm.readAll();
     }
 
-    public void createAlarm(int hour, int minute, int locationid, String wake_up_method, String tag, String tone) {
-
+    public void addToDB(Alarm newalarm){
+//        try{
+//            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+//                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+//                    cal.getFirstdate(), cal.getPayoffdate());}              //ToDo:need add mathID,on/off,locationID
+//        catch(DatabaseException e){
+//            e.fix(e.getErrNo());
+//        }
     }
 
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
@@ -46,9 +57,7 @@ public abstract class ProxyAlarm {
         addToDB(newalarm);
     }
 
-    public void updateAlarm(int alarmid, int hour, int minute, int locationid, String wake_up_method, String tag, String tone) {
 
-    }
 
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone){
@@ -74,9 +83,6 @@ public abstract class ProxyAlarm {
         delateFromDB(alarmid);
     }
 
-    public void addToDB(Alarm newalarm){
-
-    }
     public void updateToDB(Alarm newalarm){
 
     }
@@ -84,6 +90,7 @@ public abstract class ProxyAlarm {
     public void delateFromDB(int alarmid){
 
     }
+
     public int getNumberOfAlarms(){
         return alarms.size();
     }
