@@ -31,8 +31,9 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location mLastLocation;
 
-    LocationDatabaseConnector locationDatabaseConnector;
-    Context context;
+    private Context context;
+    private static LocationDatabaseConnector locationDatabaseConnector;
+
 
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
@@ -199,8 +200,8 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     /**
      * Database
      */
-    public void setContext(Context con){
-        context=con;
+    public void setContext(Context context) {
+        context=context;
         locationDatabaseConnector=new LocationDatabaseConnector(context);
     }
 

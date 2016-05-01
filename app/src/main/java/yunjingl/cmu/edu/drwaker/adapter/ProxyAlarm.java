@@ -19,8 +19,8 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 public abstract class ProxyAlarm {
     private static LinkedHashMap<Integer,Alarm> alarms=new LinkedHashMap<Integer,Alarm>();
 
-    Context context;
-    private  AlarmDatabaseConnector alarmDatabaseConnector;
+    private Context context;
+    private static  AlarmDatabaseConnector alarmDatabaseConnector;
 
 
     public LinkedHashMap<Integer, Alarm> getAlarms() {
@@ -70,14 +70,14 @@ public abstract class ProxyAlarm {
         try{
             alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
                     newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());}              //ToDo:need add mathID,on/off,locationID
+                    newalarm.isLoc_switch(), 1, 1);}              //ToDo: newalarm.getMathID(), newalarm.getLocationID(), need add mathID,on/off,locationID
         catch(DatabaseException e){
             e.fix(e.getErrNo());
         }
     }
 
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
-                            String tag, String tone){
+                            String tag, String tone) {
         alarms.remove(alarmid);
         Alarm newalarm = new Alarm();
         newalarm.setHour(hour);
@@ -155,6 +155,7 @@ public abstract class ProxyAlarm {
         context=con;
         alarmDatabaseConnector=new AlarmDatabaseConnector(context);
     }
+
     public LinkedHashMap<Integer,Alarm> allAlarm(){
         LinkedHashMap<Integer,Alarm> data= new LinkedHashMap<>();
         try {
