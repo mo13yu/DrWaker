@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="C:\Users\yapeng\Documents\GitHub\DrWaker\app\src\androidTest\res"/><source path="C:\Users\yapeng\Documents\GitHub\DrWaker\app\build\generated\res\rs\androidTest\debug"/><source path="C:\Users\yapeng\Documents\GitHub\DrWaker\app\build\generated\res\resValues\androidTest\debug"/></dataSet><mergedItems/></merger>
+=======
 <merger version="3"><dataSet config="main"><source path="/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/src/androidTest/res"/><source path="/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/generated/res/rs/androidTest/debug"/><source path="/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/generated/res/resValues/androidTest/debug"/></dataSet><mergedItems/></merger>
+>>>>>>> origin/master

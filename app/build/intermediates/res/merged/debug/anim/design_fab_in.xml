@@ -28,4 +28,8 @@
            android:pivotY="50%"/>
 
 </set>
+<<<<<<< HEAD
+<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/anim/design_fab_in.xml --><!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/anim/design_fab_in.xml -->
+=======
 <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/anim/design_fab_in.xml --><!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/anim/design_fab_in.xml -->
+>>>>>>> origin/master
