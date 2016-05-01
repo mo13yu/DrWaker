@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-w480dp/values-w480dp.xml -->
+    <!-- From: file:/Users/amychen/Documents/Courses_CMU/18-641%20Java%20Smart%20Phone%20Development/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-w480dp/values-w480dp.xml -->
     <eat-comment/>
     <bool name="abc_action_bar_embed_tabs_pre_jb">true</bool>
     <bool name="abc_config_allowActionMenuItemTextWithIcon">true</bool>
