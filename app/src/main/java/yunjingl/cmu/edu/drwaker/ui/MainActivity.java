@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),Settings.class);
-                intent.putExtra("result","create");
+                intent.putExtra("create_or_update","create");
                 startActivity(intent);
             }
         });
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(getApplicationContext(),Settings.class);
-                    intent.putExtra("result", "update");
+                    intent.putExtra("create_or_update", "update");
                     intent.putExtra("alarmid",thisid+"");
                     startActivity(intent);
                 }

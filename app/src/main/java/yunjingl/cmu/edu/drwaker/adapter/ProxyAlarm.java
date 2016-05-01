@@ -3,6 +3,7 @@ package yunjingl.cmu.edu.drwaker.adapter;
 import android.content.Context;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -47,7 +48,20 @@ public abstract class ProxyAlarm {
         newalarm.setWake_up_method(wake_up_method);
         newalarm.setTag(tag);
         newalarm.setTone(tone);
-        int alarmid = Collections.max(alarms.keySet())+1;
+//        int max=0;
+//        Iterator iterator=alarms.keySet().iterator();
+//        while(iterator.hasNext()){
+//            int key=(int)iterator.next();
+//
+//        }
+        Set<Integer> keys=alarms.keySet();
+        int alarmid=0;
+        if(keys.isEmpty()){
+            alarmid=1;
+        }else{
+            alarmid = Collections.max(keys)+1;
+        }
+        //int alarmid = Collections.max(keys)+1;
         newalarm.setAlarmid(alarmid);
         newalarm.setLocation(new SetLocation().getLocation(locationtag));
         newalarm.setLoc_switch(locationswitch);

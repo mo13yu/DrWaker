@@ -74,9 +74,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                     locations.createLocation(mLocationOutput, tag);
                 }
-                //TODO: Intent intent = new Intent(getApplicationContext(), Settings.class);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), Settings.class);
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+                finish();
             }
         });
 
