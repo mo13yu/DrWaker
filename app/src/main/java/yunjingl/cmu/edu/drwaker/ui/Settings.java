@@ -43,6 +43,32 @@ public class Settings extends AppCompatActivity {
     String tag;
     String locationtag;
     boolean locationswitch;
+    SetAlarm setAlarm=new SetAlarm();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Spinner location = (Spinner)findViewById(R.id.location);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.notifyDataSetChanged();
+        location.setAdapter(dataAdapter);
+        location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView myview = (TextView) view;
+                if (myview != null) {
+                    locationtag = myview.getText().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +97,10 @@ public class Settings extends AppCompatActivity {
                     }
                 });
                 if(method.equals("create")){
-                    new SetAlarm().createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
+                    setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){
                     int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
-                    new SetAlarm().updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
+                    setAlarm.updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }
                 //Alarm newAlarm = getAlarm();
                 //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
@@ -142,6 +168,7 @@ public class Settings extends AppCompatActivity {
 
             }
         });
+        //ToDo:populate again
         Spinner location = (Spinner)findViewById(R.id.location);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());

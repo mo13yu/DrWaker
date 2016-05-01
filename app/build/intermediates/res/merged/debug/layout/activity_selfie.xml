@@ -18,4 +18,8 @@
     <include layout="@layout/content_selfie" />
 
 </android.support.design.widget.CoordinatorLayout>
+<<<<<<< HEAD
 <!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/src/main/res/layout/activity_selfie.xml -->
+=======
+<!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/src/main/res/layout/activity_selfie.xml -->
+>>>>>>> origin/master

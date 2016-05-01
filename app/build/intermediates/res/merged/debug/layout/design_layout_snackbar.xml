@@ -20,4 +20,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="bottom"
+<<<<<<< HEAD
       style="@style/Widget.Design.Snackbar" /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/layout/design_layout_snackbar.xml --><!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/layout/design_layout_snackbar.xml -->
+=======
+      style="@style/Widget.Design.Snackbar" /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/layout/design_layout_snackbar.xml --><!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/layout/design_layout_snackbar.xml -->
+>>>>>>> origin/master

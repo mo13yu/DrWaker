@@ -65,6 +65,7 @@ public class SelfieActivity extends AppCompatActivity {
                     public void onClick(View v) {
 //                        Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
 //                        startActivity(intent);
+                        final Intent myIntent = new Intent(SelfieActivity.this, RingtonePlayingService.class);
                         if(captureButton.getText()=="Test") { //in Preview Mode
 
                             // get an image from the camera
@@ -76,8 +77,12 @@ public class SelfieActivity extends AppCompatActivity {
                                 preview.removeView(drawMask);
 
                                 //if detect the user's eyes are open then return to main activity.
-                                Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
-                                startActivity(intent);
+//                                Intent intent = new Intent(SelfieActivity.this, MainActivity.class);
+//                                startActivity(intent);
+                                myIntent.putExtra("extra", "off");
+                                startService(myIntent);
+                                // sendBroadcast(myIntent);
+                                finish();
                             }
                             else {
                                 AlertDialog.Builder builder=new AlertDialog.Builder(SelfieActivity.this);
