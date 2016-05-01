@@ -4,4 +4,12 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
+<<<<<<< HEAD
 <!-- From: file:/Users/amychen/Desktop/DrWaker/app/src/main/res/menu/menu_main.xml -->
+=======
+<<<<<<< HEAD
+<!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/src/main/res/menu/menu_main.xml -->
+=======
+<!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/src/main/res/menu/menu_main.xml -->
+>>>>>>> origin/master
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a

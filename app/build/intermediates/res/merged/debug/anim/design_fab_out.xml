@@ -28,4 +28,12 @@
            android:pivotY="50%"/>
 
 </set>
+<<<<<<< HEAD
 <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/anim/design_fab_out.xml --><!-- From: file:/Users/amychen/Desktop/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/anim/design_fab_out.xml -->
+=======
+<<<<<<< HEAD
+<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/anim/design_fab_out.xml --><!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/anim/design_fab_out.xml -->
+=======
+<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/design/res/anim/design_fab_out.xml --><!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/design/23.1.0/res/anim/design_fab_out.xml -->
+>>>>>>> origin/master
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a

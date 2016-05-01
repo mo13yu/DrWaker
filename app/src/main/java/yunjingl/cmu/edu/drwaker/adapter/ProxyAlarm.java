@@ -1,6 +1,8 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
+
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,13 +12,16 @@ import java.util.Set;
 import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
+
 /**
  * Created by yunjing on 4/22/16.
  */
 public abstract class ProxyAlarm {
     private static LinkedHashMap<Integer,Alarm> alarms=new LinkedHashMap<Integer,Alarm>();
-    private static Context context;
-    private static AlarmDatabaseConnector alarmDatabaseConnector=new AlarmDatabaseConnector(context);
+
+    Context context;
+    private  AlarmDatabaseConnector alarmDatabaseConnector;
+
 
     public LinkedHashMap<Integer, Alarm> getAlarms() {
         return alarms;
@@ -30,15 +35,19 @@ public abstract class ProxyAlarm {
         //ToDo:alarms = ReadAlarm.readAll();
     }
 
+<<<<<<< HEAD
+
+=======
     public void addToDB(Alarm newalarm){
-//        try{
-//            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
-//                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-//                    cal.getFirstdate(), cal.getPayoffdate());}              //ToDo:need add mathID,on/off,locationID
-//        catch(DatabaseException e){
-//            e.fix(e.getErrNo());
-//        }
+        try{
+            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());}              //ToDo:need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
     }
+>>>>>>> origin/master
 
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone){
@@ -97,12 +106,37 @@ public abstract class ProxyAlarm {
         delateFromDB(alarmid);
     }
 
-    public void updateToDB(Alarm newalarm){
+<<<<<<< HEAD
 
+    public void addToDB(Alarm newalarm){
+        try{
+            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    cal.getFirstdate(), cal.getPayoffdate());}              //TODO:need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
+    }
+
+=======
+>>>>>>> origin/master
+    public void updateToDB(Alarm newalarm){
+        int id = newalarm.getAlarmid();
+        try {
+            alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());       //TODO:need add mathID,on/off,locationID
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delateFromDB(int alarmid){
-
+        try {
+            alarmDatabaseConnector.deleteAlarm(alarmid);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getNumberOfAlarms(){
@@ -136,4 +170,79 @@ public abstract class ProxyAlarm {
         return alarms.get(alarmno).isLoc_switch();
     }
 
+    public void setContext(Context con){
+        context=con;
+        alarmDatabaseConnector=new AlarmDatabaseConnector(context);
+    }
+    public LinkedHashMap<Integer,Alarm> allAlarm(){
+        LinkedHashMap<Integer,Alarm> data= new LinkedHashMap<>();
+        try {
+            alarmDatabaseConnector.open();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        Cursor cursor=alarmDatabaseConnector.getAllAlarm();
+        int idIndex= cursor.getColumnIndex("id");
+        int hourIndex=cursor.getColumnIndex("Hour");
+        int minuteIndex=cursor.getColumnIndex("Minute");
+        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
+        int tagIndex=cursor.getColumnIndex("Tag");
+        int tuneIndex=cursor.getColumnIndex("Tune");
+        int statusIndex=cursor.getColumnIndex("Status");
+        cursor.moveToFirst();
+        int id=Integer.valueOf(cursor.getString(idIndex));
+        int hour=Integer.valueOf(cursor.getString(hourIndex));
+        int minute=Integer.valueOf(cursor.getString(minuteIndex));
+        String wakeupmethod=cursor.getString(wakeupmethodIndex);
+        String tag=cursor.getString(tagIndex);
+        String tune=cursor.getString(tuneIndex);
+        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));        //Status is boolean
+        int counter=0;
+
+        while(!cursor.isLast()){
+            Alarm alarm=new Alarm(id,hour,minute);
+            alarm.setWake_up_method(wakeupmethod);
+            alarm.setTag(tag);
+            alarm.setTone(tune);
+            alarm.setLoc_switch(status);
+            //need math and location
+            data.put(counter,alarm);
+            counter++;
+            cursor.moveToNext();
+        }
+        return data;
+    }
+
+    public Alarm readAlarm(int id){
+        try {
+            alarmDatabaseConnector.open();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+
+        Cursor cursor=alarmDatabaseConnector.getOneAlarm(id);
+        int idIndex= cursor.getColumnIndex("id");
+        int hourIndex=cursor.getColumnIndex("Hour");
+        int minuteIndex=cursor.getColumnIndex("Minute");
+        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
+        int tagIndex=cursor.getColumnIndex("Tag");
+        int tuneIndex=cursor.getColumnIndex("Tune");
+        int statusIndex=cursor.getColumnIndex("Status");
+        cursor.moveToFirst();
+        int alarmid=Integer.valueOf(cursor.getString(idIndex));
+        int hour=Integer.valueOf(cursor.getString(hourIndex));
+        int minute=Integer.valueOf(cursor.getString(minuteIndex));
+        String wakeupmethod=cursor.getString(wakeupmethodIndex);
+        String tag=cursor.getString(tagIndex);
+        String tune=cursor.getString(tuneIndex);
+        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));
+        Alarm alarm=new Alarm(id,hour,minute);
+        alarm.setWake_up_method(wakeupmethod);
+        alarm.setTag(tag);
+        alarm.setTone(tune);
+        alarm.setLoc_switch(status);
+        //need math and location
+
+        return alarm;
+    }
 }

@@ -1,6 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
+<<<<<<< HEAD
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,10 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+=======
+import android.database.Cursor;
+
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -17,9 +22,17 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
+<<<<<<< HEAD
 import yunjingl.cmu.edu.drwaker.database.LocationDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Location;
 import yunjingl.cmu.edu.drwaker.ui.MainActivity;
+=======
+import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
+import yunjingl.cmu.edu.drwaker.database.LocationDatabaseConnector;
+import yunjingl.cmu.edu.drwaker.entities.Location;
+import yunjingl.cmu.edu.drwaker.exception.CusException;
+import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
 
 /**
  * Created by yunjing on 4/22/16.
@@ -28,11 +41,16 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     protected static final String TAG = "ProxyLocation";
 
     private static LinkedHashMap<String,Location> locations = new LinkedHashMap<String,Location>();
+<<<<<<< HEAD
 
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location mLastLocation;
 
 
+=======
+    LocationDatabaseConnector locationDatabaseConnector;
+    Context context;
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
         // create new location
@@ -86,9 +104,15 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     }
 
     public Location getLocation(String tag) {
+        if(locations.containsKey(tag)){
+            return locations.get(tag);
+        }else{
+            //throw CusException("")
+        }
         return locations.get(tag);
     }
 
+<<<<<<< HEAD
     //TODO: test nearLocation
     public boolean nearLocation(Context context, String lat, String lng) {
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
@@ -112,6 +136,9 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
         */
 
+=======
+    public boolean nearLocation(String la,String lo) {
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
         //TODO: check if user is in the area
         Log.i(TAG, "Input Location: ("+ lat + ", " + lng + ")");
         Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
@@ -189,4 +216,89 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
     }
 
+<<<<<<< HEAD
+=======
+    public void setContext(Context con){
+        context=con;
+        locationDatabaseConnector=new LocationDatabaseConnector(context);
+    }
+
+    public void addToDB(Location newLoc){
+        try{
+            locationDatabaseConnector.insertLocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());}              //TODO:need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
+    }
+
+    public void updateToDB(Location newLoc){
+        int id = newLoc.getLocid();
+        try {
+            locationDatabaseConnector.updateLocation(id, newLoc.getLatitude(),
+                    newLoc.getLongitude(), newLoc.getTag());
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delateFromDB(int alarmid){
+        try {
+            locationDatabaseConnector.deleteLocation(alarmid);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public LinkedHashMap<String,Location> allLoc(){
+        LinkedHashMap<String,Location> data= new LinkedHashMap<>();
+        try {
+            locationDatabaseConnector.open();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        Cursor cursor=locationDatabaseConnector.getAllLocation();
+        int idIndex= cursor.getColumnIndex("id");
+        int latitudeIndex=cursor.getColumnIndex("Latitude");
+        int longitudeIndex=cursor.getColumnIndex("Longitude");
+        int tagIndex=cursor.getColumnIndex("Tag");
+        cursor.moveToFirst();
+        int id=Integer.valueOf(cursor.getString(idIndex));
+        double latitude=Double.valueOf(cursor.getString(latitudeIndex));
+        double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
+        String tag=cursor.getString(tagIndex);
+        int counter=0;
+
+        while(!cursor.isLast()){
+            LatLng latLng=new LatLng(latitude,longitude);
+            Location alarm=new Location(id,latLng,tag);
+            //need math and location
+            data.put(tag,alarm);
+            counter++;
+            cursor.moveToNext();
+        }
+        return data;
+    }
+
+    public Location readAlarm(int id){
+        try {
+            locationDatabaseConnector.open();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+
+        Cursor cursor=locationDatabaseConnector.getOneLocation(id);
+        int idIndex= cursor.getColumnIndex("id");
+        int latitudeIndex=cursor.getColumnIndex("Latitude");
+        int longitudeIndex=cursor.getColumnIndex("Longitude");
+        int tagIndex=cursor.getColumnIndex("Tag");
+        cursor.moveToFirst();
+        int locid=Integer.valueOf(cursor.getString(idIndex));
+        double latitude=Double.valueOf(cursor.getString(latitudeIndex));
+        double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
+        String tag=cursor.getString(tagIndex);
+        LatLng latLng=new LatLng(latitude,longitude);
+        Location location=new Location(id,latLng,tag);
+        return location;
+    }
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
 }

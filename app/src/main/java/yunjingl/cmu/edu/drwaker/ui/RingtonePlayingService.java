@@ -23,24 +23,24 @@ public class RingtonePlayingService extends Service {
     int id;
     boolean isRunning;
     MediaPlayer ring;
-    boolean startring;
+    //boolean startring;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
         Log.e("in ring", "in ring");
 
-        startring=true;
+        //startring=true;
         String state=intent.getExtras().getString("extra");
         String ringtone=intent.getExtras().getString("ring_tone");
-        boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
+        //boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
 
-        if(loc_switch){
-            String la=intent.getExtras().getString("loc_la");
-            String lo=intent.getExtras().getString("loc_lo");
-            //TODO: startring=SetLocation.compare(la,lo);
-        }
+//        if(loc_switch){
+//            String la=intent.getExtras().getString("loc_la");
+//            String lo=intent.getExtras().getString("loc_lo");
+//            new SetLocation().nearLocation(la,lo);
+//        }
 
-        if(startring){
+//        if(startring){
             assert state!=null;
             if(state.equals("on")){
                 id=1;
@@ -70,7 +70,7 @@ public class RingtonePlayingService extends Service {
                 this.id=0;
             }
 
-        }
+//        }
         return START_NOT_STICKY;
 
 

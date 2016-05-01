@@ -57,4 +57,12 @@
         android:layout_height="wrap_content" />
 
 </android.support.v7.internal.widget.ButtonBarLayout>
+<<<<<<< HEAD
 <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_button_bar_material.xml --><!-- From: file:/Users/amychen/Desktop/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_alert_dialog_button_bar_material.xml -->
+=======
+<<<<<<< HEAD
+<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_button_bar_material.xml --><!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_alert_dialog_button_bar_material.xml -->
+=======
+<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/mnc-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_alert_dialog_button_bar_material.xml --><!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/layout/abc_alert_dialog_button_bar_material.xml -->
+>>>>>>> origin/master
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a

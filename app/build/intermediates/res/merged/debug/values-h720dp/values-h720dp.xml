@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/Users/amychen/Desktop/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-h720dp/values-h720dp.xml -->
+=======
+<<<<<<< HEAD
+    <!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-h720dp/values-h720dp.xml -->
+=======
+    <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/res/values-h720dp/values-h720dp.xml -->
+>>>>>>> origin/master
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
     <eat-comment/>
     <dimen name="abc_alert_dialog_button_bar_height">54dip</dimen>
 </resources>

@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/remove"/>
+        android:layout_toLeftOf="@id/remove"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -24,4 +25,12 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/remove"
         android:layout_toStartOf="@+id/remove" />
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/Users/amychen/Desktop/DrWaker/app/src/main/res/layout/row.xml -->
+=======
+<<<<<<< HEAD
+</RelativeLayout><!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/src/main/res/layout/row.xml -->
+=======
+</RelativeLayout><!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/src/main/res/layout/row.xml -->
+>>>>>>> origin/master
+>>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a

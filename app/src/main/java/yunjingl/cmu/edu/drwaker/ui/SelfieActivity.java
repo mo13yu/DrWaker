@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -50,6 +52,33 @@ public class SelfieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selfie);
 
         mPreview=new CameraPreview(this, mCamera);
+       //TODO:new added
+        Camera.Parameters param = mCamera.getParameters();
+        switch((int) mPreview.getRotation()){
+            case Surface.ROTATION_0:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO){
+                    mCamera.setDisplayOrientation(90);
+                    Log.d("Rotation_0", "whatever");
+                }
+                else{
+                    Log.d("Rotation_0", "whatever");
+                    param.setRotation(90);
+                    mCamera.setParameters(param);
+                }
+                break;
+            case Surface.ROTATION_90:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO){
+                    mCamera.setDisplayOrientation(0);
+                    Log.d("Rotation_0", "whatever");
+                }
+                else{
+                    Log.d("Rotation_90", "whatever");
+                    param.setRotation(0);
+                    mCamera.setParameters(param);
+                }
+                break;
+        }
+
         final FrameLayout preview=(FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
