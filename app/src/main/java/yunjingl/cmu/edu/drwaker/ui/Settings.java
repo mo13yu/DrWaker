@@ -49,6 +49,9 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        new SetAlarm().setContext(this);
+        new SetLocation().setContext(this);
+
         final String method=(getIntent().getExtras()).getString("create_or_update");
         //final Alarm newAlarm=getAlarm();
         Button done=(Button)findViewById(R.id.done);

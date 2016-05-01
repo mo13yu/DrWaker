@@ -85,7 +85,7 @@ public class LocationDatabaseConnector {
     //end the code insert Location
 
     //update a Location which is already in the database
-    public void updateAlarm(int id,double latitude,double longitude,String tag) throws DatabaseException {
+    public void updateLocation(int id,double latitude,double longitude,String tag) throws DatabaseException {
         ContentValues editLocation=new ContentValues();
         editLocation.put("Latitude",String.valueOf(latitude));
         editLocation.put("Longitude", String.valueOf(longitude));
