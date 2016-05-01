@@ -48,12 +48,12 @@ public class Location {
         this.tag = tag;
     }
 
-    public String getLatitude() {
-        return Double.toString(latlng.latitude);
+    public Double getLatitude() {
+        return latlng.latitude;
     }
 
-    public String getLongitude() {
-        return Double.toString(latlng.longitude);
+    public Double getLongitude() {
+        return latlng.longitude;
     }
 
     // Print information of Location

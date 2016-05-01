@@ -74,9 +74,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                     locations.createLocation(mLocationOutput, tag);
                 }
-                //Intent intent = new Intent(getApplicationContext(), Settings.class);
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });
@@ -147,21 +144,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     }
     @Override
     public void onConnected(Bundle connectionHint) {
-        /*
-        //TODO: this was for testing get user current location
-        try {
-            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-                String mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-                String mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-                System.out.printf("Last Location: (%s, %s)\n", mLatitudeText, mLongitudeText);
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-        */
         // For fetching location
         if (newAddress != null) {
             // Determine whether a Geocoder is available.

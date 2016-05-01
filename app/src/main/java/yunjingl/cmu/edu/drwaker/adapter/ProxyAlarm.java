@@ -125,11 +125,11 @@ public abstract class ProxyAlarm {
     }
 
     public String getLatitude(int alarmno){
-        return alarms.get(alarmno).getLocation().getLatitude();
+        return Double.toString(alarms.get(alarmno).getLocation().getLatitude());
     }
 
     public String getLongitude(int alarmno){
-        return alarms.get(alarmno).getLocation().getLongitude();
+        return Double.toString(alarms.get(alarmno).getLocation().getLongitude());
     }
 
     public boolean isLocationSwitchOn(int alarmno){

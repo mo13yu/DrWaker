@@ -1,5 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import yunjingl.cmu.edu.drwaker.entities.Location;
@@ -12,7 +14,7 @@ public interface GetLocation {
     public Location getLocation(String tag);
 
     //TODO: a function takes alarm's location and return boolean if the location is near current location
-    public boolean nearLocation(Location location);
+    public boolean nearLocation(Context context, String lat, String lng);
 
     // functions for debugging purpose
     public void printAllLocations();
