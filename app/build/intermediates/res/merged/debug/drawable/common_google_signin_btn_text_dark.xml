@@ -14,8 +14,4 @@
     <item
         android:drawable="@drawable/common_google_signin_btn_text_dark_normal" />
 </selector>
-<<<<<<< HEAD
-<!-- From: file:/C:/Users/yapeng/Documents/GitHub/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable/common_google_signin_btn_text_dark.xml -->
-=======
 <!-- From: file:/Users/yunjing/Documents/2016spring/JAVASMART/JAVA-STUPID-PHONE/DrWaker/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/res/drawable/common_google_signin_btn_text_dark.xml -->
->>>>>>> origin/master
