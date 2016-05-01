@@ -35,20 +35,6 @@ public abstract class ProxyAlarm {
         //ToDo:alarms = ReadAlarm.readAll();
     }
 
-<<<<<<< HEAD
-
-=======
-    public void addToDB(Alarm newalarm){
-        try{
-            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
-                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());}              //ToDo:need add mathID,on/off,locationID
-        catch(DatabaseException e){
-            e.fix(e.getErrNo());
-        }
-    }
->>>>>>> origin/master
-
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone){
         Alarm newalarm = new Alarm();
@@ -80,7 +66,15 @@ public abstract class ProxyAlarm {
         addToDB(newalarm);
     }
 
-
+    public void addToDB(Alarm newalarm){
+        try{
+            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());}              //ToDo:need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
+    }
 
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone){
@@ -106,20 +100,7 @@ public abstract class ProxyAlarm {
         delateFromDB(alarmid);
     }
 
-<<<<<<< HEAD
 
-    public void addToDB(Alarm newalarm){
-        try{
-            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
-                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    cal.getFirstdate(), cal.getPayoffdate());}              //TODO:need add mathID,on/off,locationID
-        catch(DatabaseException e){
-            e.fix(e.getErrNo());
-        }
-    }
-
-=======
->>>>>>> origin/master
     public void updateToDB(Alarm newalarm){
         int id = newalarm.getAlarmid();
         try {

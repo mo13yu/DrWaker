@@ -45,9 +45,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_location);
+        setContentView(R.layout.activity_location);
 
-        // Set up "OK" button
+        // Set up "SEARCH" button
         Button findloc = (Button)findViewById(R.id.button_findloc);
         findloc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {

@@ -1,19 +1,13 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
-<<<<<<< HEAD
-import android.location.Geocoder;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-=======
-import android.database.Cursor;
-
->>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -22,17 +16,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-<<<<<<< HEAD
 import yunjingl.cmu.edu.drwaker.database.LocationDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Location;
-import yunjingl.cmu.edu.drwaker.ui.MainActivity;
-=======
-import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
-import yunjingl.cmu.edu.drwaker.database.LocationDatabaseConnector;
-import yunjingl.cmu.edu.drwaker.entities.Location;
-import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
->>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
 
 /**
  * Created by yunjing on 4/22/16.
@@ -41,16 +27,13 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     protected static final String TAG = "ProxyLocation";
 
     private static LinkedHashMap<String,Location> locations = new LinkedHashMap<String,Location>();
-<<<<<<< HEAD
 
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location mLastLocation;
 
-
-=======
     LocationDatabaseConnector locationDatabaseConnector;
     Context context;
->>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
+
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
         // create new location
@@ -112,7 +95,6 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         return locations.get(tag);
     }
 
-<<<<<<< HEAD
     //TODO: test nearLocation
     public boolean nearLocation(Context context, String lat, String lng) {
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
@@ -136,9 +118,6 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
         */
 
-=======
-    public boolean nearLocation(String la,String lo) {
->>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
         //TODO: check if user is in the area
         Log.i(TAG, "Input Location: ("+ lat + ", " + lng + ")");
         Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
@@ -216,8 +195,10 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
     }
 
-<<<<<<< HEAD
-=======
+
+    /**
+     * Database
+     */
     public void setContext(Context con){
         context=con;
         locationDatabaseConnector=new LocationDatabaseConnector(context);
@@ -279,7 +260,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         return data;
     }
 
-    public Location readAlarm(int id){
+    public Location readLocation(int id){
         try {
             locationDatabaseConnector.open();
         } catch (DatabaseException e) {
@@ -300,5 +281,5 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         Location location=new Location(id,latLng,tag);
         return location;
     }
->>>>>>> 2cb0596383adacb029677f6cc67cdde0d2071d7a
+
 }
