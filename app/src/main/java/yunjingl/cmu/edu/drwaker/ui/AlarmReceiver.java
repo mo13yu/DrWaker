@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
+
 /**
  * Created by yunjing on 4/22/16.
  */
@@ -19,20 +21,29 @@ public class AlarmReceiver extends BroadcastReceiver {
         String ringtone=intent.getExtras().getString("ring_tone");
         boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
         if(loc_switch){
-            Intent ring_intent=new Intent(context,RingtonePlayingService.class);
-            ring_intent.putExtra("extra",temp);
-            ring_intent.putExtra("ring_tone", ringtone);
-            ring_intent.putExtra("loc_switch",loc_switch);
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
-            ring_intent.putExtra("loc_la",la);
-            ring_intent.putExtra("loc_lo",lo);
-            context.startService(ring_intent);
+            boolean nearlocation=new SetLocation().nearLocation(context,la,lo);
+            if(!nearlocation){
+                Intent ring_intent=new Intent(context,RingtonePlayingService.class);
+                ring_intent.putExtra("extra",temp);
+                ring_intent.putExtra("ring_tone", ringtone);
+                context.startService(ring_intent);
+            }else{
+                Log.e("near location", "auto switch off");
+            }
+//            Intent ring_intent=new Intent(context,RingtonePlayingService.class);
+//            ring_intent.putExtra("extra",temp);
+//            ring_intent.putExtra("ring_tone", ringtone);
+//            ring_intent.putExtra("loc_switch",loc_switch);
+//            ring_intent.putExtra("loc_la",la);
+//            ring_intent.putExtra("loc_lo",lo);
+//            context.startService(ring_intent);
         }else{
             Intent ring_intent=new Intent(context,RingtonePlayingService.class);
             ring_intent.putExtra("extra",temp);
             ring_intent.putExtra("ring_tone",ringtone);
-            ring_intent.putExtra("loc_switch",loc_switch);
+            //ring_intent.putExtra("loc_switch", loc_switch);
             context.startService(ring_intent);
         }
 

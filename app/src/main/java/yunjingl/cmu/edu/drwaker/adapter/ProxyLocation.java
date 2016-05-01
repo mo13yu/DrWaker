@@ -14,6 +14,7 @@ import java.util.Set;
 import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.database.LocationDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Location;
+import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 
 /**
@@ -73,6 +74,11 @@ public abstract class ProxyLocation {
     }
 
     public Location getLocation(String tag) {
+        if(locations.containsKey(tag)){
+            return locations.get(tag);
+        }else{
+            //throw CusException("")
+        }
         return locations.get(tag);
     }
 
