@@ -26,6 +26,7 @@ import java.util.List;
 
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
+import yunjingl.cmu.edu.drwaker.entities.Alarm;
 //import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
 public class Settings extends AppCompatActivity {
@@ -49,10 +50,10 @@ public class Settings extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
                 if(method.equals("create")){
-                    SetAlarm.createAlarm(inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                    //TODO: SetAlarm.createAlarm(inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
                 }else if(method.equals("update")){
                     int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
-                    SetAlarm.updateAlarm(alarmid,inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
+                    //TODO: SetAlarm.updateAlarm(alarmid,inputhour,inputminute,locationid,wake_up_method,tag,ringtone);
                 }
                 //Alarm newAlarm = getAlarm();
                 //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
@@ -225,7 +226,7 @@ public class Settings extends AppCompatActivity {
 //        Button newloc=(Button)findViewById(R.id.newlocbutton);
 //        newloc.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View viewParam) {
-//                Intent intent = new Intent(getApplicationContext(), SetLocation.class);
+//                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
 //                startActivity(intent);
 //            }
 //        });
@@ -284,8 +285,8 @@ public class Settings extends AppCompatActivity {
         Log.e("wake up set", wake_up);
         resultAlarm.setWake_up_method(wake_up);
 
-        int id=SetAlarm.getAlarms().size()+1;
-        resultAlarm.setAlarmid(id);
+        //TODO: int id=SetAlarm.getAlarms().size()+1;
+        //TODO: resultAlarm.setAlarmid(id);
 
         String tag=((EditText) findViewById(R.id.tag)).getText().toString();
         resultAlarm.setTag(tag);

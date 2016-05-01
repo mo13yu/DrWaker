@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Settings.class);
+                //TODO: Intent intent=new Intent(getApplicationContext(),Settings.class);
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //        Button test=(Button)findViewById(R.id.map);
 //        test.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),SetLocation.class);
+//                Intent intent=new Intent(getApplicationContext(),LocationActivity.class);
 //                startActivity(intent);
 //            }
 //        });

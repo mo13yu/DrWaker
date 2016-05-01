@@ -11,20 +11,22 @@ import yunjingl.cmu.edu.drwaker.entities.Alarm;
 public abstract class ProxyAlarm {
     private static LinkedHashMap<Integer,Alarm> alarms=new LinkedHashMap<Integer,Alarm>();
 
-    public static LinkedHashMap<Integer, Alarm> getAlarms() {
+    //public static LinkedHashMap<Integer, Alarm> getAlarms() {
+    public LinkedHashMap<Integer, Alarm> getAlarms() {
         return alarms;
     }
 
-    public static void setAlarms(LinkedHashMap<Integer, Alarm> alarms) {
+    //public static void setAlarms(LinkedHashMap<Integer, Alarm> alarms) {
+    public void setAlarms(LinkedHashMap<Integer, Alarm> alarms) {
         ProxyAlarm.alarms = alarms;
     }
-    public static void initializeAlarms(){
+    //public static void initializeAlarms(){
+    public void initializeAlarms(){
         alarms= ReadAlarm.readAll();
 
     }
-    public static void createAlarm(int hour,int minute,int locationid, String wake_up_method,
-                            String tag, String tone){
-
+    //public static void createAlarm(int hour,int minute,int locationid, String wake_up_method, String tag, String tone){
+    public void createAlarm(int hour,int minute,int locationid, String wake_up_method, String tag, String tone){
         Alarm newalarm=new Alarm();
         newalarm.setHour(hour);
         newalarm.setMinute(minute);
@@ -32,14 +34,16 @@ public abstract class ProxyAlarm {
         newalarm.setTag(tag);
         newalarm.setTone(tone);
         newalarm.setAlarmid(alarms.size()+1);
-        newalarm.setLocation(ReadLocation.read(locationid));
-        newalarm.setMath(ReadMath.read());
+        //TODO: newalarm.setLocation(ReadLocation.read(locationid));
+        //TODO: newalarm.setMath(ReadMath.read());
     }
-    public static void updateAlarm(int alarmid,int hour,int minute,int locationid, String wake_up_method,
-                            String tag, String tone){
+    //public static void updateAlarm(int alarmid,int hour,int minute,int locationid, String wake_up_method, String tag, String tone){
+    public void updateAlarm(int alarmid,int hour,int minute,int locationid, String wake_up_method, String tag, String tone){
 
     }
-    public static void deleteAlarm(int alarmid){
+
+    //public static void deleteAlarm(int alarmid){
+    public void deleteAlarm(int alarmid) {
 
     }
 
