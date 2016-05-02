@@ -35,48 +35,50 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Calendar> calendars;
 
     LinearLayout container;
-    //LinkedHashMap<Integer,Alarm> alarms;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Button add=(Button)findViewById(R.id.add);
+        Button add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Settings.class);
-                intent.putExtra("create_or_update","create");
+                Intent intent = new Intent(getApplicationContext(), Settings.class);
+                intent.putExtra("create_or_update", "create");
                 startActivity(intent);
             }
         });
 
-        container = (LinearLayout)findViewById(R.id.container);
+        container = (LinearLayout) findViewById(R.id.container);
 
         initializeAlarms();
-        //TODO: initializeLocations
     }
 
-    public void initializeAlarms(){
+    public void initializeAlarms() {
+        // Initialize alarms and locations, get all from database to LinkedHashMap
+        new SetLocation().setContext(MainActivity.this);
+        new SetLocation().initializeLocations();
         new SetAlarm().setContext(MainActivity.this);
         new SetAlarm().initializeAlarms();
 
-        calendars=new ArrayList<Calendar>();
-        Iterator<Integer> itr= new SetAlarm().getIdSet().iterator();
-        while (itr.hasNext()){
+        calendars = new ArrayList<Calendar>();
+        Iterator<Integer> itr = new SetAlarm().getIdSet().iterator();
+        while (itr.hasNext()) {
 
-            final int thisid=itr.next();
-            //Log.e("Mainactivity check id", String.valueOf(thisid));
+            final int thisid = itr.next();
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             int hour_sys = calendar.get(Calendar.HOUR_OF_DAY);
             int minute_sys = calendar.get(Calendar.MINUTE);
             int hour = new SetAlarm().getHour(thisid);
-            int minute =  new SetAlarm().getMinute(thisid);
-            if(hour<hour_sys||(hour==hour_sys&&minute<minute_sys)){
-                calendar.set(Calendar.DAY_OF_MONTH, day+1);
-            }else{
+            int minute = new SetAlarm().getMinute(thisid);
+            if (hour < hour_sys || (hour == hour_sys && minute < minute_sys)) {
+                calendar.set(Calendar.DAY_OF_MONTH, day + 1);
+            } else {
                 calendar.set(Calendar.DAY_OF_MONTH, day);
             }
             calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -84,28 +86,28 @@ public class MainActivity extends AppCompatActivity {
 
             calendars.add(calendar);
 
-
-            String alarm="";
-            if(hour<10){
-                alarm+="0"+hour;
-            }else{
-                alarm+=hour;
+            // Compose the alarm string to display on main menu
+            String alarm = "";
+            if (hour < 10) {
+                alarm += "0" + hour;
+            } else {
+                alarm += hour;
             }
-            alarm+=" : ";
-            if(minute<10){
-                alarm+="0"+minute;
-            }else{
-                alarm+=minute;
+            alarm += " : ";
+            if (minute < 10) {
+                alarm += "0" + minute;
+            } else {
+                alarm += minute;
             }
-
             //String alarm=hour+" : "+minute;
+
             LayoutInflater layoutInflater =
                     (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View addView = layoutInflater.inflate(R.layout.row, null);
-            TextView textOut = (TextView)addView.findViewById(R.id.textout);
+            TextView textOut = (TextView) addView.findViewById(R.id.textout);
             textOut.setText(alarm);
             textOut.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
-            Button buttonRemove = (Button)addView.findViewById(R.id.remove);
+            Button buttonRemove = (Button) addView.findViewById(R.id.remove);
             buttonRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
 //                    alarms.remove(thisalarm.getAlarmid());
                 }
             });
-            Button buttonEdit = (Button)addView.findViewById(R.id.edit);
+            Button buttonEdit = (Button) addView.findViewById(R.id.edit);
             buttonEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(getApplicationContext(),Settings.class);
+                    Intent intent = new Intent(getApplicationContext(), Settings.class);
                     intent.putExtra("create_or_update", "update");
-                    intent.putExtra("alarmid",thisid+"");
+                    intent.putExtra("alarmid", thisid + "");
                     startActivity(intent);
                 }
             });
@@ -128,35 +130,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        mgrAlarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+        mgrAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         pendingIntents = new ArrayList<PendingIntent>();
         final Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
 
-        new SetLocation().setContext(MainActivity.this);
-        new SetLocation().initializeLocations();
-
         itr = new SetAlarm().getIdSet().iterator();
-        int i=0;
-        while (itr.hasNext()){
-            int thisid=itr.next();
-            Log.i("Alarm info", String.valueOf(new SetAlarm().isLocationSwitchOn(thisid)));
+        int i = 0;
+        while (itr.hasNext()) {
+            int thisid = itr.next();
             myIntent.putExtra("extra", "on");
             String wake_up = new SetAlarm().getWakUpMethod(thisid);
-            if(wake_up.equals("Math Calculation")){
+            if (wake_up.equals("Math Calculation")) {
                 myIntent.putExtra("wake_up_method", "math");
-                myIntent.putExtra("question",new SetAlarm().getMathQuestion(thisid));
-                myIntent.putExtra("answer",new SetAlarm().getMathAnswer(thisid));
-            }else if(wake_up.equals("Facial Recognization")){
+                myIntent.putExtra("question", new SetAlarm().getMathQuestion(thisid));
+                myIntent.putExtra("answer", new SetAlarm().getMathAnswer(thisid));
+            } else if (wake_up.equals("Facial Recognization")) {
                 myIntent.putExtra("wake_up_method", "facial");
             }
-            myIntent.putExtra("ring_tone",new SetAlarm().getTone(thisid));
-            myIntent.putExtra("loc_switch",new SetAlarm().isLocationSwitchOn(thisid));
-            if(new SetAlarm().isLocationSwitchOn(thisid)){
-                if(new SetAlarm().hasLocation(thisid)) {
+            myIntent.putExtra("ring_tone", new SetAlarm().getTone(thisid));
+            myIntent.putExtra("loc_switch", new SetAlarm().isLocationSwitchOn(thisid));
+            if (new SetAlarm().isLocationSwitchOn(thisid)) {
+                if (new SetAlarm().hasLocation(thisid)) {
                     myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
                     myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
-                }else{
-                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("Attention");
                     builder.setMessage("You need to add a new location");
                     builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -177,73 +175,9 @@ public class MainActivity extends AppCompatActivity {
             pendingIntents.add(pendingIntent);
             i++;
         }
-//        for(int i = 0; i < calendars.size(); i++)
-//        {
-//            myIntent.putExtra("extra", "on");
-//            String wake_up=SetAlarm.getWakUpMethod(i);
-//            if(wake_up.equals("Math Calculation")){
-//                myIntent.putExtra("wake_up_method", "math");
-//            }else if(wake_up.equals("Facial Recognization")){
-//                myIntent.putExtra("wake_up_method", "facial");
-//            }
-//            myIntent.putExtra("ring_tone",SetAlarm.getTone(i));
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, i, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            mgrAlarm.set(AlarmManager.RTC_WAKEUP,
-//                    calendars.get(i).getTimeInMillis(),
-//                    pendingIntent);
-//
-//            pendingIntents.add(pendingIntent);
-//        }
-//        Iterator<Integer> itr=alarms.keySet().iterator();
-//        while (itr.hasNext()){
-//            //final Alarm thisalarm=alarms.get(itr.next());
-//            Calendar calendar = Calendar.getInstance();
-//            int day = calendar.get(Calendar.DAY_OF_MONTH);
-//            int hour_sys = calendar.get(Calendar.HOUR_OF_DAY);
-//            int minute_sys = calendar.get(Calendar.MINUTE);
-//            int hour=thisalarm.getHour();
-//            int minute=thisalarm.getMinute();
-//            if(hour<hour_sys||(hour==hour_sys&&minute<minute_sys)){
-//                calendar.set(Calendar.DAY_OF_MONTH, day+1);
-//            }else{
-//                calendar.set(Calendar.DAY_OF_MONTH, day);
-//            }
-//            calendar.set(Calendar.HOUR_OF_DAY, hour);
-//            calendar.set(Calendar.MINUTE, minute);
-//
-//            calendars.add(calendar);
-//
-//            String alarm=hour+" : "+minute;
-//            LayoutInflater layoutInflater =
-//                    (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            final View addView = layoutInflater.inflate(R.layout.row, null);
-//            TextView textOut = (TextView)addView.findViewById(R.id.textout);
-//            textOut.setText(alarm);
-//            Button buttonRemove = (Button)addView.findViewById(R.id.remove);
-//            buttonRemove.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    ((LinearLayout) addView.getParent()).removeView(addView);
-//                    alarms.remove(thisalarm.getAlarmid());
-//                }
-//            });
-//            Button buttonEdit = (Button)addView.findViewById(R.id.edit);
-//            buttonEdit.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent=new Intent(getApplicationContext(),Settings.class);
-//                    intent.putExtra("result", "update");
-//                    intent.putExtra("alarmid", "update");
-//                    startActivity(intent);
-//                }
-//            });
-//            container.addView(addView);
-//        }
-
-
-
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

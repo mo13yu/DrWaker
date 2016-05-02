@@ -40,11 +40,7 @@ public abstract class ProxyAlarm {
 
     public void initializeAlarms() {
         try {
-            Log.e("inializeAlarms", "before pulling from databse");
-            printAll();
             alarms = alarmDatabaseConnector.getAllAlarm();
-            Log.e("inializeAlarms", "after pulling from databse");
-            printAll();
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -136,7 +132,8 @@ public abstract class ProxyAlarm {
         try {
             alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
                     newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    newalarm.isLoc_switch(), newalarm.getLocationTag(), 1);       //TODO:need add mathID,on/off,locationID
+                    newalarm.isLoc_switch(), newalarm.getLocationTag(), 1);
+                    //TODO:need add mathID,on/off,locationID
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

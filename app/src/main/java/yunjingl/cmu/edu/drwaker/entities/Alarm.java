@@ -97,20 +97,19 @@ public class Alarm {
         this.math = math;
     }
 
+    public void setMath(int id,String question,String answer) {
+        Math newMath=new Math();
+        newMath.setMathid(id);
+        newMath.setQuestion(question);
+        newMath.setAnswer(answer);
+    }
+
     public String getMathQuestion(){
         return math.getQuestion();
     }
 
     public String getMathAnswer() {
         return math.getAnswer();
-    }
-
-    public void setMath(int id,String question,String answer) {
-        Math newMath=new Math();
-        newMath.setMathid(id);
-        newMath.setQuestion(question);
-        newMath.setAnswer(answer);
-
     }
 
     public int getMathID(){
@@ -125,20 +124,8 @@ public class Alarm {
         this.location = location;
     }
 
-    public int getLocationID(){
-        return location.getLocid();
-    }
-
     public String getLocationTag(){
         return location.getTag();
-    }
-
-    public boolean isLoc_switch() {
-        return loc_switch;
-    }
-
-    public void setLoc_switch(boolean loc_switch) {
-        this.loc_switch = loc_switch;
     }
 
     public boolean hasLocation(){
@@ -149,6 +136,16 @@ public class Alarm {
         }
     }
 
+    public boolean isLoc_switch() {
+        return loc_switch;
+    }
+
+    public void setLoc_switch(boolean loc_switch) {
+        this.loc_switch = loc_switch;
+    }
+
+
+    // Print information of Alarm
     public void print() {
         System.out.printf("ID: %d\nTag: %s\nHour: %d\nMinute: %d\nMethod: %s\n", alarmid, tag, hour, minute, wake_up_method);
         if(loc_switch) {

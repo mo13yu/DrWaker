@@ -76,8 +76,6 @@ public abstract class ProxyLocation {
 
     public Location getLocation(String tag) {
         if (locations.containsKey(tag)) {
-            Log.d("proxyLocation", "sending: " + tag + "(" + String.valueOf(locations.get(tag).getLatitude()) +
-                            ", " + String.valueOf(locations.get(tag).getLongitude()) +")");
             return locations.get(tag);
         } else {
             //TODO: throw CusException("")
@@ -87,7 +85,6 @@ public abstract class ProxyLocation {
 
 
     /* InitializeLocation */
-    //TODO: test initializeLocations
     public void initializeLocations() {
         try {
             locations=locationDatabaseConnector.getAllLocation();
@@ -149,8 +146,7 @@ public abstract class ProxyLocation {
     public void updateToDB(Location newLoc){
         int id = newLoc.getLocid();
         try {
-            locationDatabaseConnector.updateLocation(id, newLoc.getLatitude(),
-                    newLoc.getLongitude(), newLoc.getTag());
+            locationDatabaseConnector.updateLocation(id, newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -163,9 +159,6 @@ public abstract class ProxyLocation {
             e.printStackTrace();
         }
     }
-
-
-
 
 
 }

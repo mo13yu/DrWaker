@@ -7,8 +7,6 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class Location {
     private int locid;
-    //private String latitude;
-    //private String longitude;
     private LatLng latlng;
     private String tag;
 

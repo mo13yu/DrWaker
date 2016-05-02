@@ -18,7 +18,7 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class AlarmDatabaseConnector {
-    private static final String TABLE_NAME = "AlarmDatabaseTesting1";
+    private static final String TABLE_NAME = "AlarmDatabaseTesting2";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
 
@@ -85,7 +85,6 @@ public class AlarmDatabaseConnector {
         newAlarm.put("LocTag", locTag);
         newAlarm.put("MathID", String.valueOf(mathID));
 
-
         open();//open the database
         database.insert(TABLE_NAME, null, newAlarm);
         close();
@@ -104,7 +103,7 @@ public class AlarmDatabaseConnector {
         editAlarm.put("Tune", tune);
         editAlarm.put("Status", String.valueOf(status));
         editAlarm.put("LocTag", locTag);
-        editAlarm.put("MathID",String.valueOf(mathID));
+        editAlarm.put("MathID", String.valueOf(mathID));
 
         open();//open the database
         database.update(TABLE_NAME, editAlarm, "Id=" + String.valueOf(id), null);
@@ -115,8 +114,8 @@ public class AlarmDatabaseConnector {
 
 
     //return a LinkedHashMap with all Alarm information
-    public LinkedHashMap<Integer,Alarm> getAllAlarm() throws DatabaseException {
-        LinkedHashMap<Integer,Alarm> alarms= new LinkedHashMap<Integer,Alarm>();
+    public LinkedHashMap<Integer, Alarm> getAllAlarm() throws DatabaseException {
+        LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();
 
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         open(); // open the database
@@ -130,6 +129,7 @@ public class AlarmDatabaseConnector {
             int tuneIndex = cursor.getColumnIndex("Tune");
             int statusIndex = cursor.getColumnIndex("Status");
             int locIndex = cursor.getColumnIndex("LocTag");
+            int mathIndex = cursor.getColumnIndex("MathID");
             int counter = 1;
             if (cursor.moveToFirst()) {
                 do {
@@ -142,6 +142,7 @@ public class AlarmDatabaseConnector {
                     String tune = cursor.getString(tuneIndex);
                     Boolean status = Boolean.valueOf(cursor.getString(statusIndex));
                     String locTag = cursor.getString(locIndex);
+                    int mathId = Integer.valueOf(cursor.getString(mathIndex));
                     newalarm.setAlarmid(id);
                     newalarm.setHour(hour);
                     newalarm.setMinute(minute);
@@ -150,6 +151,7 @@ public class AlarmDatabaseConnector {
                     newalarm.setTone(tune);
                     newalarm.setLoc_switch(status);
                     newalarm.setLocation(new SetLocation().getLocation(locTag));
+                    //TODO: newalarm.setMath();
                     alarms.put(counter, newalarm);
                     counter++;
                 } while (cursor.moveToNext());
@@ -177,6 +179,7 @@ public class AlarmDatabaseConnector {
             int tuneIndex = cursor.getColumnIndex("Tune");
             int statusIndex = cursor.getColumnIndex("Status");
             int locIndex = cursor.getColumnIndex("LocTag");
+            int mathIndex = cursor.getColumnIndex("MathID");
             cursor.moveToFirst();
             int alarmid = Integer.valueOf(cursor.getString(idIndex));
             int hour = Integer.valueOf(cursor.getString(hourIndex));
@@ -186,7 +189,9 @@ public class AlarmDatabaseConnector {
             String tune = cursor.getString(tuneIndex);
             Boolean status = Boolean.valueOf(cursor.getString(statusIndex));
             String locTag = cursor.getString(locIndex);
+            int mathId = Integer.valueOf(cursor.getString(mathIndex));
             alarm = new Alarm(id, hour, minute);
+            //TODO: add all other attributes if want to use this function
             alarm.setWake_up_method(wakeupmethod);
             alarm.setTag(tag);
             alarm.setTone(tune);

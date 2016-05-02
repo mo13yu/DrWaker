@@ -13,7 +13,6 @@ import android.widget.TextView;
 import yunjingl.cmu.edu.drwaker.R;
 
 public class MathActivity extends AppCompatActivity {
-    //private final String question="3+9=";
     private EditText answer;
     private String mathAnswer;
     private TextView topLine, mathQuestion;
@@ -39,7 +38,7 @@ public class MathActivity extends AppCompatActivity {
                 if(result==Integer.parseInt(answer)){
                     myIntent.putExtra("extra", "off");
                     startService(myIntent);
-                    // sendBroadcast(myIntent);
+                    //sendBroadcast(myIntent);
                     finish();
 
                 }

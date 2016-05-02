@@ -11,9 +11,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import yunjingl.cmu.edu.drwaker.adapter.GetLocation;
-import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
-
 /**
  * Created by yunjing on 4/22/16.
  */
@@ -135,6 +132,7 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
             context.startService(ring_intent);
 
             Intent stopintent = new Intent();
+            // Math Calculation
             if (method.equals("math")) {
                 String question = intent.getExtras().getString("question");
                 String answer = intent.getExtras().getString("answer");
@@ -149,13 +147,6 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
             stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(stopintent);
         }
-
-//        Intent stopintent = new Intent();
-//        if (method.equals("math")) {
-//            stopintent = new Intent(context, MathActivity.class);
-//        } else if (method.equals("facial")) {
-//            stopintent = new Intent(context, SelfieActivity.class);
-//        }
 
     }
 

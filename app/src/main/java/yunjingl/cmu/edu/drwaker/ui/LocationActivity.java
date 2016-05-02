@@ -15,11 +15,13 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import yunjingl.cmu.edu.drwaker.R;
@@ -127,6 +129,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d("GoogleMap", "Map Ready");
+
+        try {
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            LatLng cmu = new LatLng(40.442979, -79.945243);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cmu, 17));
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -205,14 +216,16 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             if (resultCode == Constants.SUCCESS_RESULT) {
                 mLocationOutput = new LatLng(resultData.getDouble(Constants.RESULT_LAT_DATA_KEY),
                         resultData.getDouble(Constants.RESULT_LNG_DATA_KEY));
-                System.out.printf("RESULT: (%f, %f)\n", mLocationOutput.latitude, mLocationOutput.longitude);
-
                 System.out.printf("New Address: %s\n", newAddress);
-                System.out.printf("New LatLng: (%f, %f)\n", mLocationOutput.latitude, mLocationOutput.longitude);
-                System.out.printf("New Tag: %s\n", newTag);
-                mMap.addMarker(new MarkerOptions().position(mLocationOutput).title(newTag));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(mLocationOutput));
-                //TODO: zoom in
+                System.out.printf("RESULT: %s (%f, %f)\n", newTag, mLocationOutput.latitude, mLocationOutput.longitude);
+
+                mMap.clear();
+                Marker marker = mMap.addMarker(new MarkerOptions().position(mLocationOutput).title(newTag));
+                marker.showInfoWindow();
+                CameraUpdate center = CameraUpdateFactory.newLatLng(mLocationOutput);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(17);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
             }
 
             // Reset
