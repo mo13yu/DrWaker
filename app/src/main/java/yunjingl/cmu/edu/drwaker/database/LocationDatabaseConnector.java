@@ -6,13 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.LinkedHashMap;
+
+import yunjingl.cmu.edu.drwaker.entities.Location;
+import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 
 /**
  * Created by yapeng on 4/30/2016.
  */
 public class LocationDatabaseConnector {
-    private static final String TABLE_NAME="LocationDatabase";
+    private static final String TABLE_NAME="LocationDatabaseTest";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
 
@@ -28,8 +34,8 @@ public class LocationDatabaseConnector {
         public void onCreate(SQLiteDatabase db) {
             //create the query first
             String createQuery="CREATE TABLE "+TABLE_NAME+
-                    " Id TEXT, "+
-                    " Latitude TEXT, Longitude TEXT, Tag TEXT);";//
+                    "Id TEXT, "+
+                    "Latitude TEXT, Longitude TEXT, Tag TEXT);";//
             db.execSQL(createQuery);
 //            System.out.println(createQuery);
         }
@@ -100,15 +106,60 @@ public class LocationDatabaseConnector {
     }
     //end the code update Location
 
-    //return a cursor with all Location information
-    public Cursor getAllLocation(){
+    public LinkedHashMap<String,Location> getAllLocation() throws DatabaseException {
 //        return database.query(TABLE_NAME,null,null,null,null,null,"PurchasedPrice");
-        return database.query(TABLE_NAME, null, null, null, null, null, null);
+        LinkedHashMap<String,Location> locations = new LinkedHashMap<String,Location>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        open(); // open the database
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            int idIndex= cursor.getColumnIndex("Id");
+            int latitudeIndex=cursor.getColumnIndex("Latitude");
+            int longitudeIndex=cursor.getColumnIndex("Longitude");
+            int tagIndex=cursor.getColumnIndex("Tag");
+            int counter = 1;
+            if (cursor.moveToFirst()) {
+                do {
+                    int id=Integer.valueOf(cursor.getString(idIndex));
+                    double latitude=Double.valueOf(cursor.getString(latitudeIndex));
+                    double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
+                    String tag=cursor.getString(tagIndex);
+                    LatLng latLng=new LatLng(latitude,longitude);
+                    Location location=new Location(id,latLng,tag);
+                    locations.put(tag,location);
+                    counter++;
+
+                } while (cursor.moveToNext());
+            }
+        }
+        close();
+
+        return locations;
+        //return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
-    //return a curser for a specific Location
-    public Cursor getOneLocation(int id){
-        return database.query(TABLE_NAME,null,"Id="+id,null,null,null,null);
+    public Location getOneLocation(int id) throws DatabaseException {
+        open();
+        Location location=new Location();
+        Cursor cursor = database.query(TABLE_NAME, null, "Id=" + id, null, null, null, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            int idIndex= cursor.getColumnIndex("Id");
+            int latitudeIndex=cursor.getColumnIndex("Latitude");
+            int longitudeIndex=cursor.getColumnIndex("Longitude");
+            int tagIndex=cursor.getColumnIndex("Tag");
+            cursor.moveToFirst();
+            int locid=Integer.valueOf(cursor.getString(idIndex));
+            double latitude=Double.valueOf(cursor.getString(latitudeIndex));
+            double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
+            String tag=cursor.getString(tagIndex);
+            LatLng latLng=new LatLng(latitude,longitude);
+            location=new Location(id,latLng,tag);
+
+        } else {
+            new CusException("No such location exist");
+        }
+        close();
+        return location;
     }
 
     //delete a specific Location

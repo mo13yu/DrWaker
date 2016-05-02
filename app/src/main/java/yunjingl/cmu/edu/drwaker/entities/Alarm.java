@@ -107,6 +107,14 @@ public class Alarm {
         this.loc_switch = loc_switch;
     }
 
+    public boolean hasLocation(){
+        if(location==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public Alarm(){
         super();
     }

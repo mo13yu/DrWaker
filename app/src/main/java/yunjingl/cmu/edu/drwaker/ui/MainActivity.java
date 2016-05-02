@@ -1,8 +1,10 @@
 package yunjingl.cmu.edu.drwaker.ui;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -187,8 +189,21 @@ public class MainActivity extends AppCompatActivity {
             myIntent.putExtra("ring_tone",new SetAlarm().getTone(thisid));
             myIntent.putExtra("loc_switch",new SetAlarm().isLocationSwitchOn(thisid));
             if(new SetAlarm().isLocationSwitchOn(thisid)){
-                myIntent.putExtra("loc_la",new SetAlarm().getLatitude(thisid));
-                myIntent.putExtra("loc_lo",new SetAlarm().getLongitude(thisid));
+                if(new SetAlarm().hasLocation(thisid)) {
+                    myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
+                    myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Attention");
+                    builder.setMessage("You need to add a new location");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).create();
+                    builder.show();
+                }
             }
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, thisid, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);

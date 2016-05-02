@@ -37,6 +37,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     private android.location.Location alarmLocation = new android.location.Location("alarm");
 
 
+
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
         // create new location
@@ -44,7 +45,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         // add new location to LinkedHashMap
         locations.put(newLocation.getTag(), newLocation);
         // add new location to database
-        //TODO: add new location to database
+        addToDB(newLocation);
 
         printAllLocations();
     }
@@ -72,8 +73,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         // delete location from LinkedHashMap
         locations.remove(tag);
         // delete location from database
-        //TODO: remove location from database
-
+        delateFromDB(id);
         printAllLocations();
     }
 
@@ -135,7 +135,11 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     //TODO: test initializeLocations
     public void initializeLocations() {
         // get locations from database
-        //TODO: get all stored locations from database, loop through them and add all to LinkedHashMap
+        try {
+            locations=locationDatabaseConnector.getAllLocation();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -146,10 +150,13 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         Iterator<String> itr = st.iterator();
         while (itr.hasNext()) {
             String currentTag = locations.get(itr.next()).getTag();
-            if(locations.get(currentTag).getLocid()==locid) {
-                //TODO: update the values in the database
-                locations.get(currentTag).setLatlng(latlng);
-                locations.get(currentTag).setTag(tag);
+            Location currentLoc=locations.get(currentTag);
+            if(currentLoc.getLocid()==locid) {
+                currentLoc.setLatlng(latlng);
+                currentLoc.setTag(tag);
+                locations.put(currentTag,currentLoc);
+                updateToDB(currentLoc);
+
             }
         }
     }
@@ -216,7 +223,8 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
 
     public void addToDB(Location newLoc){
         try{
-            locationDatabaseConnector.insertLocation(newLoc.getLocid(),newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());}              //TODO:need add mathID,on/off,locationID
+            locationDatabaseConnector.insertLocation(newLoc.getLocid(),newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());
+        }
         catch(DatabaseException e){
             e.fix(e.getErrNo());
         }
@@ -232,64 +240,16 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
     }
 
-    public void delateFromDB(int alarmid){
+    public void delateFromDB(int locmid){
         try {
-            locationDatabaseConnector.deleteLocation(alarmid);
+            locationDatabaseConnector.deleteLocation(locmid);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
 
-    public LinkedHashMap<String,Location> allLoc(){
-        LinkedHashMap<String,Location> data= new LinkedHashMap<>();
-        try {
-            locationDatabaseConnector.open();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-        Cursor cursor=locationDatabaseConnector.getAllLocation();
-        int idIndex= cursor.getColumnIndex("id");
-        int latitudeIndex=cursor.getColumnIndex("Latitude");
-        int longitudeIndex=cursor.getColumnIndex("Longitude");
-        int tagIndex=cursor.getColumnIndex("Tag");
-        cursor.moveToFirst();
-        int id=Integer.valueOf(cursor.getString(idIndex));
-        double latitude=Double.valueOf(cursor.getString(latitudeIndex));
-        double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
-        String tag=cursor.getString(tagIndex);
-        int counter=0;
 
-        while(!cursor.isLast()){
-            LatLng latLng=new LatLng(latitude,longitude);
-            Location alarm=new Location(id,latLng,tag);
-            //need math and location
-            data.put(tag,alarm);
-            counter++;
-            cursor.moveToNext();
-        }
-        return data;
-    }
 
-    public Location readLocation(int id){
-        try {
-            locationDatabaseConnector.open();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
 
-        Cursor cursor=locationDatabaseConnector.getOneLocation(id);
-        int idIndex= cursor.getColumnIndex("id");
-        int latitudeIndex=cursor.getColumnIndex("Latitude");
-        int longitudeIndex=cursor.getColumnIndex("Longitude");
-        int tagIndex=cursor.getColumnIndex("Tag");
-        cursor.moveToFirst();
-        int locid=Integer.valueOf(cursor.getString(idIndex));
-        double latitude=Double.valueOf(cursor.getString(latitudeIndex));
-        double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
-        String tag=cursor.getString(tagIndex);
-        LatLng latLng=new LatLng(latitude,longitude);
-        Location location=new Location(id,latLng,tag);
-        return location;
-    }
 
 }

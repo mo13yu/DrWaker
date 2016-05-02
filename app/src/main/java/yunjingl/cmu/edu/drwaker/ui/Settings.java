@@ -171,10 +171,12 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-        //ToDo:populate again
+
         Spinner location = (Spinner)findViewById(R.id.location);
+        SetLocation setLocation=new SetLocation();
+        setLocation.initializeLocations();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());
+                android.R.layout.simple_spinner_item, setLocation.getAllLocations());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dataAdapter.notifyDataSetChanged();
         location.setAdapter(dataAdapter);
