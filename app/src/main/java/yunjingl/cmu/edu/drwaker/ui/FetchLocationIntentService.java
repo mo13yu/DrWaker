@@ -39,7 +39,7 @@ public class FetchLocationIntentService extends IntentService {
         // Check if receiver was properly registered.
         if (mReceiver == null) {
             Log.wtf(TAG, "No receiver received. There is nowhere to send the results.");
-            return ;
+            return;
         }
 
         // Get user input address
@@ -51,7 +51,7 @@ public class FetchLocationIntentService extends IntentService {
             errorMessage = "No address was provided";
             Log.wtf(TAG, errorMessage);
             deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
-            return ;
+            return;
         }
 
         // Translate address into LatLng
@@ -70,7 +70,7 @@ public class FetchLocationIntentService extends IntentService {
         }
 
         // Handle cases where no location was found
-        if (addresses == null || addresses.size()  == 0) {
+        if (addresses == null || addresses.size() == 0) {
             if (errorMessage.isEmpty()) {
                 errorMessage = "No location found";
                 Log.e(TAG, errorMessage);

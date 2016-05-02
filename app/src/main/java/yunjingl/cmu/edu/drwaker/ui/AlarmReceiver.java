@@ -29,17 +29,21 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
         this.context = context;
         this.intent = intent;
 
+        // Get alarm information
         loc_switch = intent.getExtras().getBoolean("loc_switch");
         temp = intent.getExtras().getString("extra");
         method = intent.getExtras().getString("wake_up_method");
         ringtone = intent.getExtras().getString("ring_tone");
 
-        // If location service is disabled
+        // If location service is disabled, ring no matter where the user is
         if (!loc_switch) {
+            // Create new Intent and start service to sound the alarm
             Intent ring_intent = new Intent(context, RingtonePlayingService.class);
             ring_intent.putExtra("extra", temp);
             ring_intent.putExtra("ring_tone", ringtone);
             context.startService(ring_intent);
+
+            // Create new Intent to stop the alarm after user has completed the task
             Intent stopintent = new Intent();
             // Math Calculation
             if (method.equals("math")) {
@@ -49,27 +53,32 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
                 stopintent.putExtra("question", question);
                 stopintent.putExtra("answer", answer);
             }
-            // Facial Recognization
+            // Facial Recognition
             else if (method.equals("facial")) {
                 stopintent = new Intent(context, SelfieActivity.class);
             }
             stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(stopintent);
         }
-        // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
-        if (mGoogleApiClient == null) {
-            Log.d("nearLocation", "Build GoogleAiClient");
-            mGoogleApiClient = new GoogleApiClient.Builder(context)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
+
+        // If location service is enabled, setup GoogleApiClient so can get user's last known location
+        else {
+            // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
+            if (mGoogleApiClient == null) {
+                Log.d("nearLocation", "Build GoogleAiClient");
+                mGoogleApiClient = new GoogleApiClient.Builder(context)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
+
+            // Connect to Google Play services location API
+            mGoogleApiClient.connect();
+
+            // onConnected() will be called and set last known location to mLastLocation inside the function
         }
 
-        // Connect to Google Play services location API
-        mGoogleApiClient.connect();
-
-        // onConnected() will be called and set last known location to mLastLocation inside the function
     }
 
     @Override
@@ -90,15 +99,7 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
             mGoogleApiClient.disconnect();
         }
 
-        // Get info from Intent
-//        String temp = intent.getExtras().getString("extra");
-//        String method = intent.getExtras().getString("wake_up_method");
-//        String ringtone = intent.getExtras().getString("ring_tone");
-        // boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
-        Log.e("location switch", String.valueOf(loc_switch));
-
-        // If alarm's location service is enabled,
-        // need to compare user location with alarm location to determine if alarm should be sounded
+        // Compare user location with alarm location to determine if alarm should be sound
         if (loc_switch) {
             // Get alarm location
             String la = intent.getExtras().getString("loc_la");
@@ -127,11 +128,13 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
 
             // Sound the alarm if user is near alarm location
             if (result) {
+                // Create new Intent and start service to sound the alarm
                 Intent ring_intent = new Intent(context, RingtonePlayingService.class);
                 ring_intent.putExtra("extra", temp);
                 ring_intent.putExtra("ring_tone", ringtone);
                 context.startService(ring_intent);
 
+                // Create new Intent to stop the alarm after user has completed the task
                 Intent stopintent = new Intent();
                 // Math Calculation
                 if (method.equals("math")) {
@@ -141,7 +144,7 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
                     stopintent.putExtra("question", question);
                     stopintent.putExtra("answer", answer);
                 }
-                // Facial Recognization
+                // Facial Recognition
                 else if (method.equals("facial")) {
                     stopintent = new Intent(context, SelfieActivity.class);
                 }
@@ -151,31 +154,6 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
                 Log.e("CompareLocation", "Disable alarm due to location service");
             }
         }
-
-        // If alarm's location service is disabled, sound the alarm no matter what
-//        else {
-//            Intent ring_intent = new Intent(context, RingtonePlayingService.class);
-//            ring_intent.putExtra("extra", temp);
-//            ring_intent.putExtra("ring_tone", ringtone);
-//            //ring_intent.putExtra("loc_switch", loc_switch);
-//            context.startService(ring_intent);
-//
-//            Intent stopintent = new Intent();
-//            // Math Calculation
-//            if (method.equals("math")) {
-//                String question = intent.getExtras().getString("question");
-//                String answer = intent.getExtras().getString("answer");
-//                stopintent = new Intent(context, MathActivity.class);
-//                stopintent.putExtra("question", question);
-//                stopintent.putExtra("answer", answer);
-//            }
-//            // Facial Recognization
-//            else if (method.equals("facial")) {
-//                stopintent = new Intent(context, SelfieActivity.class);
-//            }
-//            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(stopintent);
-//        }
 
     }
 

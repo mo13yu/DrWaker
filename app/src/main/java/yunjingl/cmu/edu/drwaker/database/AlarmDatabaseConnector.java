@@ -19,7 +19,7 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class AlarmDatabaseConnector {
-    private static final String TABLE_NAME = "AlarmDatabaseTesting8";
+    private static final String TABLE_NAME = "AlarmDatabaseTesting9";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
     private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();

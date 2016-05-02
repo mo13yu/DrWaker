@@ -3,7 +3,7 @@ package yunjingl.cmu.edu.drwaker.adapter;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
- * Created by yunjing on 4/22/16.
+ * This is an interface to update an existing location
  */
 public interface UpdateLocation {
     public void updateLocation(int locid, LatLng latlng, String tag);

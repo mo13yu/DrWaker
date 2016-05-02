@@ -49,8 +49,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+
         // Set up "SEARCH" button
-        Button findloc = (Button)findViewById(R.id.button_findloc);
+        Button findloc = (Button) findViewById(R.id.button_findloc);
         findloc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
                 // get user input address and tag
@@ -63,14 +64,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+
         // Set up "Save" button
-        Button saveloc = (Button)findViewById(R.id.button_saveloc);
+        Button saveloc = (Button) findViewById(R.id.button_saveloc);
         saveloc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
                 SetLocation locations = new SetLocation();
-                if (mLocationOutput!=null) {
+                if (mLocationOutput != null) {
                     String tag = ((EditText) findViewById(R.id.text_loctag)).getText().toString();
-                    //TODO: maybe change it to custom exception handling?
+                    // If user doesn't enter a tag, generate "Location #" for it
                     if (tag.isEmpty()) {
                         tag = "Location " + Integer.toString(locations.getAvailableID());
                     }
@@ -79,6 +81,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 finish();
             }
         });
+
 
         // Set up Google Maps
         if (findViewById(R.id.map_frame) != null) {
@@ -91,6 +94,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             getSupportFragmentManager().beginTransaction().add(R.id.map_frame, mapFragment).commit();
             mapFragment.getMapAsync(this);
         }
+
 
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
         if (mGoogleApiClient == null) {
@@ -108,11 +112,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mLocationOutput = null;
         updateValuesFromBundle(savedInstanceState);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -149,10 +157,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
+
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
+
     @Override
     public void onConnected(Bundle connectionHint) {
         // For fetching location
@@ -205,7 +215,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         /**
-         *  Receives data sent from FetchLocationIntentService
+         * Receives data sent from FetchLocationIntentService
          */
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
@@ -219,6 +229,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 System.out.printf("New Address: %s\n", newAddress);
                 System.out.printf("RESULT: %s (%f, %f)\n", newTag, mLocationOutput.latitude, mLocationOutput.longitude);
 
+                // Clear the map and add new marker whenever user clicks "SEARCH"
                 mMap.clear();
                 Marker marker = mMap.addMarker(new MarkerOptions().position(mLocationOutput).title(newTag));
                 marker.showInfoWindow();
@@ -245,7 +256,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             // Check savedInstanceState to see if the location was previously found and stored in the Bundle
             if (savedInstanceState.keySet().contains(LOCATION_LAT_KEY) && savedInstanceState.keySet().contains(LOCATION_LNG_KEY)) {
                 mLocationOutput = new LatLng(savedInstanceState.getDouble(LOCATION_LAT_KEY),
-                                                savedInstanceState.getDouble(LOCATION_LNG_KEY));
+                        savedInstanceState.getDouble(LOCATION_LNG_KEY));
                 System.out.printf("updateValueFromBundle - New Location: (%f, %f)\n", mLocationOutput);
             }
         }

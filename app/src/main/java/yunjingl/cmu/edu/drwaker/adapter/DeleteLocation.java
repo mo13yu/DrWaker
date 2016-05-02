@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 /**
- * Created by yunjing on 4/22/16.
+ *  This is an interface to delete a locatioin
  */
 public interface DeleteLocation {
     public void deleteLocation(String tag);

@@ -1,9 +1,6 @@
 package yunjingl.cmu.edu.drwaker.ui;
 
 /**
- * Created by amychen on 5/1/16.
- */
-/**
  * Constant values reused in fetching location
  */
 public final class Constants {

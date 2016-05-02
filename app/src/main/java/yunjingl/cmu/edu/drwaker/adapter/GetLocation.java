@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import yunjingl.cmu.edu.drwaker.entities.Location;
 
 /**
- * Created by yunjing on 4/22/16.
+ *  This is an interface to get all locations as well as a single location
  */
 public interface GetLocation {
     public ArrayList<String> getAllLocations();

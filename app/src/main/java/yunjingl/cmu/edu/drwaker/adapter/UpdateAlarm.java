@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 /**
- * Created by yunjing on 4/22/16.
+ * This is an interface to update an existing alarm
  */
 public interface UpdateAlarm {
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,

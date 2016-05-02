@@ -10,40 +10,30 @@ public class Location {
     private LatLng latlng;
     private String tag;
 
+    /* Default Constructor */
     public Location() {
         locid = 0;
         latlng = null;
         tag = null;
     }
 
+    /* Constructor */
     public Location(int locid, LatLng latlng, String tag) {
         this.locid = locid;
         this.latlng = latlng;
         this.tag = tag;
     }
 
+
+    /**
+     * Getters
+     */
     public int getLocid() {
         return locid;
     }
 
-    public void setLocid(int locid) {
-        this.locid = locid;
-    }
-
     public LatLng getLatlng() {
         return latlng;
-    }
-
-    public void setLatlng(LatLng latlng) {
-        this.latlng = latlng;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 
     public Double getLatitude() {
@@ -54,8 +44,30 @@ public class Location {
         return latlng.longitude;
     }
 
-    // Print information of Location
+    public String getTag() {
+        return tag;
+    }
+
+
+    /**
+     * Setters
+     */
+    public void setLocid(int locid) {
+        this.locid = locid;
+    }
+
+    public void setLatlng(LatLng latlng) {
+        this.latlng = latlng;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+
+    /* print - print all information of given location */
     public void print() {
         System.out.printf("ID: %d\nTag: %s\nLatLng: (%f, %f)\n", locid, tag, latlng.latitude, latlng.longitude);
     }
+
 }

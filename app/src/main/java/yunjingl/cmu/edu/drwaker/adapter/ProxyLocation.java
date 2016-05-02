@@ -20,22 +20,23 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  */
 public abstract class ProxyLocation {
 
-    private static LinkedHashMap<String,Location> locations = new LinkedHashMap<String,Location>();
+    private static LinkedHashMap<String, Location> locations = new LinkedHashMap<String, Location>();
 
     private static Context context;
     private static LocationDatabaseConnector locationDatabaseConnector;
 
 
-
-    /* CreateLocation */
+    /**
+     * CreateLocation Interface
+     */
+    /* createLocation */
     public void createLocation(LatLng latlng, String tag) {
         Location newLocation = new Location(getAvailableID(), latlng, tag);
         locations.put(newLocation.getTag(), newLocation);
         addToDB(newLocation);
-
-        printAllLocations();
     }
 
+    /* getAvailableID - return the next available ID for the new location */
     public int getAvailableID() {
         ArrayList<Integer> ids = new ArrayList<Integer>();
         Set<String> st = locations.keySet();
@@ -45,25 +46,27 @@ public abstract class ProxyLocation {
         }
         if (ids.isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             return Collections.max(ids) + 1;
         }
     }
 
 
+    /**
+     * DeleteLocation Interface
+     */
     /* DeleteLocation */
-    //TODO: test deleteLocation
     public void deleteLocation(String tag) {
         int id = locations.get(tag).getLocid();
         locations.remove(tag);
         delateFromDB(id);
-
-        printAllLocations();
     }
 
 
-    /* GetLocation */
+    /**
+     * GetLocation Interface
+     */
+    /* getAllLocations - return ArrayList<String> of all location tags */
     public ArrayList<String> getAllLocations() {
         ArrayList<String> tags = new ArrayList<String>();
         Set<String> st = locations.keySet();
@@ -74,21 +77,24 @@ public abstract class ProxyLocation {
         return tags;
     }
 
+    /* getLocation - return Location based on given location tag */
     public Location getLocation(String tag) {
         if (locations.containsKey(tag)) {
             return locations.get(tag);
         } else {
-            //TODO: throw CusException("")
+
         }
         return locations.get(tag);
     }
 
 
-    /* InitializeLocation */
+    /**
+     * InitializeLocation Interface
+     */
+    /* intializeLocations - get all locations in database and put them in the static LinkedHashMap */
     public void initializeLocations() {
         try {
-            locations=locationDatabaseConnector.getAllLocation();
-            printAllLocations();
+            locations = locationDatabaseConnector.getAllLocation();
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -96,17 +102,17 @@ public abstract class ProxyLocation {
 
 
     /* UpdateLocation */
-    //TODO: test updateLocation
+    /* updateLocation */
     public void updateLocation(int locid, LatLng latlng, String tag) {
         Set<String> st = locations.keySet();
         Iterator<String> itr = st.iterator();
         while (itr.hasNext()) {
             String currentTag = locations.get(itr.next()).getTag();
-            Location currentLoc=locations.get(currentTag);
-            if(currentLoc.getLocid()==locid) {
+            Location currentLoc = locations.get(currentTag);
+            if (currentLoc.getLocid() == locid) {
                 currentLoc.setLatlng(latlng);
                 currentLoc.setTag(tag);
-                locations.put(currentTag,currentLoc);
+                locations.put(currentTag, currentLoc);
                 updateToDB(currentLoc);
 
             }
@@ -117,6 +123,7 @@ public abstract class ProxyLocation {
     /**
      * DEBUGGING PURPOSE
      */
+    /* printAllLocations - go through all locations in LinkedHashMap and print out information */
     public void printAllLocations() {
         Set<String> st = locations.keySet();
         Iterator<String> itr = st.iterator();
@@ -129,21 +136,23 @@ public abstract class ProxyLocation {
     /**
      * Database
      */
+    /* setContext */
     public void setContext(Context con) {
-        context=con;
-        locationDatabaseConnector=new LocationDatabaseConnector(context);
+        context = con;
+        locationDatabaseConnector = new LocationDatabaseConnector(context);
     }
 
-    public void addToDB(Location newLoc){
-        try{
-            locationDatabaseConnector.insertLocation(newLoc.getLocid(),newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());
-        }
-        catch(DatabaseException e){
+    /* addToDB - add a location into local database */
+    public void addToDB(Location newLoc) {
+        try {
+            locationDatabaseConnector.insertLocation(newLoc.getLocid(), newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());
+        } catch (DatabaseException e) {
             e.fix(e.getErrNo());
         }
     }
 
-    public void updateToDB(Location newLoc){
+    /* updateToDB - update a location in the database */
+    public void updateToDB(Location newLoc) {
         int id = newLoc.getLocid();
         try {
             locationDatabaseConnector.updateLocation(id, newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());
@@ -152,7 +161,8 @@ public abstract class ProxyLocation {
         }
     }
 
-    public void delateFromDB(int locmid){
+    /* deleteFromDB - delete a location from database */
+    public void delateFromDB(int locmid) {
         try {
             locationDatabaseConnector.deleteLocation(locmid);
         } catch (DatabaseException e) {
