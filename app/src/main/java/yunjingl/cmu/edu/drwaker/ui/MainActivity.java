@@ -183,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
             String wake_up = new SetAlarm().getWakUpMethod(thisid);
             if(wake_up.equals("Math Calculation")){
                 myIntent.putExtra("wake_up_method", "math");
+                myIntent.putExtra("question",new SetAlarm().getMathQuestion(thisid));
+                myIntent.putExtra("answer",new SetAlarm().getMathAnswer(thisid));
             }else if(wake_up.equals("Facial Recognization")){
                 myIntent.putExtra("wake_up_method", "facial");
             }

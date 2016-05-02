@@ -2,6 +2,7 @@ package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 
 import java.util.Collections;
@@ -32,10 +33,16 @@ public abstract class ProxyAlarm {
     }
 
     public void initializeAlarms(){
+        try {
+            alarms = alarmDatabaseConnector.getAllAlarm();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone){
+
         Alarm newalarm = new Alarm();
         newalarm.setHour(hour);
         newalarm.setMinute(minute);
@@ -49,7 +56,7 @@ public abstract class ProxyAlarm {
 //
 //        }
         Set<Integer> keys=alarms.keySet();
-        int alarmid=0;
+        int alarmid;
         if(keys.isEmpty()){
             alarmid=1;
         }else{
@@ -60,12 +67,23 @@ public abstract class ProxyAlarm {
         newalarm.setLocation(new SetLocation().getLocation(locationtag));
         newalarm.setLoc_switch(locationswitch);
         //TODO: newalarm.setMath(ReadMath.read());
-        alarms.put(alarmid,newalarm);
+
+        Log.e("ProxyAlarm check", "alarm id" + alarmid);
+        alarms.put(alarmid, newalarm);
 
         addToDB(newalarm);
     }
 
     public void addToDB(Alarm newalarm){
+        try{
+
+            alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(),newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), 1, 1);
+        }              //ToDo: newalarm.getMathID(), newalarm.getLocationID(), need add mathID,on/off,locationID
+        catch(DatabaseException e){
+            e.fix(e.getErrNo());
+        }
     }
 
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
@@ -94,6 +112,14 @@ public abstract class ProxyAlarm {
 
 
     public void updateToDB(Alarm newalarm){
+        int id = newalarm.getAlarmid();
+        try {
+            alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                    newalarm.isLoc_switch(), 1, 1);       //TODO:need add mathID,on/off,locationID
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delateFromDB(int alarmid){
@@ -126,7 +152,15 @@ public abstract class ProxyAlarm {
     public String getLatitude(int alarmno){
         return Double.toString(alarms.get(alarmno).getLocation().getLatitude());
     }
-
+    public String getTag(int alarmno){
+        return alarms.get(alarmno).getTag();
+    }
+    public String getMathQuestion(int alarmno){
+        return alarms.get(alarmno).getMathQuestion();
+    }
+    public String getMathAnswer(int alarmno){
+        return alarms.get(alarmno).getMathAnswer();
+    }
     public String getLongitude(int alarmno){
         return Double.toString(alarms.get(alarmno).getLocation().getLongitude());
     }
@@ -140,74 +174,51 @@ public abstract class ProxyAlarm {
         alarmDatabaseConnector=new AlarmDatabaseConnector(context);
     }
 
-    public LinkedHashMap<Integer,Alarm> allAlarm(){
-        LinkedHashMap<Integer,Alarm> data= new LinkedHashMap<>();
-        try {
-            alarmDatabaseConnector.open();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-        Cursor cursor=alarmDatabaseConnector.getAllAlarm();
-        int idIndex= cursor.getColumnIndex("id");
-        int hourIndex=cursor.getColumnIndex("Hour");
-        int minuteIndex=cursor.getColumnIndex("Minute");
-        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
-        int tagIndex=cursor.getColumnIndex("Tag");
-        int tuneIndex=cursor.getColumnIndex("Tune");
-        int statusIndex=cursor.getColumnIndex("Status");
-        cursor.moveToFirst();
-        int id=Integer.valueOf(cursor.getString(idIndex));
-        int hour=Integer.valueOf(cursor.getString(hourIndex));
-        int minute=Integer.valueOf(cursor.getString(minuteIndex));
-        String wakeupmethod=cursor.getString(wakeupmethodIndex);
-        String tag=cursor.getString(tagIndex);
-        String tune=cursor.getString(tuneIndex);
-        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));        //Status is boolean
-        int counter=0;
-
-        while(!cursor.isLast()){
-            alarm.setWake_up_method(wakeupmethod);
-            alarm.setTag(tag);
-            alarm.setTone(tune);
-            alarm.setLoc_switch(status);
-            //need math and location
-            data.put(counter,alarm);
-            counter++;
-            cursor.moveToNext();
-        }
-        return data;
+    public boolean hasLocation(int alarmid){
+        Alarm thisalarm=alarms.get(alarmid);
+        return thisalarm.hasLocation();
     }
 
-    public Alarm readAlarm(int id){
-        try {
-            alarmDatabaseConnector.open();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+
+//    public Alarm readAlarm(int id){
+//        try {
+//            alarmDatabaseConnector.open();
+//        } catch (DatabaseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Cursor cursor=alarmDatabaseConnector.getOneAlarm(id);
+//        int idIndex= cursor.getColumnIndex("Id");
+//        int hourIndex=cursor.getColumnIndex("Hour");
+//        int minuteIndex=cursor.getColumnIndex("Minute");
+//        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
+//        int tagIndex=cursor.getColumnIndex("Tag");
+//        int tuneIndex=cursor.getColumnIndex("Tune");
+//        int statusIndex=cursor.getColumnIndex("Status");
+//        cursor.moveToFirst();
+//        int alarmid=Integer.valueOf(cursor.getString(idIndex));
+//        int hour=Integer.valueOf(cursor.getString(hourIndex));
+//        int minute=Integer.valueOf(cursor.getString(minuteIndex));
+//        String wakeupmethod=cursor.getString(wakeupmethodIndex);
+//        String tag=cursor.getString(tagIndex);
+//        String tune=cursor.getString(tuneIndex);
+//        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));
+//        Alarm alarm=new Alarm(id,hour,minute);
+//        alarm.setWake_up_method(wakeupmethod);
+//        alarm.setTag(tag);
+//        alarm.setTone(tune);
+//        alarm.setLoc_switch(status);
+//        //need math and location
+//
+//        return alarm;
+//    }
+    public String printAll(){
+        String result="";
+        Iterator iterator=alarms.keySet().iterator();
+        while(iterator.hasNext()){
+            Alarm next=alarms.get(iterator.next());
+            result+=next.getHour()+":"+next.getMinute()+"     ";
         }
-
-        Cursor cursor=alarmDatabaseConnector.getOneAlarm(id);
-        int idIndex= cursor.getColumnIndex("id");
-        int hourIndex=cursor.getColumnIndex("Hour");
-        int minuteIndex=cursor.getColumnIndex("Minute");
-        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
-        int tagIndex=cursor.getColumnIndex("Tag");
-        int tuneIndex=cursor.getColumnIndex("Tune");
-        int statusIndex=cursor.getColumnIndex("Status");
-        cursor.moveToFirst();
-        int alarmid=Integer.valueOf(cursor.getString(idIndex));
-        int hour=Integer.valueOf(cursor.getString(hourIndex));
-        int minute=Integer.valueOf(cursor.getString(minuteIndex));
-        String wakeupmethod=cursor.getString(wakeupmethodIndex);
-        String tag=cursor.getString(tagIndex);
-        String tune=cursor.getString(tuneIndex);
-        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));
-        Alarm alarm=new Alarm(id,hour,minute);
-        alarm.setWake_up_method(wakeupmethod);
-        alarm.setTag(tag);
-        alarm.setTone(tune);
-        alarm.setLoc_switch(status);
-        //need math and location
-
-        return alarm;
+        return result;
     }
 }

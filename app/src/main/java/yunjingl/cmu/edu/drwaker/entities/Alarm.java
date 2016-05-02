@@ -76,6 +76,12 @@ public class Alarm {
     public void setMath(Math math) {
         this.math = math;
     }
+    public String getMathQuestion(){
+        return math.getQuestion();
+    }
+    public String getMathAnswer(){
+        return math.getAnswer();
+    }
 
     public int getMathID(){
         return math.mathid;

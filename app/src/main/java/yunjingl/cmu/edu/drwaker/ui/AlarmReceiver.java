@@ -33,7 +33,12 @@ public class AlarmReceiver extends BroadcastReceiver {
                 context.startService(ring_intent);
                 Intent stopintent=new Intent();
                 if(method.equals("math")){
+                    String question=intent.getExtras().getString("question");
+                    String answer=intent.getExtras().getString("answer");
+
                     stopintent=new Intent(context,MathActivity.class);
+                    stopintent.putExtra("question",question);
+                    stopintent.putExtra("answer",answer);
                 }else if(method.equals("facial")){
                     stopintent=new Intent(context,SelfieActivity.class);
                 }
@@ -57,7 +62,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             context.startService(ring_intent);
             Intent stopintent=new Intent();
             if(method.equals("math")){
+                String question=intent.getExtras().getString("question");
+                String answer=intent.getExtras().getString("answer");
+
                 stopintent=new Intent(context,MathActivity.class);
+                stopintent.putExtra("question",question);
+                stopintent.putExtra("answer",answer);
             }else if(method.equals("facial")){
                 stopintent=new Intent(context,SelfieActivity.class);
             }
