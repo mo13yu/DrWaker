@@ -91,6 +91,7 @@ public class Settings extends AppCompatActivity {
 
                 Switch loc_switch=(Switch) findViewById(R.id.locswitch);
                 locationswitch=loc_switch.isChecked();
+                Log.e("test switch",String.valueOf(locationswitch));
 //                loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                    @Override
 //                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -100,6 +101,7 @@ public class Settings extends AppCompatActivity {
 //                });
                 //Log.e("Settings check", "inputhour"+inputhour+"inputminute"+inputminute+"tag"+tag);
                 if(method.equals("create")){
+                    Log.e("test loctag",locationtag);
                     setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){
                     int alarmid=Integer.parseInt((getIntent().getExtras()).getString("alarmid"));

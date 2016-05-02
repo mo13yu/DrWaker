@@ -41,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // alarms=new SetAlarm().getAlarms();
-//        Alarm testalarm=new Alarm(1,20,54);
-//        testalarm.setWake_up_method("Math Calculation");
-//        alarms.put(1,testalarm);
+
         Button add=(Button)findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,39 +55,7 @@ public class MainActivity extends AppCompatActivity {
         container = (LinearLayout)findViewById(R.id.container);
 
         initializeAlarms();
-
-//        initializeAlarms();
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        Button addnew=(Button)findViewById(R.id.okmath);
-//        addnew.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),Settings.class);
-//                startActivity(intent);
-//            }
-//        });
-//        Button test=(Button)findViewById(R.id.map);
-//        test.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),LocationActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        Button math=(Button)findViewById(R.id.math);
-//        math.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),MathActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        Button selfie=(Button)findViewById(R.id.selfie);
-//        selfie.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent=new Intent(getApplicationContext(),SelfieActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        //TODO: initializeLocations
     }
 
     public void initializeAlarms(){
@@ -119,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
             calendars.add(calendar);
 
-            //String testall=new SetAlarm().printAll();
-            //Log.e("Mainactivity check all alarms",testall );
-           // Log.e("Mainactivity check hour", "hour"+hour+"minute"+minute);
+
             String alarm="";
             if(hour<10){
                 alarm+="0"+hour;
@@ -170,11 +133,13 @@ public class MainActivity extends AppCompatActivity {
         final Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
 
         new SetLocation().setContext(MainActivity.this);
+        new SetLocation().initializeLocations();
 
         itr = new SetAlarm().getIdSet().iterator();
         int i=0;
         while (itr.hasNext()){
             int thisid=itr.next();
+            Log.i("Alarm info", String.valueOf(new SetAlarm().isLocationSwitchOn(thisid)));
             myIntent.putExtra("extra", "on");
             String wake_up = new SetAlarm().getWakUpMethod(thisid);
             if(wake_up.equals("Math Calculation")){

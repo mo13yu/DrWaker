@@ -18,7 +18,7 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class LocationDatabaseConnector {
-    private static final String TABLE_NAME="LocationDatabaseTest";
+    private static final String TABLE_NAME="LocationDatabaseTe";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
 
@@ -34,7 +34,7 @@ public class LocationDatabaseConnector {
         public void onCreate(SQLiteDatabase db) {
             //create the query first
             String createQuery="CREATE TABLE "+TABLE_NAME+
-                    "Id TEXT, "+
+                    "(Id TEXT, "+
                     "Latitude TEXT, Longitude TEXT, Tag TEXT);";//
             db.execSQL(createQuery);
 //            System.out.println(createQuery);
@@ -100,7 +100,7 @@ public class LocationDatabaseConnector {
 
 
         open();//open the database
-        database.update(TABLE_NAME, editLocation,"Id=" + id, null);
+        database.update(TABLE_NAME, editLocation,"Id=" + String.valueOf(id), null);
         close();
 
     }
@@ -122,7 +122,7 @@ public class LocationDatabaseConnector {
                 do {
                     int id=Integer.valueOf(cursor.getString(idIndex));
                     double latitude=Double.valueOf(cursor.getString(latitudeIndex));
-                    double longitude=Integer.valueOf(cursor.getString(longitudeIndex));
+                    double longitude=Double.valueOf(cursor.getString(longitudeIndex));
                     String tag=cursor.getString(tagIndex);
                     LatLng latLng=new LatLng(latitude,longitude);
                     Location location=new Location(id,latLng,tag);
@@ -141,7 +141,7 @@ public class LocationDatabaseConnector {
     public Location getOneLocation(int id) throws DatabaseException {
         open();
         Location location=new Location();
-        Cursor cursor = database.query(TABLE_NAME, null, "Id=" + id, null, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, null, "Id=" + String.valueOf(id), null, null, null, null);
         if (cursor != null && cursor.getCount() > 0) {
             int idIndex= cursor.getColumnIndex("Id");
             int latitudeIndex=cursor.getColumnIndex("Latitude");
@@ -166,7 +166,7 @@ public class LocationDatabaseConnector {
     public void deleteLocation(int id) throws DatabaseException {
 
         open();
-        database.delete(TABLE_NAME,"Id="+id,null);
+        database.delete(TABLE_NAME,"Id="+String.valueOf(id),null);
         close();
 
     }

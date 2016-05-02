@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.util.LinkedHashMap;
 
+import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
 import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
@@ -17,7 +18,7 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class AlarmDatabaseConnector {
-    private static final String TABLE_NAME = "AlarmDatabaseTest";
+    private static final String TABLE_NAME = "AlarmDatabaseTesting1";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
 
@@ -33,7 +34,7 @@ public class AlarmDatabaseConnector {
         public void onCreate(SQLiteDatabase db) {
             //create the query first
             String createQuery = "CREATE TABLE " + TABLE_NAME +
-                    " (Id TEXT, Hour TEXT, Minute TEXT, Wakeupmethod TEXT, Tag TEXT, Tune TEXT,Status TEXT, LocID TEXT, MathID TEXT);";//
+                    " (Id TEXT, Hour TEXT, Minute TEXT, Wakeupmethod TEXT, Tag TEXT, Tune TEXT,Status TEXT, LocTag TEXT, MathID TEXT);";//
             db.execSQL(createQuery);
 //            System.out.println(createQuery);
         }
@@ -71,17 +72,17 @@ public class AlarmDatabaseConnector {
 
     //insert a new Alarm into database
     public void insertAlarm(int id, int hour, int minute, String method, String tag, String tune,
-                            boolean status, int locID, int mathID) throws DatabaseException {
+                            boolean status, String locTag, int mathID) throws DatabaseException {
         //Log.e("connector check", "id"+id+"inputhour" + String.valueOf(hour) + "inputminute" +String.valueOf(minute)+"tag"+tag);
         ContentValues newAlarm = new ContentValues();
-        newAlarm.put("Id", id);
+        newAlarm.put("Id", String.valueOf(id));
         newAlarm.put("Hour", String.valueOf(hour));
         newAlarm.put("Minute", String.valueOf(minute));
         newAlarm.put("Wakeupmethod", method);
         newAlarm.put("Tag", tag);
         newAlarm.put("Tune", tune);
-        newAlarm.put("Status", status);
-        newAlarm.put("LocID", String.valueOf(locID));
+        newAlarm.put("Status", String.valueOf(status));
+        newAlarm.put("LocTag", locTag);
         newAlarm.put("MathID", String.valueOf(mathID));
 
 
@@ -94,33 +95,29 @@ public class AlarmDatabaseConnector {
 
     //update a Alarm which is already in the database
     public void updateAlarm(int id, int hour, int minute, String method, String tag, String tune,
-                            boolean status, int locID, int mathID) throws DatabaseException {
+                            boolean status, String locTag, int mathID) throws DatabaseException {
         ContentValues editAlarm = new ContentValues();
-        editAlarm.put("Hour", hour);
-        editAlarm.put("Minute", minute);
+        editAlarm.put("Hour", String.valueOf(hour));
+        editAlarm.put("Minute", String.valueOf(minute));
         editAlarm.put("Wakeupmethod", method);
         editAlarm.put("Tag", tag);
         editAlarm.put("Tune", tune);
-        editAlarm.put("Status", status);
-        editAlarm.put("LocID", locID);
-        editAlarm.put("MathID", mathID);
+        editAlarm.put("Status", String.valueOf(status));
+        editAlarm.put("LocTag", locTag);
+        editAlarm.put("MathID",String.valueOf(mathID));
 
         open();//open the database
-        database.update(TABLE_NAME, editAlarm, "Id=" + id, null);
+        database.update(TABLE_NAME, editAlarm, "Id=" + String.valueOf(id), null);
         close();
 
     }
     //end the code update Alarm
 
-<<<<<<< HEAD
+
     //return a LinkedHashMap with all Alarm information
     public LinkedHashMap<Integer,Alarm> getAllAlarm() throws DatabaseException {
         LinkedHashMap<Integer,Alarm> alarms= new LinkedHashMap<Integer,Alarm>();
-=======
-    //return a cursor with all Alarm information
-    public LinkedHashMap<Integer, Alarm> getAllAlarm() throws DatabaseException {
-        LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();
->>>>>>> 992fa65c60c55e9cefc737eb76d27f15354fb6f9
+
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         open(); // open the database
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -132,6 +129,7 @@ public class AlarmDatabaseConnector {
             int tagIndex = cursor.getColumnIndex("Tag");
             int tuneIndex = cursor.getColumnIndex("Tune");
             int statusIndex = cursor.getColumnIndex("Status");
+            int locIndex = cursor.getColumnIndex("LocTag");
             int counter = 1;
             if (cursor.moveToFirst()) {
                 do {
@@ -143,6 +141,7 @@ public class AlarmDatabaseConnector {
                     String tag = cursor.getString(tagIndex);
                     String tune = cursor.getString(tuneIndex);
                     Boolean status = Boolean.valueOf(cursor.getString(statusIndex));
+                    String locTag = cursor.getString(locIndex);
                     newalarm.setAlarmid(id);
                     newalarm.setHour(hour);
                     newalarm.setMinute(minute);
@@ -150,6 +149,7 @@ public class AlarmDatabaseConnector {
                     newalarm.setTag(tag);
                     newalarm.setTone(tune);
                     newalarm.setLoc_switch(status);
+                    newalarm.setLocation(new SetLocation().getLocation(locTag));
                     alarms.put(counter, newalarm);
                     counter++;
                 } while (cursor.moveToNext());
@@ -176,6 +176,7 @@ public class AlarmDatabaseConnector {
             int tagIndex = cursor.getColumnIndex("Tag");
             int tuneIndex = cursor.getColumnIndex("Tune");
             int statusIndex = cursor.getColumnIndex("Status");
+            int locIndex = cursor.getColumnIndex("LocTag");
             cursor.moveToFirst();
             int alarmid = Integer.valueOf(cursor.getString(idIndex));
             int hour = Integer.valueOf(cursor.getString(hourIndex));
@@ -184,11 +185,13 @@ public class AlarmDatabaseConnector {
             String tag = cursor.getString(tagIndex);
             String tune = cursor.getString(tuneIndex);
             Boolean status = Boolean.valueOf(cursor.getString(statusIndex));
+            String locTag = cursor.getString(locIndex);
             alarm = new Alarm(id, hour, minute);
             alarm.setWake_up_method(wakeupmethod);
             alarm.setTag(tag);
             alarm.setTone(tune);
             alarm.setLoc_switch(status);
+            alarm.setLocation(new SetLocation().getLocation(locTag));
         } else {
             new CusException("No such alarm exist");
         }
@@ -202,7 +205,7 @@ public class AlarmDatabaseConnector {
     public void deleteAlarm(int id) throws DatabaseException {
 
         open();
-        database.delete(TABLE_NAME, "Id=" + id, null);
+        database.delete(TABLE_NAME, "Id=" + String.valueOf(id), null);
         close();
 
     }

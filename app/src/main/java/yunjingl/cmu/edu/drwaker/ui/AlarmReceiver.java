@@ -17,7 +17,7 @@ import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
 /**
  * Created by yunjing on 4/22/16.
  */
-public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private Context context;
     private Intent intent;
     protected GoogleApiClient mGoogleApiClient;
@@ -68,11 +68,11 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
         String method = intent.getExtras().getString("wake_up_method");
         String ringtone = intent.getExtras().getString("ring_tone");
         boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
-        Log.e("location switch",String.valueOf(loc_switch));
+        Log.e("location switch", String.valueOf(loc_switch));
 
         // If alarm's location service is enabled,
         // need to compare user location with alarm location to determine if alarm should be sounded
-        if(loc_switch){
+        if (loc_switch) {
             // Get alarm location
             //TODO: might have empty location, will have error trying to read latlng values
             String la = intent.getExtras().getString("loc_la");
@@ -83,14 +83,14 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
 
             // Calculate distance between the two
             boolean result;
-            if(mLastLocation != null) {
+            if (mLastLocation != null) {
                 float distance = mLastLocation.distanceTo(alarmLocation);
                 Log.e("CompareLocation", "alarmLocation: (" + String.valueOf(alarmLocation.getLatitude()) + ", " + String.valueOf(alarmLocation.getLongitude()) + ")");
                 Log.e("CompareLocation", "mLastLocation: (" + String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
                 Log.e("CompareLocation", "Distance: " + String.valueOf(distance) + "m");
 
                 // Determine result based on distance in meters
-                if(distance<600) {
+                if (distance < 600) {
                     result = true;
                 } else {
                     result = false;
@@ -100,24 +100,24 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
             }
 
             // Sound the alarm if user is near alarm location
-            if(result) {
-                Intent ring_intent = new Intent(context,RingtonePlayingService.class);
-                ring_intent.putExtra("extra",temp);
+            if (result) {
+                Intent ring_intent = new Intent(context, RingtonePlayingService.class);
+                ring_intent.putExtra("extra", temp);
                 ring_intent.putExtra("ring_tone", ringtone);
                 context.startService(ring_intent);
 
                 Intent stopintent = new Intent();
                 // Math Calculation
-                if(method.equals("math")) {
+                if (method.equals("math")) {
                     String question = intent.getExtras().getString("question");
                     String answer = intent.getExtras().getString("answer");
-                    stopintent = new Intent(context,MathActivity.class);
-                    stopintent.putExtra("question",question);
-                    stopintent.putExtra("answer",answer);
+                    stopintent = new Intent(context, MathActivity.class);
+                    stopintent.putExtra("question", question);
+                    stopintent.putExtra("answer", answer);
                 }
                 // Facial Recognization
-                else if(method.equals("facial")){
-                    stopintent=new Intent(context,SelfieActivity.class);
+                else if (method.equals("facial")) {
+                    stopintent = new Intent(context, SelfieActivity.class);
                 }
                 stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(stopintent);
@@ -128,19 +128,34 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
 
         // If alarm's location service is disabled, sound the alarm no matter what
         else {
-            Intent ring_intent = new Intent(context,RingtonePlayingService.class);
-            ring_intent.putExtra("extra",temp);
+            Intent ring_intent = new Intent(context, RingtonePlayingService.class);
+            ring_intent.putExtra("extra", temp);
             ring_intent.putExtra("ring_tone", ringtone);
             //ring_intent.putExtra("loc_switch", loc_switch);
             context.startService(ring_intent);
+
+            Intent stopintent = new Intent();
+            if (method.equals("math")) {
+                String question = intent.getExtras().getString("question");
+                String answer = intent.getExtras().getString("answer");
+                stopintent = new Intent(context, MathActivity.class);
+                stopintent.putExtra("question", question);
+                stopintent.putExtra("answer", answer);
+            }
+            // Facial Recognization
+            else if (method.equals("facial")) {
+                stopintent = new Intent(context, SelfieActivity.class);
+            }
+            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(stopintent);
         }
 
-        Intent stopintent=new Intent();
-        if(method.equals("math")){
-            stopintent=new Intent(context,MathActivity.class);
-        }else if(method.equals("facial")){
-            stopintent=new Intent(context,SelfieActivity.class);
-        }
+//        Intent stopintent = new Intent();
+//        if (method.equals("math")) {
+//            stopintent = new Intent(context, MathActivity.class);
+//        } else if (method.equals("facial")) {
+//            stopintent = new Intent(context, SelfieActivity.class);
+//        }
 
     }
 

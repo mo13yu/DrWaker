@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -29,11 +29,8 @@ public abstract class ProxyLocation {
 
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
-        // create new location
         Location newLocation = new Location(getAvailableID(), latlng, tag);
-        // add new location to LinkedHashMap
         locations.put(newLocation.getTag(), newLocation);
-        // add new location to database
         addToDB(newLocation);
 
         printAllLocations();
@@ -59,10 +56,9 @@ public abstract class ProxyLocation {
     //TODO: test deleteLocation
     public void deleteLocation(String tag) {
         int id = locations.get(tag).getLocid();
-        // delete location from LinkedHashMap
         locations.remove(tag);
-        // delete location from database
         delateFromDB(id);
+
         printAllLocations();
     }
 
@@ -80,6 +76,8 @@ public abstract class ProxyLocation {
 
     public Location getLocation(String tag) {
         if (locations.containsKey(tag)) {
+            Log.d("proxyLocation", "sending: " + tag + "(" + String.valueOf(locations.get(tag).getLatitude()) +
+                            ", " + String.valueOf(locations.get(tag).getLongitude()) +")");
             return locations.get(tag);
         } else {
             //TODO: throw CusException("")
@@ -91,9 +89,9 @@ public abstract class ProxyLocation {
     /* InitializeLocation */
     //TODO: test initializeLocations
     public void initializeLocations() {
-        // get locations from database
         try {
             locations=locationDatabaseConnector.getAllLocation();
+            printAllLocations();
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,7 @@
 package yunjingl.cmu.edu.drwaker.entities;
 
+import android.util.Log;
+
 /**
  * Created by yunjing on 4/13/16.
  */
@@ -15,10 +17,28 @@ public class Alarm {
     private String tone;
     //private String alarm_switch;
 
+    public Alarm(){
+        super();
+    }
+
     public Alarm(int alarmid,int hour,int minute){
         this.alarmid = alarmid;
         this.hour=hour;
         this.minute=minute;
+    }
+
+    public Alarm(int alarmid, int hour,int minute,Math math, Location location, String wake_up_method, boolean loc_switch,
+                 String tag, String tone, String alarm_switch) {
+        this.alarmid = alarmid;
+        this.hour=hour;
+        this.minute=minute;
+        this.math = math;
+        this.location = location;
+        this.wake_up_method = wake_up_method;
+        this.loc_switch = loc_switch;
+        this.tag = tag;
+        this.tone = tone;
+        //this.alarm_switch = alarm_switch;
     }
 
     public int getHour() {
@@ -76,19 +96,21 @@ public class Alarm {
     public void setMath(Math math) {
         this.math = math;
     }
-<<<<<<< HEAD
+
     public String getMathQuestion(){
         return math.getQuestion();
     }
-    public String getMathAnswer(){
+
+    public String getMathAnswer() {
         return math.getAnswer();
-=======
+    }
+
     public void setMath(int id,String question,String answer) {
         Math newMath=new Math();
         newMath.setMathid(id);
         newMath.setQuestion(question);
         newMath.setAnswer(answer);
->>>>>>> origin/master
+
     }
 
     public int getMathID(){
@@ -107,6 +129,10 @@ public class Alarm {
         return location.getLocid();
     }
 
+    public String getLocationTag(){
+        return location.getTag();
+    }
+
     public boolean isLoc_switch() {
         return loc_switch;
     }
@@ -123,23 +149,15 @@ public class Alarm {
         }
     }
 
-    public Alarm(){
-        super();
+    public void print() {
+        System.out.printf("ID: %d\nTag: %s\nHour: %d\nMinute: %d\nMethod: %s\n", alarmid, tag, hour, minute, wake_up_method);
+        if(loc_switch) {
+            System.out.printf("Location ON: %s (%f, %f)\n", location.getTag(), location.getLatitude(), location.getLongitude());
+        }
+        //System.out.printf("Math Question: %s\n", math.getQuestion());
     }
 
-    public Alarm(int alarmid, int hour,int minute,Math math, Location location, String wake_up_method, boolean loc_switch,
-                 String tag, String tone, String alarm_switch) {
-        this.alarmid = alarmid;
-        this.hour=hour;
-        this.minute=minute;
-        this.math = math;
-        this.location = location;
-        this.wake_up_method = wake_up_method;
-        this.loc_switch = loc_switch;
-        this.tag = tag;
-        this.tone = tone;
-        //this.alarm_switch = alarm_switch;
-    }
+
 
     protected class Math {
         private int mathid;
