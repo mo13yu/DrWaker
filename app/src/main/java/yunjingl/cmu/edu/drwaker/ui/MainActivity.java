@@ -47,12 +47,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //TODO: this is for testing nearLocation
-                new SetLocation().nearLocation(MainActivity.this, "34.414166", "-119.848936"); //UCSB
-                /*
+                //new SetLocation().nearLocation("34.414166", "-119.848936"); //UCSB
+
                 Intent intent=new Intent(getApplicationContext(),Settings.class);
                 intent.putExtra("create_or_update","create");
                 startActivity(intent);
-                */
             }
         });
 

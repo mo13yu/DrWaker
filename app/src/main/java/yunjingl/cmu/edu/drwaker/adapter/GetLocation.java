@@ -14,7 +14,7 @@ public interface GetLocation {
     public Location getLocation(String tag);
 
     //TODO: a function takes alarm's location and return boolean if the location is near current location
-    public boolean nearLocation(Context context, String lat, String lng);
+    public boolean nearLocation(String lat, String lng);
 
     // functions for debugging purpose
     public void printAllLocations();

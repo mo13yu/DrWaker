@@ -25,7 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
             Log.e("near location", "reach here");
-            boolean nearlocation=new SetLocation().nearLocation(context,la,lo);
+            boolean nearlocation=new SetLocation().nearLocation(la,lo);
             if(nearlocation){
                 Intent ring_intent=new Intent(context,RingtonePlayingService.class);
                 ring_intent.putExtra("extra",temp);
