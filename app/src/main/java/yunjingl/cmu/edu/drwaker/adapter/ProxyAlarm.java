@@ -21,16 +21,16 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 import yunjingl.cmu.edu.drwaker.ws.local.SocketClient;
 
 /**
- * Created by yunjing on 4/22/16.
+ * This is a proxy contains all the methods of populating and manipulating alarms.
  */
 public abstract class ProxyAlarm {
-    private static LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();
+    private static LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();//keeps all the alarms in database
 
-    private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();
-    private Context context;
-    private static AlarmDatabaseConnector alarmDatabaseConnector;
+    private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();//keeps all the math problems read from remote server database.
+    private Context context;//context helps to connect database
+    private static AlarmDatabaseConnector alarmDatabaseConnector;//connector to connect database.
 
-    private String math;
+    private String math;//math problems get from remote server database
 
 
     public LinkedHashMap<Integer, Alarm> getAlarms() {
@@ -41,6 +41,9 @@ public abstract class ProxyAlarm {
         ProxyAlarm.alarms = alarms;
     }
 
+    /**
+     * initialize all alarms in database, and populate them to the alarms linked hash map.
+     */
     public void initializeAlarms() {
         try {
             if(mathProblemAndAnswer.isEmpty()){
@@ -52,6 +55,9 @@ public abstract class ProxyAlarm {
         }
     }
 
+    /**
+     * get all math problems from remote server database by socket and populate them to the mathProblemAndAnswer hash map.
+     */
     public void initializeMathsSet() {
 
             //TODO: Insert Server's IP
@@ -67,15 +73,21 @@ public abstract class ProxyAlarm {
             for(int i=0;i<qa.length;i=i+3){
                 mathProblemAndAnswer.put(Integer.parseInt(qa[i]),qa[i+1]+" "+qa[i+2]);
             }
-            //newalarm.setMath(Integer.parseInt(qa[0]), qa[1], qa[2]);
-            //alarms = alarmDatabaseConnector.getAllAlarm();
-
     }
 
+    /**
+     * create a new alarm and add it to the linked hash map as well as to the database.
+     * @param hour hour of the alarm
+     * @param minute minute of the alarm
+     * @param locationtag location tag
+     * @param locationswitch whether the location is switched on.
+     * @param wake_up_method the wake up method
+     * @param tag tag of the alarm
+     * @param tone which tone to use
+     */
     public void createAlarm(int hour, int minute, String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone) {
 
-        //Log.d("proxy:location tag", "is null???");
         Alarm newalarm = new Alarm();
         newalarm.setHour(hour);
         newalarm.setMinute(minute);
@@ -83,17 +95,7 @@ public abstract class ProxyAlarm {
         newalarm.setTag(tag);
         newalarm.setTone(tone);
 
-
         if(wake_up_method.equals("Math Calculation")) {
-//            SocketClient socketClient = new SocketClient("10.0.2.2", 8896);
-//            socketClient.start();
-//
-//            while (socketClient.isAlive()) {
-//                continue;
-//            }
-//            math = socketClient.getMath();
-//            Log.d("alarm test", math);
-//            String[] qa = math.split(" ");
             Log.d("in proxyalarm, math:", String.valueOf(mathProblemAndAnswer.get(1)));
             int random=new Random().nextInt(mathProblemAndAnswer.size())+1;
             while(!mathProblemAndAnswer.keySet().contains(random)){
@@ -102,16 +104,7 @@ public abstract class ProxyAlarm {
 
             String[] qa=mathProblemAndAnswer.get(random).split(" ");
             newalarm.setMath(random,qa[0],qa[1]);
-            //newalarm.setMath(1, qa[1], qa[2]);
         }
-
-//        int max=0;
-//        Iterator iterator=alarms.keySet().iterator();
-//        while(iterator.hasNext()){
-//            int key=(int)iterator.next();
-//
-//        }
-//        */
 
         // Get next available alarm ID
         Set<Integer> keys = alarms.keySet();
@@ -121,7 +114,6 @@ public abstract class ProxyAlarm {
         } else {
             alarmid = Collections.max(keys) + 1;
         }
-        //int alarmid = Collections.max(keys)+1;
         newalarm.setAlarmid(alarmid);
         newalarm.setLoc_switch(locationswitch);
         if(locationswitch){
@@ -136,6 +128,10 @@ public abstract class ProxyAlarm {
         addToDB(newalarm);
     }
 
+    /**
+     * add an alarm to the database.
+     * @param newalarm
+     */
     public void addToDB(Alarm newalarm) {
         try {
             if(!newalarm.hasLocation()&&!newalarm.hasMath()){
@@ -157,12 +153,23 @@ public abstract class ProxyAlarm {
             }
 
 
-        }              //ToDo: newalarm.getMathID(), need add mathID,on/off,locationID
+        }
         catch (DatabaseException e) {
             e.fix(e.getErrNo());
         }
     }
 
+    /**
+     * update a current alarm with new settings.
+     * @param alarmid
+     * @param hour
+     * @param minute
+     * @param locationtag
+     * @param locationswitch
+     * @param wake_up_method
+     * @param tag
+     * @param tone
+     */
     public void updateAlarm(int alarmid, int hour, int minute, String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone) {
         alarms.remove(alarmid);
@@ -187,13 +194,20 @@ public abstract class ProxyAlarm {
         updateToDB(newalarm);
     }
 
+    /**
+     * delete a current alarm.
+     * @param alarmid
+     */
     public void deleteAlarm(int alarmid) {
         alarms.remove(alarmid);
 
         delateFromDB(alarmid);
     }
 
-
+    /**
+     * update a current alarm with new alarm object.
+     * @param newalarm
+     */
     public void updateToDB(Alarm newalarm) {
         int id = newalarm.getAlarmid();
         try {
@@ -214,13 +228,15 @@ public abstract class ProxyAlarm {
                         newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
                         newalarm.isLoc_switch(), newalarm.getLocationTag(),newalarm.getMathID());
             }
-
-            //TODO:need add mathID,on/off,locationID
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * delete an existing alarm from database.
+     * @param alarmid
+     */
     public void delateFromDB(int alarmid) {
         try {
             alarmDatabaseConnector.deleteAlarm(alarmid);
@@ -229,121 +245,118 @@ public abstract class ProxyAlarm {
         }
     }
 
+    /**
+     * get the number of total alarms
+     * @return
+     */
     public int getNumberOfAlarms() {
         return alarms.size();
     }
 
+    /**
+     * get the hour feild of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public int getHour(int alarmno) {
         return alarms.get(alarmno).getHour();
     }
-
+    /**
+     * get the minute feild of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public int getMinute(int alarmno) {
         return alarms.get(alarmno).getMinute();
     }
-
+    /**
+     * get the tone feild of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getTone(int alarmno) {
         return alarms.get(alarmno).getTone();
     }
-
+    /**
+     * get the wake_up_method feild of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getWakUpMethod(int alarmno) {
         return alarms.get(alarmno).getWake_up_method();
     }
 
+    /**
+     * get the key set of the alarms linked hash map
+     * @return
+     */
     public Set<Integer> getIdSet() {
         return alarms.keySet();
     }
-
+    /**
+     * get the latitude feild of location of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getLatitude(int alarmno) {
         return Double.toString(alarms.get(alarmno).getLocation().getLatitude());
     }
 
+    /**
+     * get the tag feild of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getTag(int alarmno) {
         return alarms.get(alarmno).getTag();
     }
-
+    /**
+     * get the question feild of math object of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getMathQuestion(int alarmno) {
         return alarms.get(alarmno).getMathQuestion();
     }
-
+    /**
+     * get the answer feild of math object of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getMathAnswer(int alarmno) {
         return alarms.get(alarmno).getMathAnswer();
     }
-
+    /**
+     * get the longitude feild of location of a certain alarm
+     * @param alarmno alarm id
+     * @return
+     */
     public String getLongitude(int alarmno) {
         return Double.toString(alarms.get(alarmno).getLocation().getLongitude());
     }
-
+    /**
+     * see if user switch on the location detection function
+     * @param alarmno alarm id
+     * @return
+     */
     public boolean isLocationSwitchOn(int alarmno) {
         return alarms.get(alarmno).isLoc_switch();
     }
 
+    /**
+     * set the context and connect to database
+     * @param con
+     */
     public void setContext(Context con) {
         context = con;
         alarmDatabaseConnector = new AlarmDatabaseConnector(context,mathProblemAndAnswer);
     }
 
-
-    public boolean hasLocation(int alarmid) {
-        Alarm thisalarm = alarms.get(alarmid);
-        return thisalarm.hasLocation();
-    }
-
-
-    //    public Alarm readAlarm(int id){
-//        try {
-//            alarmDatabaseConnector.open();
-//        } catch (DatabaseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Cursor cursor=alarmDatabaseConnector.getOneAlarm(id);
-//        int idIndex= cursor.getColumnIndex("Id");
-//        int hourIndex=cursor.getColumnIndex("Hour");
-//        int minuteIndex=cursor.getColumnIndex("Minute");
-//        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
-//        int tagIndex=cursor.getColumnIndex("Tag");
-//        int tuneIndex=cursor.getColumnIndex("Tune");
-//        int statusIndex=cursor.getColumnIndex("Status");
-//        cursor.moveToFirst();
-//        int alarmid=Integer.valueOf(cursor.getString(idIndex));
-//        int hour=Integer.valueOf(cursor.getString(hourIndex));
-//        int minute=Integer.valueOf(cursor.getString(minuteIndex));
-//        String wakeupmethod=cursor.getString(wakeupmethodIndex);
-//        String tag=cursor.getString(tagIndex);
-//        String tune=cursor.getString(tuneIndex);
-//        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));
-//        Alarm alarm=new Alarm(id,hour,minute);
-//        alarm.setWake_up_method(wakeupmethod);
-//        alarm.setTag(tag);
-//        alarm.setTone(tune);
-//        alarm.setLoc_switch(status);
-//        //need math and location
-//
-//        return alarm;
-//    }
-
     public void printAll() {
         Iterator iterator = alarms.keySet().iterator();
         while (iterator.hasNext()) {
             alarms.get(iterator.next()).print();
-            //Alarm next = alarms.get(iterator.next());
-            //result += next.getHour() + ":" + next.getMinute() + "     ";
         }
     }
 
-//    public String getIP() {
-//        String strAddress = "";
-//        try {
-//            InetAddress local = InetAddress.getLocalHost();
-//            byte[] b = local.getAddress();
-//
-//            for (int i = 0; i < b.length; i++) {
-//                strAddress += ((int) 255 & b[i]) + ".";
-//            }
-//            strAddress = strAddress.substring(0, strAddress.length() - 1);
-//
-//        } catch (UnknownHostException e) {
-//        }
-//        return strAddress;
-//    }
 }

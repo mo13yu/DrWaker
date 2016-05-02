@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 import yunjingl.cmu.edu.drwaker.R;
 
+/**
+ * detect whether answer input by user is correct, if yes then stop alarm.
+ */
 public class MathActivity extends AppCompatActivity {
-    private EditText answer;
-    private String mathAnswer;
     private TextView topLine, mathQuestion;
     private int result;
 
@@ -32,15 +33,12 @@ public class MathActivity extends AppCompatActivity {
         Button okmath=(Button)findViewById(R.id.okmath);
         okmath.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
-
                 final Intent myIntent = new Intent(MathActivity.this, RingtonePlayingService.class);
                 result=Integer.parseInt(((EditText) findViewById(R.id.editText)).getText().toString());
                 if(result==Integer.parseInt(answer)){
                     myIntent.putExtra("extra", "off");
                     startService(myIntent);
-                    //sendBroadcast(myIntent);
                     finish();
-
                 }
                 else{
                     AlertDialog.Builder builder=new AlertDialog.Builder(MathActivity.this);
