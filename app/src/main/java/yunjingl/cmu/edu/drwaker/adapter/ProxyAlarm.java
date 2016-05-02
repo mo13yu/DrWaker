@@ -68,7 +68,7 @@ public abstract class ProxyAlarm {
 
     public void addToDB(Alarm newalarm){
         try{
-            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
+            alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(),newalarm.getHour(),
                     newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
                     newalarm.isLoc_switch(), 1, 1);}              //ToDo: newalarm.getMathID(), newalarm.getLocationID(), need add mathID,on/off,locationID
         catch(DatabaseException e){

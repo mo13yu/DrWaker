@@ -28,8 +28,7 @@ public class AlarmDatabaseConnector {
         public void onCreate(SQLiteDatabase db) {
             //create the query first
             String createQuery="CREATE TABLE "+TABLE_NAME+
-                    " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                    " Hour TEXT, Minute TEXT, Wakeupmethod TEXT, Tag TEXT, Tune TEXT,Status TEXT, LocID TEXT, MathID TEXT);";//
+                    " (Id TEXT, Hour TEXT, Minute TEXT, Wakeupmethod TEXT, Tag TEXT, Tune TEXT,Status TEXT, LocID TEXT, MathID TEXT);";//
             db.execSQL(createQuery);
 //            System.out.println(createQuery);
         }
@@ -68,10 +67,11 @@ public class AlarmDatabaseConnector {
     }
 
     //insert a new Alarm into database
-    public void insertAlarm(int hour,int minute,String method,String tag ,String tune ,
+    public void insertAlarm(int id, int hour,int minute,String method,String tag ,String tune ,
                             boolean status,int locID,int mathID) throws DatabaseException {
 
         ContentValues newAlarm=new ContentValues();
+        newAlarm.put("Id",id);
         newAlarm.put("Hour",String.valueOf(hour));
         newAlarm.put("Minute", String.valueOf(minute));
         newAlarm.put("Wakeupmethod", method);
@@ -90,7 +90,7 @@ public class AlarmDatabaseConnector {
     //end the code insert Alarm
 
     //update a Alarm which is already in the database
-    public void updateAlarm(long id,int hour,int minute,String method,String tag ,String tune ,
+    public void updateAlarm(int id,int hour,int minute,String method,String tag ,String tune ,
                             boolean status, int locID,int mathID) throws DatabaseException {
         ContentValues editAlarm=new ContentValues();
         editAlarm.put("Hour",hour);
@@ -103,7 +103,7 @@ public class AlarmDatabaseConnector {
         editAlarm.put("MathID",mathID);
 
         open();//open the database
-        database.update(TABLE_NAME, editAlarm,"_id=" + id, null);
+        database.update(TABLE_NAME, editAlarm,"Id=" + id, null);
         close();
 
     }
@@ -117,14 +117,14 @@ public class AlarmDatabaseConnector {
 
     //return a curser for a specific Alarm
     public Cursor getOneAlarm(int id){
-        return database.query(TABLE_NAME,null,"_id="+id,null,null,null,null);
+        return database.query(TABLE_NAME,null,"Id="+id,null,null,null,null);
     }
 
     //delete a specific Alarm
     public void deleteAlarm(int id) throws DatabaseException {
 
         open();
-        database.delete(TABLE_NAME,"id="+id,null);
+        database.delete(TABLE_NAME,"Id="+id,null);
         close();
 
     }

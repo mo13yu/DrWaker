@@ -28,7 +28,7 @@ public class LocationDatabaseConnector {
         public void onCreate(SQLiteDatabase db) {
             //create the query first
             String createQuery="CREATE TABLE "+TABLE_NAME+
-                    " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    " Id TEXT, "+
                     " Latitude TEXT, Longitude TEXT, Tag TEXT);";//
             db.execSQL(createQuery);
 //            System.out.println(createQuery);
@@ -68,9 +68,10 @@ public class LocationDatabaseConnector {
     }
 
     //insert a new Location into database
-    public void insertLocation(double latitude,double longitude,String tag) throws DatabaseException {
+    public void insertLocation(int id, double latitude,double longitude,String tag) throws DatabaseException {
 
         ContentValues newLocation=new ContentValues();
+        newLocation.put("Id",String.valueOf(id));
         newLocation.put("Latitude",String.valueOf(latitude));
         newLocation.put("Longitude", String.valueOf(longitude));
         newLocation.put("Tag", tag);
@@ -93,7 +94,7 @@ public class LocationDatabaseConnector {
 
 
         open();//open the database
-        database.update(TABLE_NAME, editLocation,"_id=" + id, null);
+        database.update(TABLE_NAME, editLocation,"Id=" + id, null);
         close();
 
     }
@@ -107,14 +108,14 @@ public class LocationDatabaseConnector {
 
     //return a curser for a specific Location
     public Cursor getOneLocation(int id){
-        return database.query(TABLE_NAME,null,"_id="+id,null,null,null,null);
+        return database.query(TABLE_NAME,null,"Id="+id,null,null,null,null);
     }
 
     //delete a specific Location
     public void deleteLocation(int id) throws DatabaseException {
 
         open();
-        database.delete(TABLE_NAME,"id="+id,null);
+        database.delete(TABLE_NAME,"Id="+id,null);
         close();
 
     }

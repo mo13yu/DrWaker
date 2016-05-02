@@ -10,5 +10,5 @@ import com.google.android.gms.maps.model.LatLng;
 public interface CreateLocation {
     public void createLocation(LatLng latlng, String tag);
     public int getAvailableID();
-    public void setContext(Context context);
+    public void setContext(Context con);
 }

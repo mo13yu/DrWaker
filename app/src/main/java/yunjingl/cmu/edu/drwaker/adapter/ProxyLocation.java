@@ -34,6 +34,8 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     private Context context;
     private static LocationDatabaseConnector locationDatabaseConnector;
 
+    private android.location.Location alarmLocation;
+
 
     /* CreateLocation */
     public void createLocation(LatLng latlng, String tag) {
@@ -119,9 +121,15 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         }
         */
 
+        // get alarm location
+        //android.location.Location alarmLocation = new android.location.Location("");
+        alarmLocation.setLatitude(Double.parseDouble(lat));
+        alarmLocation.setLatitude(Double.parseDouble(lat));
+        Log.i(TAG, "Input Location: ("+ String.valueOf(alarmLocation.getLatitude()) + ", " + String.valueOf(alarmLocation.getLongitude()) + ")");
+
         //TODO: check if user is in the area
-        Log.i(TAG, "Input Location: ("+ lat + ", " + lng + ")");
-        Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
+
+
         return false;
     }
 
@@ -178,6 +186,10 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
             e.printStackTrace();
         }
 
+        Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
+        float distance = mLastLocation.distanceTo(alarmLocation);
+        Log.i(TAG, "Distance: " + String.valueOf(distance) + "m");
+
         // Disconnect from Google Play services location API
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -200,14 +212,14 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     /**
      * Database
      */
-    public void setContext(Context context) {
-        context=context;
+    public void setContext(Context con) {
+        context=con;
         locationDatabaseConnector=new LocationDatabaseConnector(context);
     }
 
     public void addToDB(Location newLoc){
         try{
-            locationDatabaseConnector.insertLocation(newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());}              //TODO:need add mathID,on/off,locationID
+            locationDatabaseConnector.insertLocation(newLoc.getLocid(),newLoc.getLatitude(), newLoc.getLongitude(), newLoc.getTag());}              //TODO:need add mathID,on/off,locationID
         catch(DatabaseException e){
             e.fix(e.getErrNo());
         }
