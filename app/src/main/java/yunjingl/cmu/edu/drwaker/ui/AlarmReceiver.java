@@ -20,11 +20,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         String method=intent.getExtras().getString("wake_up_method");
         String ringtone=intent.getExtras().getString("ring_tone");
         boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
+        Log.e("location switch",String.valueOf(loc_switch));
         if(loc_switch){
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
+            Log.e("near location", "reach here");
             boolean nearlocation=new SetLocation().nearLocation(context,la,lo);
-            if(!nearlocation){
+            if(nearlocation){
                 Intent ring_intent=new Intent(context,RingtonePlayingService.class);
                 ring_intent.putExtra("extra",temp);
                 ring_intent.putExtra("ring_tone", ringtone);

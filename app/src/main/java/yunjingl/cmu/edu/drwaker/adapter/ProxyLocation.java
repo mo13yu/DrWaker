@@ -31,7 +31,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location mLastLocation;
 
-    private Context context;
+    private static Context context;
     private static LocationDatabaseConnector locationDatabaseConnector;
 
 
@@ -98,9 +98,11 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
 
     //TODO: test nearLocation
     public boolean nearLocation(Context context, String lat, String lng) {
+        Log.i(TAG, "Input Location: ("+ lat + ", " + lng + ")");
+
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
         if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(context)
+            mGoogleApiClient = new GoogleApiClient.Builder(this.context)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
@@ -120,8 +122,8 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
         */
 
         //TODO: check if user is in the area
-        Log.i(TAG, "Input Location: ("+ lat + ", " + lng + ")");
-        Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
+
+
         return false;
     }
 
@@ -178,6 +180,8 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
             e.printStackTrace();
         }
 
+        Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
+
         // Disconnect from Google Play services location API
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -201,7 +205,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
      * Database
      */
     public void setContext(Context context) {
-        context=context;
+        this.context=context;
         locationDatabaseConnector=new LocationDatabaseConnector(context);
     }
 
