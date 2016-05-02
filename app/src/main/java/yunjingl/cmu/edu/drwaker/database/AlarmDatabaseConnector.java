@@ -113,7 +113,7 @@ public class AlarmDatabaseConnector {
     }
     //end the code update Alarm
 
-    //return a cursor with all Alarm information
+    //return a LinkedHashMap with all Alarm information
     public LinkedHashMap<Integer,Alarm> getAllAlarm() throws DatabaseException {
         LinkedHashMap<Integer,Alarm> alarms= new LinkedHashMap<Integer,Alarm>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
