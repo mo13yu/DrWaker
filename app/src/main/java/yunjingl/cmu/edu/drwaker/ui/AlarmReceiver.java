@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String method=intent.getExtras().getString("wake_up_method");
         String ringtone=intent.getExtras().getString("ring_tone");
         boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
-        Log.e("location switch",String.valueOf(loc_switch));
+        Log.e("location switch", String.valueOf(loc_switch));
         if(loc_switch){
             String la=intent.getExtras().getString("loc_la");
             String lo=intent.getExtras().getString("loc_lo");
@@ -31,6 +31,14 @@ public class AlarmReceiver extends BroadcastReceiver {
                 ring_intent.putExtra("extra",temp);
                 ring_intent.putExtra("ring_tone", ringtone);
                 context.startService(ring_intent);
+                Intent stopintent=new Intent();
+                if(method.equals("math")){
+                    stopintent=new Intent(context,MathActivity.class);
+                }else if(method.equals("facial")){
+                    stopintent=new Intent(context,SelfieActivity.class);
+                }
+                stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(stopintent);
             }else{
                 Log.e("near location", "auto switch off");
             }
@@ -47,17 +55,15 @@ public class AlarmReceiver extends BroadcastReceiver {
             ring_intent.putExtra("ring_tone",ringtone);
             //ring_intent.putExtra("loc_switch", loc_switch);
             context.startService(ring_intent);
+            Intent stopintent=new Intent();
+            if(method.equals("math")){
+                stopintent=new Intent(context,MathActivity.class);
+            }else if(method.equals("facial")){
+                stopintent=new Intent(context,SelfieActivity.class);
+            }
+            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(stopintent);
         }
 
-
-
-        Intent stopintent=new Intent();
-        if(method.equals("math")){
-            stopintent=new Intent(context,MathActivity.class);
-        }else if(method.equals("facial")){
-            stopintent=new Intent(context,SelfieActivity.class);
-        }
-        stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(stopintent);
     }
 }
