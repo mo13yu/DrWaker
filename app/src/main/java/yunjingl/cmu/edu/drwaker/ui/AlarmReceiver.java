@@ -18,14 +18,43 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
     private Context context;
     private Intent intent;
     protected GoogleApiClient mGoogleApiClient;
-
-
+    boolean loc_switch;
+    String temp;
+    String ringtone;
+    String method;
     @Override
     public void onReceive(Context context, Intent intent) {
 
         this.context = context;
         this.intent = intent;
 
+        loc_switch=intent.getExtras().getBoolean("loc_switch");
+        temp = intent.getExtras().getString("extra");
+        method = intent.getExtras().getString("wake_up_method");
+        ringtone = intent.getExtras().getString("ring_tone");
+        if(!loc_switch){
+            Intent ring_intent = new Intent(context, RingtonePlayingService.class);
+            ring_intent.putExtra("extra", temp);
+            ring_intent.putExtra("ring_tone", ringtone);
+            //ring_intent.putExtra("loc_switch", loc_switch);
+            context.startService(ring_intent);
+
+            Intent stopintent = new Intent();
+            // Math Calculation
+            if (method.equals("math")) {
+                String question = intent.getExtras().getString("question");
+                String answer = intent.getExtras().getString("answer");
+                stopintent = new Intent(context, MathActivity.class);
+                stopintent.putExtra("question", question);
+                stopintent.putExtra("answer", answer);
+            }
+            // Facial Recognization
+            else if (method.equals("facial")) {
+                stopintent = new Intent(context, SelfieActivity.class);
+            }
+            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(stopintent);
+        }
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
         if (mGoogleApiClient == null) {
             Log.d("nearLocation", "Build GoogleAiClient");
@@ -61,10 +90,10 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
         }
 
         // Get info from Intent
-        String temp = intent.getExtras().getString("extra");
-        String method = intent.getExtras().getString("wake_up_method");
-        String ringtone = intent.getExtras().getString("ring_tone");
-        boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
+//        String temp = intent.getExtras().getString("extra");
+//        String method = intent.getExtras().getString("wake_up_method");
+//        String ringtone = intent.getExtras().getString("ring_tone");
+       // boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
         Log.e("location switch", String.valueOf(loc_switch));
 
         // If alarm's location service is enabled,
@@ -124,29 +153,29 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
         }
 
         // If alarm's location service is disabled, sound the alarm no matter what
-        else {
-            Intent ring_intent = new Intent(context, RingtonePlayingService.class);
-            ring_intent.putExtra("extra", temp);
-            ring_intent.putExtra("ring_tone", ringtone);
-            //ring_intent.putExtra("loc_switch", loc_switch);
-            context.startService(ring_intent);
-
-            Intent stopintent = new Intent();
-            // Math Calculation
-            if (method.equals("math")) {
-                String question = intent.getExtras().getString("question");
-                String answer = intent.getExtras().getString("answer");
-                stopintent = new Intent(context, MathActivity.class);
-                stopintent.putExtra("question", question);
-                stopintent.putExtra("answer", answer);
-            }
-            // Facial Recognization
-            else if (method.equals("facial")) {
-                stopintent = new Intent(context, SelfieActivity.class);
-            }
-            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(stopintent);
-        }
+//        else {
+//            Intent ring_intent = new Intent(context, RingtonePlayingService.class);
+//            ring_intent.putExtra("extra", temp);
+//            ring_intent.putExtra("ring_tone", ringtone);
+//            //ring_intent.putExtra("loc_switch", loc_switch);
+//            context.startService(ring_intent);
+//
+//            Intent stopintent = new Intent();
+//            // Math Calculation
+//            if (method.equals("math")) {
+//                String question = intent.getExtras().getString("question");
+//                String answer = intent.getExtras().getString("answer");
+//                stopintent = new Intent(context, MathActivity.class);
+//                stopintent.putExtra("question", question);
+//                stopintent.putExtra("answer", answer);
+//            }
+//            // Facial Recognization
+//            else if (method.equals("facial")) {
+//                stopintent = new Intent(context, SelfieActivity.class);
+//            }
+//            stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            context.startActivity(stopintent);
+//        }
 
     }
 

@@ -150,22 +150,26 @@ public class MainActivity extends AppCompatActivity {
             myIntent.putExtra("ring_tone", new SetAlarm().getTone(thisid));
             myIntent.putExtra("loc_switch", new SetAlarm().isLocationSwitchOn(thisid));
             if (new SetAlarm().isLocationSwitchOn(thisid)) {
-                if (new SetAlarm().hasLocation(thisid)) {
-                    myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
-                    myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("Attention");
-                    builder.setMessage("You need to add a new location");
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).create();
-                    builder.show();
-                }
+                myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
+                myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
             }
+//            if (new SetAlarm().isLocationSwitchOn(thisid)) {
+//                if (new SetAlarm().hasLocation(thisid)) {
+//                    myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
+//                    myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
+//                } else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                    builder.setTitle("Attention");
+//                    builder.setMessage("You need to add a new location");
+//                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    }).create();
+//                    builder.show();
+//                }
+//            }
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, thisid, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mgrAlarm.set(AlarmManager.RTC_WAKEUP,

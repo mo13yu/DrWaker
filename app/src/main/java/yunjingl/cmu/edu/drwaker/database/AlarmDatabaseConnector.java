@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
@@ -18,9 +19,10 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class AlarmDatabaseConnector {
-    private static final String TABLE_NAME = "AlarmDatabaseTesting2";
+    private static final String TABLE_NAME = "AlarmDatabaseTesting8";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
+    private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();
 
     private class DatabaseOpenHelper extends SQLiteOpenHelper {
         //constructor
@@ -46,10 +48,11 @@ public class AlarmDatabaseConnector {
     }
     //end class DatabaseOpenHelper
 
-    public AlarmDatabaseConnector(Context context) {
+    public AlarmDatabaseConnector(Context context,HashMap<Integer,String> mathProblemAndAnswer) {
         // create a new DatabaseOpenHelper
         databaseOpenHelper =
                 new DatabaseOpenHelper(context, TABLE_NAME, null, 1);
+        this.mathProblemAndAnswer=mathProblemAndAnswer;
 
 
     } // end DatabaseConnector constructor
@@ -150,8 +153,15 @@ public class AlarmDatabaseConnector {
                     newalarm.setTag(tag);
                     newalarm.setTone(tune);
                     newalarm.setLoc_switch(status);
-                    newalarm.setLocation(new SetLocation().getLocation(locTag));
-                    //TODO: newalarm.setMath();
+                    if(!locTag.equals("0")){
+                        newalarm.setLocation(new SetLocation().getLocation(locTag));
+                    }
+                    if(mathId!=0){
+                        //TODO: newalarm.setMath();
+                        String[] qa=mathProblemAndAnswer.get(mathId).split(" ");
+                        newalarm.setMath(mathId,qa[0],qa[1]);
+                    }
+
                     alarms.put(counter, newalarm);
                     counter++;
                 } while (cursor.moveToNext());
@@ -196,7 +206,15 @@ public class AlarmDatabaseConnector {
             alarm.setTag(tag);
             alarm.setTone(tune);
             alarm.setLoc_switch(status);
-            alarm.setLocation(new SetLocation().getLocation(locTag));
+            if(!locTag.equals("0")){
+                alarm.setLocation(new SetLocation().getLocation(locTag));
+            }
+            if(mathId!=0){
+                //TODO: alarm.setMath();
+                String[] qa=mathProblemAndAnswer.get(mathId).split(" ");
+                alarm.setMath(mathId,qa[0],qa[1]);
+            }
+            //alarm.setLocation(new SetLocation().getLocation(locTag));
         } else {
             new CusException("No such alarm exist");
         }

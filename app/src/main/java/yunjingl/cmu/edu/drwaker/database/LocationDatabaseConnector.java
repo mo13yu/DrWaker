@@ -18,7 +18,7 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
  * Created by yapeng on 4/30/2016.
  */
 public class LocationDatabaseConnector {
-    private static final String TABLE_NAME = "LocationDatabaseTesting2";
+    private static final String TABLE_NAME = "LocationDatabaseTesting8";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
 

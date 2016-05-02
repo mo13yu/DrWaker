@@ -1,5 +1,7 @@
 package yunjingl.cmu.edu.drwaker.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -79,6 +81,34 @@ public class Settings extends AppCompatActivity {
 
                 Switch loc_switch = (Switch) findViewById(R.id.locswitch);
                 locationswitch = loc_switch.isChecked();
+                if (locationtag == null && locationswitch) {
+                    //Log.d("location tag", "need set");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+                    builder.setTitle("Attention");
+                    builder.setMessage("You need to add a new location");
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).create();
+                    builder.show();
+                }else{
+                    if (method.equals("create")) {
+
+                        setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
+
+                        //Log.d("location tag", "is null???");
+
+                    } else if (method.equals("update")) {
+                        int alarmid = Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
+                        setAlarm.updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
+                    }
+                    //Alarm newAlarm = getAlarm();
+                    //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
                 /*
                 loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -89,16 +119,7 @@ public class Settings extends AppCompatActivity {
                 });
                 */
                 //Log.e("Settings check", "inputhour"+inputhour+"inputminute"+inputminute+"tag"+tag);
-                if (method.equals("create")) {
-                    setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
-                } else if (method.equals("update")) {
-                    int alarmid = Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
-                    setAlarm.updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
-                }
-                //Alarm newAlarm = getAlarm();
-                //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+
             }
         });
 

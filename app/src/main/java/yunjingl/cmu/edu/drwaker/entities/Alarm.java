@@ -102,6 +102,7 @@ public class Alarm {
         newMath.setMathid(id);
         newMath.setQuestion(question);
         newMath.setAnswer(answer);
+        math=newMath;
     }
 
     public String getMathQuestion(){
@@ -130,6 +131,13 @@ public class Alarm {
 
     public boolean hasLocation(){
         if(location==null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public boolean hasMath(){
+        if(math==null){
             return false;
         }else{
             return true;

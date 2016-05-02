@@ -9,8 +9,10 @@ import android.util.Log;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.Set;
 
 import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
@@ -24,6 +26,7 @@ import yunjingl.cmu.edu.drwaker.ws.local.SocketClient;
 public abstract class ProxyAlarm {
     private static LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();
 
+    private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();
     private Context context;
     private static AlarmDatabaseConnector alarmDatabaseConnector;
 
@@ -40,34 +43,74 @@ public abstract class ProxyAlarm {
 
     public void initializeAlarms() {
         try {
+            if(mathProblemAndAnswer.isEmpty()){
+                initializeMathsSet();
+            }
             alarms = alarmDatabaseConnector.getAllAlarm();
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
 
+    public void initializeMathsSet() {
+
+            SocketClient socketClient = new SocketClient("10.0.2.2", 8902);
+            socketClient.start();
+
+            while (socketClient.isAlive()) {
+                continue;
+            }
+            math = socketClient.getMath();
+            Log.d("initialize alarm test", math);
+            String[] qa = math.split(" ");
+            for(int i=0;i<qa.length;i=i+3){
+                mathProblemAndAnswer.put(Integer.parseInt(qa[i]),qa[i+1]+" "+qa[i+2]);
+            }
+            //newalarm.setMath(Integer.parseInt(qa[0]), qa[1], qa[2]);
+            //alarms = alarmDatabaseConnector.getAllAlarm();
+
+    }
+
     public void createAlarm(int hour, int minute, String locationtag, boolean locationswitch, String wake_up_method,
                             String tag, String tone) {
 
+        //Log.d("proxy:location tag", "is null???");
         Alarm newalarm = new Alarm();
         newalarm.setHour(hour);
         newalarm.setMinute(minute);
         newalarm.setWake_up_method(wake_up_method);
         newalarm.setTag(tag);
         newalarm.setTone(tone);
-        /*
-        SocketClient socketClient=new SocketClient(getIP(),8844);
-        socketClient.start();
-        math=socketClient.getMath();
-        String[] qa=math.split(" ");
-        newalarm.setMath(Integer.parseInt(qa[0]),qa[1],qa[2]);
-        int max=0;
-        Iterator iterator=alarms.keySet().iterator();
-        while(iterator.hasNext()){
-            int key=(int)iterator.next();
 
+
+        if(wake_up_method.equals("Math Calculation")) {
+//            SocketClient socketClient = new SocketClient("10.0.2.2", 8896);
+//            socketClient.start();
+//
+//            while (socketClient.isAlive()) {
+//                continue;
+//            }
+//            math = socketClient.getMath();
+//            Log.d("alarm test", math);
+//            String[] qa = math.split(" ");
+            Log.d("in proxyalarm, math:", String.valueOf(mathProblemAndAnswer.get(1)));
+            int random=new Random().nextInt(mathProblemAndAnswer.size())+1;
+            while(!mathProblemAndAnswer.keySet().contains(random)){
+                random=new Random().nextInt(mathProblemAndAnswer.size());
+            }
+
+            String[] qa=mathProblemAndAnswer.get(random).split(" ");
+            newalarm.setMath(random,qa[0],qa[1]);
+            //newalarm.setMath(1, qa[1], qa[2]);
         }
-        */
+
+//        int max=0;
+//        Iterator iterator=alarms.keySet().iterator();
+//        while(iterator.hasNext()){
+//            int key=(int)iterator.next();
+//
+//        }
+//        */
 
         // Get next available alarm ID
         Set<Integer> keys = alarms.keySet();
@@ -79,10 +122,12 @@ public abstract class ProxyAlarm {
         }
         //int alarmid = Collections.max(keys)+1;
         newalarm.setAlarmid(alarmid);
-
-        newalarm.setLocation(new SetLocation().getLocation(locationtag));
         newalarm.setLoc_switch(locationswitch);
-        //TODO: newalarm.setMath(ReadMath.read());
+        if(locationswitch){
+            newalarm.setLocation(new SetLocation().getLocation(locationtag));
+        }
+
+        newalarm.setLoc_switch(locationswitch);
 
         Log.e("ProxyAlarm check", "alarm id" + alarmid);
         alarms.put(alarmid, newalarm);
@@ -92,10 +137,25 @@ public abstract class ProxyAlarm {
 
     public void addToDB(Alarm newalarm) {
         try {
+            if(!newalarm.hasLocation()&&!newalarm.hasMath()){
+                alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(), newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(),"0", 0);
+            }else if(!newalarm.hasLocation()){
+                alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(), newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(),"0",newalarm.getMathID());
+            }else if(!newalarm.hasMath()){
+                alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(), newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(), newalarm.getLocationTag(),0);
+            }else{
+                alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(), newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(), newalarm.getLocationTag(), newalarm.getMathID());
+            }
 
-            alarmDatabaseConnector.insertAlarm(newalarm.getAlarmid(), newalarm.getHour(),
-                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    newalarm.isLoc_switch(), newalarm.getLocationTag(), 1);
+
         }              //ToDo: newalarm.getMathID(), need add mathID,on/off,locationID
         catch (DatabaseException e) {
             e.fix(e.getErrNo());
@@ -112,9 +172,15 @@ public abstract class ProxyAlarm {
         newalarm.setTag(tag);
         newalarm.setTone(tone);
         newalarm.setAlarmid(alarmid);
-        newalarm.setLocation(new SetLocation().getLocation(locationtag));
         newalarm.setLoc_switch(locationswitch);
-        //TODO: newalarm.setMath(ReadMath.read());
+
+        if(locationswitch){
+            newalarm.setLocation(new SetLocation().getLocation(locationtag));
+        }
+        if(wake_up_method.equals("Math Calculation")) {
+            String[] qa=mathProblemAndAnswer.get(1).split(" ");
+            newalarm.setMath(1,qa[0],qa[1]);
+        }
         alarms.put(alarmid, newalarm);
 
         updateToDB(newalarm);
@@ -130,10 +196,25 @@ public abstract class ProxyAlarm {
     public void updateToDB(Alarm newalarm) {
         int id = newalarm.getAlarmid();
         try {
-            alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
-                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-                    newalarm.isLoc_switch(), newalarm.getLocationTag(), 1);
-                    //TODO:need add mathID,on/off,locationID
+            if(!newalarm.hasLocation()&&!newalarm.hasMath()){
+                alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(), "0", 0);
+            }else if(!newalarm.hasLocation()){
+                alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(),"0", newalarm.getMathID());
+            }else if(!newalarm.hasMath()){
+                alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(), newalarm.getLocationTag(),0);
+            }else{
+                alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
+                        newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
+                        newalarm.isLoc_switch(), newalarm.getLocationTag(),newalarm.getMathID());
+            }
+
+            //TODO:need add mathID,on/off,locationID
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -197,7 +278,7 @@ public abstract class ProxyAlarm {
 
     public void setContext(Context con) {
         context = con;
-        alarmDatabaseConnector = new AlarmDatabaseConnector(context);
+        alarmDatabaseConnector = new AlarmDatabaseConnector(context,mathProblemAndAnswer);
     }
 
 
@@ -249,19 +330,19 @@ public abstract class ProxyAlarm {
         }
     }
 
-    public String getIP() {
-        String strAddress = "";
-        try {
-            InetAddress local = InetAddress.getLocalHost();
-            byte[] b = local.getAddress();
-
-            for (int i = 0; i < b.length; i++) {
-                strAddress += ((int) 255 & b[i]) + ".";
-            }
-            strAddress = strAddress.substring(0, strAddress.length() - 1);
-
-        } catch (UnknownHostException e) {
-        }
-        return strAddress;
-    }
+//    public String getIP() {
+//        String strAddress = "";
+//        try {
+//            InetAddress local = InetAddress.getLocalHost();
+//            byte[] b = local.getAddress();
+//
+//            for (int i = 0; i < b.length; i++) {
+//                strAddress += ((int) 255 & b[i]) + ".";
+//            }
+//            strAddress = strAddress.substring(0, strAddress.length() - 1);
+//
+//        } catch (UnknownHostException e) {
+//        }
+//        return strAddress;
+//    }
 }
