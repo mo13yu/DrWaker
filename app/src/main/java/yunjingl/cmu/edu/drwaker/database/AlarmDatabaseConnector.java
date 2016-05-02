@@ -157,7 +157,6 @@ public class AlarmDatabaseConnector {
                         newalarm.setLocation(new SetLocation().getLocation(locTag));
                     }
                     if(mathId!=0){
-                        //TODO: newalarm.setMath();
                         String[] qa=mathProblemAndAnswer.get(mathId).split(" ");
                         newalarm.setMath(mathId,qa[0],qa[1]);
                     }
@@ -210,7 +209,6 @@ public class AlarmDatabaseConnector {
                 alarm.setLocation(new SetLocation().getLocation(locTag));
             }
             if(mathId!=0){
-                //TODO: alarm.setMath();
                 String[] qa=mathProblemAndAnswer.get(mathId).split(" ");
                 alarm.setMath(mathId,qa[0],qa[1]);
             }

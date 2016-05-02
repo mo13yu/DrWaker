@@ -52,7 +52,6 @@ public class SelfieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selfie);
 
         mPreview=new CameraPreview(this, mCamera);
-       //TODO:new added
         Camera.Parameters param = mCamera.getParameters();
         switch((int) mPreview.getRotation()){
             case Surface.ROTATION_0:

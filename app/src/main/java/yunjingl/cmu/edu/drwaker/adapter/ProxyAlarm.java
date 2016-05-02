@@ -156,7 +156,7 @@ public abstract class ProxyAlarm {
             }
 
 
-        }              //ToDo: newalarm.getMathID(), need add mathID,on/off,locationID
+        }
         catch (DatabaseException e) {
             e.fix(e.getErrNo());
         }
@@ -213,8 +213,6 @@ public abstract class ProxyAlarm {
                         newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
                         newalarm.isLoc_switch(), newalarm.getLocationTag(),newalarm.getMathID());
             }
-
-            //TODO:need add mathID,on/off,locationID
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

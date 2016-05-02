@@ -22,23 +22,24 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
     String temp;
     String ringtone;
     String method;
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
         this.context = context;
         this.intent = intent;
 
-        loc_switch=intent.getExtras().getBoolean("loc_switch");
+        loc_switch = intent.getExtras().getBoolean("loc_switch");
         temp = intent.getExtras().getString("extra");
         method = intent.getExtras().getString("wake_up_method");
         ringtone = intent.getExtras().getString("ring_tone");
-        if(!loc_switch){
+
+        // If location service is disabled
+        if (!loc_switch) {
             Intent ring_intent = new Intent(context, RingtonePlayingService.class);
             ring_intent.putExtra("extra", temp);
             ring_intent.putExtra("ring_tone", ringtone);
-            //ring_intent.putExtra("loc_switch", loc_switch);
             context.startService(ring_intent);
-
             Intent stopintent = new Intent();
             // Math Calculation
             if (method.equals("math")) {
@@ -93,14 +94,13 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
 //        String temp = intent.getExtras().getString("extra");
 //        String method = intent.getExtras().getString("wake_up_method");
 //        String ringtone = intent.getExtras().getString("ring_tone");
-       // boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
+        // boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
         Log.e("location switch", String.valueOf(loc_switch));
 
         // If alarm's location service is enabled,
         // need to compare user location with alarm location to determine if alarm should be sounded
         if (loc_switch) {
             // Get alarm location
-            //TODO: might have empty location, will have error trying to read latlng values
             String la = intent.getExtras().getString("loc_la");
             String lo = intent.getExtras().getString("loc_lo");
             Location alarmLocation = new Location("alarm");
