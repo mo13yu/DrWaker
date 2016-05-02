@@ -2,12 +2,7 @@ package yunjingl.cmu.edu.drwaker.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -23,18 +18,12 @@ import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 /**
  * Created by yunjing on 4/22/16.
  */
-public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    protected static final String TAG = "ProxyLocation";
+public abstract class ProxyLocation {
 
     private static LinkedHashMap<String,Location> locations = new LinkedHashMap<String,Location>();
 
-    private GoogleApiClient mGoogleApiClient;
-    private android.location.Location mLastLocation;
-
     private static Context context;
     private static LocationDatabaseConnector locationDatabaseConnector;
-
-    private android.location.Location alarmLocation = new android.location.Location("alarm");
 
 
     /* CreateLocation */
@@ -90,44 +79,12 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     }
 
     public Location getLocation(String tag) {
-        if(locations.containsKey(tag)){
+        if (locations.containsKey(tag)) {
             return locations.get(tag);
-        }else{
-            //throw CusException("")
+        } else {
+            //TODO: throw CusException("")
         }
         return locations.get(tag);
-    }
-
-    //TODO: test nearLocation
-    public boolean nearLocation(String lat, String lng) {
-        // get alarm location
-        //android.location.Location alarmLocation = new android.location.Location("");
-        alarmLocation.setLatitude(Double.parseDouble(lat));
-        alarmLocation.setLongitude(Double.parseDouble(lng));
-        Log.i(TAG, "Input Location: (" + String.valueOf(alarmLocation.getLatitude()) + ", " + String.valueOf(alarmLocation.getLongitude()) + ")");
-
-        // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this.context)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-        // Connect to Google Play services location API
-        mGoogleApiClient.connect();
-
-        // onConnected() will be called and set last known location to mLastLocation inside the function
-
-        /*
-        // Disconnect from Google Play services location API
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-        */
-
-        return false;
     }
 
 
@@ -151,45 +108,6 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
                 locations.get(currentTag).setLatlng(latlng);
                 locations.get(currentTag).setTag(tag);
             }
-        }
-    }
-
-
-    /**
-     * GoogleApiClient
-     */
-    @Override
-    public void onConnectionSuspended(int cause) {
-        Log.i(TAG, "GoogleApiClient: onConnectionSuspended");
-    }
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        Log.i(TAG, "GoogleApiClient: oConnectionFailed: Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
-    }
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        Log.i(TAG, "GoogleApiClient: onConnected()");
-
-        // Get last known location
-        try {
-            Log.i(TAG, "Trying to get last known location");
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                String mLatitudeText = String.valueOf(mLastLocation.getLatitude());
-                String mLongitudeText = String.valueOf(mLastLocation.getLongitude());
-                Log.i(TAG, "Last Location: (" + mLatitudeText + ", " + mLongitudeText + ")");
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-
-        Log.i(TAG, "mLastLocation: (" + String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
-        float distance = mLastLocation.distanceTo(alarmLocation);
-        Log.i(TAG, "Distance: " + String.valueOf(distance) + "m");
-
-        // Disconnect from Google Play services location API
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
         }
     }
 
