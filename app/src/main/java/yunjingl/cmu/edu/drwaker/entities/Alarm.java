@@ -76,11 +76,19 @@ public class Alarm {
     public void setMath(Math math) {
         this.math = math;
     }
+<<<<<<< HEAD
     public String getMathQuestion(){
         return math.getQuestion();
     }
     public String getMathAnswer(){
         return math.getAnswer();
+=======
+    public void setMath(int id,String question,String answer) {
+        Math newMath=new Math();
+        newMath.setMathid(id);
+        newMath.setQuestion(question);
+        newMath.setAnswer(answer);
+>>>>>>> origin/master
     }
 
     public int getMathID(){

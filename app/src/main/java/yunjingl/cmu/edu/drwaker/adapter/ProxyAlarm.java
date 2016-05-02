@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -13,6 +15,7 @@ import java.util.Set;
 import yunjingl.cmu.edu.drwaker.database.AlarmDatabaseConnector;
 import yunjingl.cmu.edu.drwaker.entities.Alarm;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
+import yunjingl.cmu.edu.drwaker.ws.local.SocketClient;
 
 /**
  * Created by yunjing on 4/22/16.
@@ -23,7 +26,7 @@ public abstract class ProxyAlarm {
     private Context context;
     private static  AlarmDatabaseConnector alarmDatabaseConnector;
 
-
+    private String math;
     public LinkedHashMap<Integer, Alarm> getAlarms() {
         return alarms;
     }
@@ -49,6 +52,11 @@ public abstract class ProxyAlarm {
         newalarm.setWake_up_method(wake_up_method);
         newalarm.setTag(tag);
         newalarm.setTone(tone);
+        SocketClient socketClient=new SocketClient(getIP(),8844);
+        socketClient.start();
+        math=socketClient.getMath();
+        String[] qa=math.split(" ");
+        newalarm.setMath(Integer.parseInt(qa[0]),qa[1],qa[2]);
 //        int max=0;
 //        Iterator iterator=alarms.keySet().iterator();
 //        while(iterator.hasNext()){
@@ -174,10 +182,50 @@ public abstract class ProxyAlarm {
         alarmDatabaseConnector=new AlarmDatabaseConnector(context);
     }
 
+<<<<<<< HEAD
     public boolean hasLocation(int alarmid){
         Alarm thisalarm=alarms.get(alarmid);
         return thisalarm.hasLocation();
     }
+=======
+//    public LinkedHashMap<Integer,Alarm> allAlarm(){
+//        LinkedHashMap<Integer,Alarm> data= new LinkedHashMap<>();
+//        try {
+//            alarmDatabaseConnector.open();
+//        } catch (DatabaseException e) {
+//            e.printStackTrace();
+//        }
+//        Cursor cursor=alarmDatabaseConnector.getAllAlarm();
+//        int idIndex= cursor.getColumnIndex("id");
+//        int hourIndex=cursor.getColumnIndex("Hour");
+//        int minuteIndex=cursor.getColumnIndex("Minute");
+//        int wakeupmethodIndex=cursor.getColumnIndex("Wakeupmethod");
+//        int tagIndex=cursor.getColumnIndex("Tag");
+//        int tuneIndex=cursor.getColumnIndex("Tune");
+//        int statusIndex=cursor.getColumnIndex("Status");
+//        cursor.moveToFirst();
+//        int id=Integer.valueOf(cursor.getString(idIndex));
+//        int hour=Integer.valueOf(cursor.getString(hourIndex));
+//        int minute=Integer.valueOf(cursor.getString(minuteIndex));
+//        String wakeupmethod=cursor.getString(wakeupmethodIndex);
+//        String tag=cursor.getString(tagIndex);
+//        String tune=cursor.getString(tuneIndex);
+//        Boolean status=Boolean.valueOf(cursor.getString(statusIndex));        //Status is boolean
+//        int counter=0;
+//
+//        while(!cursor.isLast()){
+//            alarm.setWake_up_method(wakeupmethod);
+//            alarm.setTag(tag);
+//            alarm.setTone(tune);
+//            alarm.setLoc_switch(status);
+//            //need math and location
+//            data.put(counter,alarm);
+//            counter++;
+//            cursor.moveToNext();
+//        }
+//        return data;
+//    }
+>>>>>>> origin/master
 
 
 //    public Alarm readAlarm(int id){
@@ -220,5 +268,22 @@ public abstract class ProxyAlarm {
             result+=next.getHour()+":"+next.getMinute()+"     ";
         }
         return result;
+    }
+
+
+    public String getIP() {
+        String strAddress = "";
+        try {
+            InetAddress local = InetAddress.getLocalHost();
+            byte[] b = local.getAddress();
+
+            for (int i = 0; i < b.length; i++) {
+                strAddress += ((int) 255 & b[i]) + ".";
+            }
+            strAddress = strAddress.substring(0, strAddress.length() - 1);
+
+        }
+        catch(UnknownHostException e){}
+        return strAddress;
     }
 }
