@@ -149,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         pendingIntents = new ArrayList<PendingIntent>();
         final Intent myIntent = new Intent(MainActivity.this, AlarmReceiver.class);
 
+        new SetLocation().setContext(MainActivity.this);
+
         itr = new SetAlarm().getIdSet().iterator();
         int i=0;
         while (itr.hasNext()){

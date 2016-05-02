@@ -90,12 +90,14 @@ public class Settings extends AppCompatActivity {
                 tag=((EditText) findViewById(R.id.tag)).getText().toString();
 
                 Switch loc_switch=(Switch) findViewById(R.id.locswitch);
-                loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        locationswitch=isChecked;
-                    }
-                });
+                locationswitch=loc_switch.isChecked();
+//                loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        locationswitch=isChecked;
+//                        Log.e("switch",String.valueOf(isChecked));
+//                    }
+//                });
                 if(method.equals("create")){
                     setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){

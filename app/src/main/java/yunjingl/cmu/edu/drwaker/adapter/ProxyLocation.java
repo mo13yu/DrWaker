@@ -31,10 +31,10 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location mLastLocation;
 
-    private Context context;
+    private static Context context;
     private static LocationDatabaseConnector locationDatabaseConnector;
 
-    private android.location.Location alarmLocation;
+    private android.location.Location alarmLocation = new android.location.Location("alarm");
 
 
     /* CreateLocation */
@@ -99,10 +99,16 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
     }
 
     //TODO: test nearLocation
-    public boolean nearLocation(Context context, String lat, String lng) {
+    public boolean nearLocation(String lat, String lng) {
+        // get alarm location
+        //android.location.Location alarmLocation = new android.location.Location("");
+        alarmLocation.setLatitude(Double.parseDouble(lat));
+        alarmLocation.setLongitude(Double.parseDouble(lng));
+        Log.i(TAG, "Input Location: (" + String.valueOf(alarmLocation.getLatitude()) + ", " + String.valueOf(alarmLocation.getLongitude()) + ")");
+
         // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
         if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(context)
+            mGoogleApiClient = new GoogleApiClient.Builder(this.context)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
@@ -120,15 +126,6 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
             mGoogleApiClient.disconnect();
         }
         */
-
-        // get alarm location
-        //android.location.Location alarmLocation = new android.location.Location("");
-        alarmLocation.setLatitude(Double.parseDouble(lat));
-        alarmLocation.setLatitude(Double.parseDouble(lat));
-        Log.i(TAG, "Input Location: ("+ String.valueOf(alarmLocation.getLatitude()) + ", " + String.valueOf(alarmLocation.getLongitude()) + ")");
-
-        //TODO: check if user is in the area
-
 
         return false;
     }
@@ -186,7 +183,7 @@ public abstract class ProxyLocation implements GoogleApiClient.ConnectionCallbac
             e.printStackTrace();
         }
 
-        Log.i(TAG, "mLastLocation: ("+ String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
+        Log.i(TAG, "mLastLocation: (" + String.valueOf(mLastLocation.getLatitude()) + ", " + String.valueOf(mLastLocation.getLongitude()) + ")");
         float distance = mLastLocation.distanceTo(alarmLocation);
         Log.i(TAG, "Distance: " + String.valueOf(distance) + "m");
 
