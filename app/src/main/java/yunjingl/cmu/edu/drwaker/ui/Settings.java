@@ -75,8 +75,8 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        new SetAlarm().setContext(this);
-        new SetLocation().setContext(this);
+        //new SetAlarm().setContext(Settings.this);
+        //new SetLocation().setContext(this);
 
         final String method=(getIntent().getExtras()).getString("create_or_update");
         //final Alarm newAlarm=getAlarm();
@@ -98,6 +98,7 @@ public class Settings extends AppCompatActivity {
 //                        Log.e("switch",String.valueOf(isChecked));
 //                    }
 //                });
+                //Log.e("Settings check", "inputhour"+inputhour+"inputminute"+inputminute+"tag"+tag);
                 if(method.equals("create")){
                     setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                 }else if(method.equals("update")){
@@ -170,10 +171,12 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-        //ToDo:populate again
+
         Spinner location = (Spinner)findViewById(R.id.location);
+        SetLocation setLocation=new SetLocation();
+        setLocation.initializeLocations();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, new SetLocation().getAllLocations());
+                android.R.layout.simple_spinner_item, setLocation.getAllLocations());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dataAdapter.notifyDataSetChanged();
         location.setAdapter(dataAdapter);

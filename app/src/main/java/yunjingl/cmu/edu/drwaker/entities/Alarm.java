@@ -76,6 +76,20 @@ public class Alarm {
     public void setMath(Math math) {
         this.math = math;
     }
+<<<<<<< HEAD
+    public String getMathQuestion(){
+        return math.getQuestion();
+    }
+    public String getMathAnswer(){
+        return math.getAnswer();
+=======
+    public void setMath(int id,String question,String answer) {
+        Math newMath=new Math();
+        newMath.setMathid(id);
+        newMath.setQuestion(question);
+        newMath.setAnswer(answer);
+>>>>>>> origin/master
+    }
 
     public int getMathID(){
         return math.mathid;
@@ -99,6 +113,14 @@ public class Alarm {
 
     public void setLoc_switch(boolean loc_switch) {
         this.loc_switch = loc_switch;
+    }
+
+    public boolean hasLocation(){
+        if(location==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public Alarm(){

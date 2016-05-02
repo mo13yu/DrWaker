@@ -13,7 +13,7 @@ import android.widget.TextView;
 import yunjingl.cmu.edu.drwaker.R;
 
 public class MathActivity extends AppCompatActivity {
-    private final String question="3+9=";
+    //private final String question="3+9=";
     private EditText answer;
     private String mathAnswer;
     private TextView topLine, mathQuestion;
@@ -23,6 +23,10 @@ public class MathActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_math);
+
+        final String question=(getIntent().getExtras()).getString("question");
+        final String answer=(getIntent().getExtras()).getString("answer");
+
         topLine=(TextView)findViewById(R.id.textView);
         mathQuestion=(TextView)findViewById(R.id.textView3);
         mathQuestion.setText(question);
@@ -32,7 +36,7 @@ public class MathActivity extends AppCompatActivity {
 
                 final Intent myIntent = new Intent(MathActivity.this, RingtonePlayingService.class);
                 result=Integer.parseInt(((EditText) findViewById(R.id.editText)).getText().toString());
-                if(result==12){
+                if(result==Integer.parseInt(answer)){
                     myIntent.putExtra("extra", "off");
                     startService(myIntent);
                     // sendBroadcast(myIntent);

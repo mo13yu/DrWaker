@@ -105,6 +105,22 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
                 ring_intent.putExtra("extra",temp);
                 ring_intent.putExtra("ring_tone", ringtone);
                 context.startService(ring_intent);
+
+                Intent stopintent = new Intent();
+                // Math Calculation
+                if(method.equals("math")) {
+                    String question = intent.getExtras().getString("question");
+                    String answer = intent.getExtras().getString("answer");
+                    stopintent = new Intent(context,MathActivity.class);
+                    stopintent.putExtra("question",question);
+                    stopintent.putExtra("answer",answer);
+                }
+                // Facial Recognization
+                else if(method.equals("facial")){
+                    stopintent=new Intent(context,SelfieActivity.class);
+                }
+                stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(stopintent);
             } else {
                 Log.e("CompareLocation", "Disable alarm due to location service");
             }
@@ -125,8 +141,7 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
         }else if(method.equals("facial")){
             stopintent=new Intent(context,SelfieActivity.class);
         }
-        stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(stopintent);
+
     }
 
     @Override
