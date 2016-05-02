@@ -111,7 +111,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if (mGoogleApiClient!=null) {
+            mGoogleApiClient.connect();
+        }
     }
     @Override
     protected void onStop() {

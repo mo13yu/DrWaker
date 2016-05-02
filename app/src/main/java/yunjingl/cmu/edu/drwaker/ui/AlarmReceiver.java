@@ -54,21 +54,23 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
             }
             stopintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(stopintent);
-        }
-        // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
-        if (mGoogleApiClient == null) {
-            Log.d("nearLocation", "Build GoogleAiClient");
-            mGoogleApiClient = new GoogleApiClient.Builder(context)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
+        }else{
+            // Build a GoogleApiClient. Uses {@code #addApi} to request the LocationServices API.
+            if (mGoogleApiClient == null) {
+                Log.d("nearLocation", "Build GoogleAiClient");
+                mGoogleApiClient = new GoogleApiClient.Builder(context)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
+
+            // Connect to Google Play services location API
+            mGoogleApiClient.connect();
+
+            // onConnected() will be called and set last known location to mLastLocation inside the function
         }
 
-        // Connect to Google Play services location API
-        mGoogleApiClient.connect();
-
-        // onConnected() will be called and set last known location to mLastLocation inside the function
     }
 
     @Override
@@ -94,7 +96,7 @@ public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.
 //        String method = intent.getExtras().getString("wake_up_method");
 //        String ringtone = intent.getExtras().getString("ring_tone");
        // boolean loc_switch = intent.getExtras().getBoolean("loc_switch");
-        Log.e("location switch", String.valueOf(loc_switch));
+        //Log.e("location switch", String.valueOf(loc_switch));
 
         // If alarm's location service is enabled,
         // need to compare user location with alarm location to determine if alarm should be sounded

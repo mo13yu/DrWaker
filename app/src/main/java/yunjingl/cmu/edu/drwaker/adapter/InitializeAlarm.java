@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
 /**
- * Created by yunjing on 4/22/16.
+ * This is an interface to initialize all alarms in the database at the beginning of main activity being created.
  */
 public interface InitializeAlarm {
     public void initializeAlarms();

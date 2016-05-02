@@ -54,7 +54,8 @@ public abstract class ProxyAlarm {
 
     public void initializeMathsSet() {
 
-            SocketClient socketClient = new SocketClient("10.0.2.2", 8902);
+            //TODO: Insert Server's IP
+            SocketClient socketClient = new SocketClient("128.237.207.109", 8904);
             socketClient.start();
 
             while (socketClient.isAlive()) {
