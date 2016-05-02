@@ -32,7 +32,6 @@ public abstract class ProxyAlarm {
     }
 
     public void initializeAlarms(){
-        //ToDo:alarms = ReadAlarm.readAll();
     }
 
     public void createAlarm(int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
@@ -67,13 +66,6 @@ public abstract class ProxyAlarm {
     }
 
     public void addToDB(Alarm newalarm){
-//        try{
-//            alarmDatabaseConnector.insertAlarm(newalarm.getHour(),
-//                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-//                    newalarm.isLoc_switch(), 1, 1);}              //ToDo: newalarm.getMathID(), newalarm.getLocationID(), need add mathID,on/off,locationID
-//        catch(DatabaseException e){
-//            e.fix(e.getErrNo());
-//        }
     }
 
     public void updateAlarm(int alarmid,int hour,int minute,String locationtag, boolean locationswitch, String wake_up_method,
@@ -102,14 +94,6 @@ public abstract class ProxyAlarm {
 
 
     public void updateToDB(Alarm newalarm){
-//        int id = newalarm.getAlarmid();
-//        try {
-//            alarmDatabaseConnector.updateAlarm(id, newalarm.getHour(),
-//                    newalarm.getMinute(), newalarm.getWake_up_method(), newalarm.getTag(), newalarm.getTone(),
-//                    newalarm.isLoc_switch(), newalarm.getMathID(),newalarm.getLocationID());       //TODO:need add mathID,on/off,locationID
-//        } catch (DatabaseException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void delateFromDB(int alarmid){
@@ -182,7 +166,6 @@ public abstract class ProxyAlarm {
         int counter=0;
 
         while(!cursor.isLast()){
-            Alarm alarm=new Alarm(id,hour,minute);
             alarm.setWake_up_method(wakeupmethod);
             alarm.setTag(tag);
             alarm.setTone(tune);

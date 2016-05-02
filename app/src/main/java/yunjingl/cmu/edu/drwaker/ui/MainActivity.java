@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -94,11 +96,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initializeAlarms(){
+        new SetAlarm().setContext(MainActivity.this);
+        new SetAlarm().initializeAlarms();
+
         calendars=new ArrayList<Calendar>();
         Iterator<Integer> itr= new SetAlarm().getIdSet().iterator();
         while (itr.hasNext()){
 
             final int thisid=itr.next();
+            //Log.e("Mainactivity check id", String.valueOf(thisid));
             Calendar calendar = Calendar.getInstance();
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             int hour_sys = calendar.get(Calendar.HOUR_OF_DAY);
@@ -115,12 +121,29 @@ public class MainActivity extends AppCompatActivity {
 
             calendars.add(calendar);
 
-            String alarm=hour+" : "+minute;
+            //String testall=new SetAlarm().printAll();
+            //Log.e("Mainactivity check all alarms",testall );
+           // Log.e("Mainactivity check hour", "hour"+hour+"minute"+minute);
+            String alarm="";
+            if(hour<10){
+                alarm+="0"+hour;
+            }else{
+                alarm+=hour;
+            }
+            alarm+=" : ";
+            if(minute<10){
+                alarm+="0"+minute;
+            }else{
+                alarm+=minute;
+            }
+
+            //String alarm=hour+" : "+minute;
             LayoutInflater layoutInflater =
                     (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View addView = layoutInflater.inflate(R.layout.row, null);
             TextView textOut = (TextView)addView.findViewById(R.id.textout);
             textOut.setText(alarm);
+            textOut.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             Button buttonRemove = (Button)addView.findViewById(R.id.remove);
             buttonRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
