@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by amychen on 5/1/16.
+ * IntentService that will receiver the request of looking up LatLng from an address and send back the response
  */
 public class FetchLocationIntentService extends IntentService {
     private static final String TAG = "FetchLocationIS";

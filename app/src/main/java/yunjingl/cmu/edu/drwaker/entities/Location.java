@@ -3,7 +3,7 @@ package yunjingl.cmu.edu.drwaker.entities;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
- * Created by yunjing on 4/13/16.
+ * Location object
  */
 public class Location {
     private int locid;

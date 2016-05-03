@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.exception;
 
 /**
- * Created by yapeng on 4/30/2016.
+ * Interface to fix exception.
  */
 public interface Fix {
     public void fix(int errNo);

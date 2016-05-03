@@ -15,28 +15,26 @@ import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 
 /**
- * Created by yapeng on 4/30/2016.
+ * This is to connect to location database and performs direct CRUD to data.
  */
 public class LocationDatabaseConnector {
     private static final String TABLE_NAME = "LocationDatabaseTesting9";
     private SQLiteDatabase database;
     private DatabaseOpenHelper databaseOpenHelper;
-
+    /**
+     * connect to database and create new table
+     */
     private class DatabaseOpenHelper extends SQLiteOpenHelper {
-        //constructor
+
         public DatabaseOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
-        }//end constructor
-
-        //override method
+        }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            //create the query first
             String createQuery = "CREATE TABLE " + TABLE_NAME +
                     "(Id TEXT, Latitude TEXT, Longitude TEXT, Tag TEXT);";
             db.execSQL(createQuery);
-//            System.out.println(createQuery);
         }
 
         @Override
@@ -44,33 +42,35 @@ public class LocationDatabaseConnector {
 
         }
     }
-    //end class DatabaseOpenHelper
 
     public LocationDatabaseConnector(Context context) {
-        // create a new DatabaseOpenHelper
         databaseOpenHelper =
                 new DatabaseOpenHelper(context, TABLE_NAME, null, 1);
 
 
-    } // end DatabaseConnector constructor
+    }
 
-    //open database connection
     public void open() throws DatabaseException {
-        //open a database for writing
         database = databaseOpenHelper.getWritableDatabase();
         if (database == null) {
             throw new DatabaseException(1);
         }
     }
 
-    //close database connection
     public void close() {
         if (database != null) {
             database.close();
         }
     }
 
-    //insert a new Location into database
+    /**
+     * insert a new Location into database
+     * @param id
+     * @param latitude
+     * @param longitude
+     * @param tag
+     * @throws DatabaseException
+     */
     public void insertLocation(int id, double latitude, double longitude, String tag) throws DatabaseException {
         ContentValues newLocation = new ContentValues();
         newLocation.put("Id", String.valueOf(id));
@@ -83,9 +83,15 @@ public class LocationDatabaseConnector {
         close();
 
     }
-    //end the code insert Location
 
-    //update a Location which is already in the database
+    /**
+     * update a Location which is already in the database
+     * @param id
+     * @param latitude
+     * @param longitude
+     * @param tag
+     * @throws DatabaseException
+     */
     public void updateLocation(int id, double latitude, double longitude, String tag) throws DatabaseException {
         ContentValues editLocation = new ContentValues();
         editLocation.put("Latitude", String.valueOf(latitude));
@@ -96,10 +102,13 @@ public class LocationDatabaseConnector {
         database.update(TABLE_NAME, editLocation, "Id=" + String.valueOf(id), null);
         close();
     }
-    //end the code update Location
 
+    /**
+     * return all locations
+     * @return
+     * @throws DatabaseException
+     */
     public LinkedHashMap<String, Location> getAllLocation() throws DatabaseException {
-//        return database.query(TABLE_NAME,null,null,null,null,null,"PurchasedPrice");
         LinkedHashMap<String, Location> locations = new LinkedHashMap<String, Location>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         open(); // open the database
@@ -127,9 +136,14 @@ public class LocationDatabaseConnector {
         close();
 
         return locations;
-        //return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
+    /**
+     * get a certain location
+     * @param id
+     * @return
+     * @throws DatabaseException
+     */
     public Location getOneLocation(int id) throws DatabaseException {
         open();
         Location location = new Location();
@@ -153,7 +167,11 @@ public class LocationDatabaseConnector {
         return location;
     }
 
-    //delete a specific Location
+    /**
+     * delete a certain location
+     * @param id
+     * @throws DatabaseException
+     */
     public void deleteLocation(int id) throws DatabaseException {
 
         open();
@@ -161,5 +179,4 @@ public class LocationDatabaseConnector {
         close();
 
     }
-    //end code for delete Location
 }

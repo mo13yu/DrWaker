@@ -1,9 +1,5 @@
 package yunjingl.cmu.edu.drwaker.ui;
 
-/**
- * Created by yunjing on 4/22/16.
- */
-
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -13,6 +9,9 @@ import android.util.Log;
 
 import yunjingl.cmu.edu.drwaker.R;
 
+/**
+ * service to ring the tone according to alarm settings
+ */
 public class RingtonePlayingService extends Service {
     @Nullable
     @Override
@@ -24,24 +23,14 @@ public class RingtonePlayingService extends Service {
     boolean isRunning;
     MediaPlayer ring;
 
-    //boolean startring;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        return super.onStartCommand(intent, flags, startId);
         Log.e("in ring", "in ring");
 
-        //startring=true;
-        String state = intent.getExtras().getString("extra");
-        String ringtone = intent.getExtras().getString("ring_tone");
-        //boolean loc_switch=intent.getExtras().getBoolean("loc_switch");
 
-//        if(loc_switch){
-//            String la=intent.getExtras().getString("loc_la");
-//            String lo=intent.getExtras().getString("loc_lo");
-//            new SetLocation().nearLocation(la,lo);
-//        }
+        String state = intent.getExtras().getString("extra");//whether to turn on or turn down the ring tone
+        String ringtone = intent.getExtras().getString("ring_tone");//which ring tone to play.
 
-//        if(startring){
         assert state != null;
         if (state.equals("on")) {
             id = 1;
@@ -54,7 +43,6 @@ public class RingtonePlayingService extends Service {
         }
         if (!this.isRunning && id == 1) {
             ring = createRing(ringtone);
-            // ring=MediaPlayer.create(this, R.raw.kiss_the_rain);
             ring.start();
             this.isRunning = true;
             this.id = 0;
@@ -70,10 +58,7 @@ public class RingtonePlayingService extends Service {
             this.isRunning = false;
             this.id = 0;
         }
-
-//        }
-        return START_NOT_STICKY;
-
+         return START_NOT_STICKY;
 
     }
 

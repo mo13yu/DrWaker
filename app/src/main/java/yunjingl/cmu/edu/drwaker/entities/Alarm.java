@@ -3,19 +3,18 @@ package yunjingl.cmu.edu.drwaker.entities;
 import android.util.Log;
 
 /**
- * Created by yunjing on 4/13/16.
+ * Alarm object
  */
 public class Alarm {
-    private int alarmid;
+    private int alarmid;//alarm id
     private int hour;
     private int minute;
-    private Math math;
-    private Location location;
-    private String wake_up_method;
-    private boolean loc_switch;
-    private String tag;
-    private String tone;
-    //private String alarm_switch;
+    private Math math;//math problem to do the math detection when alarm rings
+    private Location location;//Location object to do the location detection
+    private String wake_up_method;//method user wants to be woke up
+    private boolean loc_switch;//whether user enable location detection function.
+    private String tag;//tag of the alarm
+    private String tone;//tone of the alarm
 
     public Alarm(){
         super();
@@ -163,7 +162,9 @@ public class Alarm {
     }
 
 
-
+    /**
+     * Math problem to perform math detection when alarm rings.
+     */
     protected class Math {
         private int mathid;
         private String question;

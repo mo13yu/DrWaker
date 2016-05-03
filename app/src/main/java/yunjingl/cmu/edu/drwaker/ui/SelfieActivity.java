@@ -33,6 +33,9 @@ import java.io.IOException;
 
 import yunjingl.cmu.edu.drwaker.R;
 
+/**
+ * Selfie Activity, user needs to complete a selfie before turning off the alarm
+ */
 public class SelfieActivity extends AppCompatActivity {
     private Camera mCamera = openFrontFacingCamera();
     private CameraPreview mPreview;

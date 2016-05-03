@@ -22,13 +22,15 @@ import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
 import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
 
+/**
+ * set all info when add a new alarm or edit an alarm
+ */
 public class Settings extends AppCompatActivity {
 
     MediaPlayer ring;
     String ringtone;
     int inputhour;
     int inputminute;
-    //int locationid;
     String wake_up_method;
     String tag;
     String locationtag;
@@ -65,11 +67,7 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        //new SetAlarm().setContext(Settings.this);
-        //new SetLocation().setContext(this);
-
         final String method = (getIntent().getExtras()).getString("create_or_update");
-        //final Alarm newAlarm=getAlarm();
         Button done = (Button) findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
             public void onClick(View viewParam) {
@@ -82,7 +80,6 @@ public class Settings extends AppCompatActivity {
                 Switch loc_switch = (Switch) findViewById(R.id.locswitch);
                 locationswitch = loc_switch.isChecked();
                 if (locationtag == null && locationswitch) {
-                    //Log.d("location tag", "need set");
                     AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
                     builder.setTitle("Attention");
                     builder.setMessage("You need to add a new location");
@@ -95,35 +92,21 @@ public class Settings extends AppCompatActivity {
                     builder.show();
                 }else{
                     if (method.equals("create")) {
-
                         setAlarm.createAlarm(inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
-
-                        //Log.d("location tag", "is null???");
-
                     } else if (method.equals("update")) {
                         int alarmid = Integer.parseInt((getIntent().getExtras()).getString("alarmid"));
                         setAlarm.updateAlarm(alarmid, inputhour, inputminute, locationtag, locationswitch, wake_up_method, tag, ringtone);
                     }
-                    //Alarm newAlarm = getAlarm();
-                    //SetAlarm.getAlarms().put(newAlarm.getAlarmid(), newAlarm);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
-                /*
-                loc_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        locationswitch=isChecked;
-                        Log.e("switch",String.valueOf(isChecked));
-                    }
-                });
-                */
-                //Log.e("Settings check", "inputhour"+inputhour+"inputminute"+inputminute+"tag"+tag);
 
             }
         });
 
-
+/**
+ * hour, minute, ring tone drop down list.
+ */
         Spinner hour = (Spinner) findViewById(R.id.hour);
         Spinner minute = (Spinner) findViewById(R.id.minute);
         hour.setAdapter(ArrayAdapter.createFromResource(this, R.array.hour, android.R.layout.simple_spinner_item));
@@ -139,8 +122,6 @@ public class Settings extends AppCompatActivity {
                     }
                     inputhour = Integer.parseInt(temp);
                 }
-
-                //Toast.makeText(getBaseContext(),inthour,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -237,68 +218,6 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//
-//
-//        final Intent myIntent = new Intent(this.context, AlarmReceiver.class);
-//        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        final Calendar calendar = Calendar.getInstance();
-//        Button done=(Button)findViewById(R.id.done);
-//        done.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                //Calendar calendar=setAlarm(clockTime);
-//                int hour;
-//                int minute=clockTime.getMinute();
-//                String ampm=clockTime.getAmpm();
-//                if(ampm.equals("PM")){
-//                    hour=clockTime.getHour()+12;
-//                }else{
-//                    hour=clockTime.getHour();
-//                }
-//                calendar.set(Calendar.HOUR_OF_DAY, hour);
-//                calendar.set(Calendar.MINUTE, minute);
-//                pendingIntent = PendingIntent.getBroadcast(Settings.this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-//                Log.e("clicked", "ye");
-////                Intent alarm_intent=new Intent(getApplicationContext(), AlarmReceiver.class);
-////                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarm_intent, 0);
-////                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-////                Log.e("set alarm manager", "ye");
-//
-// //               setAlarm(clockTime,tunes);
-////                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-////                startActivity(intent);
-//                //Toast.makeText(getBaseContext(),inthour+""+intminute+""+ampms,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        Button delete=(Button)findViewById(R.id.delete);
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View viewParam) {
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
-
-//    public Alarm getAlarm(){
-//        final Alarm resultAlarm=new Alarm();
-//        resultAlarm.setHour(inputhour);
-//        resultAlarm.setMinute(inputminute);
-//        resultAlarm.setTone(ringtone);
-//
-//        RadioGroup radioGroup=(RadioGroup) findViewById(R.id.wake_up);
-//        int selectedId = radioGroup.getCheckedRadioButtonId();
-//        RadioButton radioButton = (RadioButton) findViewById(selectedId);
-//        String wake_up=radioButton.getText().toString();
-//        Log.e("wake up set", wake_up);
-//        resultAlarm.setWake_up_method(wake_up);
-//
-//        int id=SetAlarm.getAlarms().size()+1;
-//        resultAlarm.setAlarmid(id);
-//
-//        String tag=((EditText) findViewById(R.id.tag)).getText().toString();
-//        resultAlarm.setTag(tag);
-//        return resultAlarm;
-//    }
 
 }

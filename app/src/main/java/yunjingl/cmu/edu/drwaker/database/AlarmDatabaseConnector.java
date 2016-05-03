@@ -16,7 +16,7 @@ import yunjingl.cmu.edu.drwaker.exception.CusException;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 
 /**
- * Created by yapeng on 4/30/2016.
+ * This is to connect to alarm database and performs direct CRUD to data.
  */
 public class AlarmDatabaseConnector {
     private static final String TABLE_NAME = "AlarmDatabaseTesting9";
@@ -24,6 +24,9 @@ public class AlarmDatabaseConnector {
     private DatabaseOpenHelper databaseOpenHelper;
     private static HashMap<Integer,String> mathProblemAndAnswer=new HashMap<Integer,String>();
 
+    /**
+     * connect to database and create new table
+     */
     private class DatabaseOpenHelper extends SQLiteOpenHelper {
         //constructor
         public DatabaseOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -73,7 +76,19 @@ public class AlarmDatabaseConnector {
         }
     }
 
-    //insert a new Alarm into database
+    /**
+     * insert a new Alarm into database
+     * @param id
+     * @param hour
+     * @param minute
+     * @param method
+     * @param tag
+     * @param tune
+     * @param status
+     * @param locTag
+     * @param mathID
+     * @throws DatabaseException
+     */
     public void insertAlarm(int id, int hour, int minute, String method, String tag, String tune,
                             boolean status, String locTag, int mathID) throws DatabaseException {
         //Log.e("connector check", "id"+id+"inputhour" + String.valueOf(hour) + "inputminute" +String.valueOf(minute)+"tag"+tag);
@@ -93,9 +108,21 @@ public class AlarmDatabaseConnector {
         close();
 
     }
-    //end the code insert Alarm
 
-    //update a Alarm which is already in the database
+    /**
+     * update a Alarm which is already in the database
+     * @param id
+     * @param hour
+     * @param minute
+     * @param method
+     * @param tag
+     * @param tune
+     * @param status
+     * @param locTag
+     * @param mathID
+     * @throws DatabaseException
+     */
+
     public void updateAlarm(int id, int hour, int minute, String method, String tag, String tune,
                             boolean status, String locTag, int mathID) throws DatabaseException {
         ContentValues editAlarm = new ContentValues();
@@ -113,10 +140,13 @@ public class AlarmDatabaseConnector {
         close();
 
     }
-    //end the code update Alarm
 
+    /**
+     * return a LinkedHashMap with all Alarm information
+     * @return
+     * @throws DatabaseException
+     */
 
-    //return a LinkedHashMap with all Alarm information
     public LinkedHashMap<Integer, Alarm> getAllAlarm() throws DatabaseException {
         LinkedHashMap<Integer, Alarm> alarms = new LinkedHashMap<Integer, Alarm>();
 
@@ -169,11 +199,14 @@ public class AlarmDatabaseConnector {
         close();
 
         return alarms;
-//        return database.query(TABLE_NAME,null,null,null,null,null,"PurchasedPrice");
-        //      return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
-    //return a curser for a specific Alarm
+    /**
+     * return a certain alarm object
+     * @param id
+     * @return
+     * @throws DatabaseException
+     */
     public Alarm getOneAlarm(int id) throws DatabaseException {
 
         open();
@@ -222,7 +255,11 @@ public class AlarmDatabaseConnector {
 
     }
 
-    //delete a specific Alarm
+    /**
+     * delete a certain alarm.
+     * @param id
+     * @throws DatabaseException
+     */
     public void deleteAlarm(int id) throws DatabaseException {
 
         open();
@@ -230,5 +267,4 @@ public class AlarmDatabaseConnector {
         close();
 
     }
-    //end code for delete Alarm
 }

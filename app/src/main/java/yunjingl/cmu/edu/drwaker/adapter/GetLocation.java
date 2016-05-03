@@ -1,7 +1,5 @@
 package yunjingl.cmu.edu.drwaker.adapter;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 
 import yunjingl.cmu.edu.drwaker.entities.Location;

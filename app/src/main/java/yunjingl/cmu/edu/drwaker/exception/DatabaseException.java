@@ -1,7 +1,7 @@
 package yunjingl.cmu.edu.drwaker.exception;
 
 /**
- * Created by yapeng on 4/30/2016.
+ * Database exception
  */
 public class DatabaseException extends Exception implements Fix {
     private int errNo;
@@ -27,10 +27,6 @@ public class DatabaseException extends Exception implements Fix {
                 errMess="Cannot get writtable database";
                 handler.handleNullDatabase(1);
                 break;
-//            case 2:
-//                errMess="Cannot get input data";
-//                handler.handleNullInsertion(2);
-//                break;
         }
     }
 }

@@ -12,7 +12,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 /**
- * Created by yunjing on 4/22/16.
+ * A receiver that will catch the Intent and process the information to sound the alarm accordingly
  */
 public class AlarmReceiver extends BroadcastReceiver implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private Context context;

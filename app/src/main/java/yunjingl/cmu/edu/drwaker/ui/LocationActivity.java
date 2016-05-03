@@ -27,6 +27,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
 
+/**
+ * Location Activity - allows user to search and add a new location
+ */
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;

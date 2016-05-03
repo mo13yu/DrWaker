@@ -16,7 +16,7 @@ import yunjingl.cmu.edu.drwaker.entities.Location;
 import yunjingl.cmu.edu.drwaker.exception.DatabaseException;
 
 /**
- * Created by yunjing on 4/22/16.
+ * This is a proxy contains all the methods of populating and manipulating locations.
  */
 public abstract class ProxyLocation {
 

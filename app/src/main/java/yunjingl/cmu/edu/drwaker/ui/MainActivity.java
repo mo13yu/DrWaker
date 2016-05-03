@@ -21,13 +21,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 
 import yunjingl.cmu.edu.drwaker.R;
 import yunjingl.cmu.edu.drwaker.adapter.SetAlarm;
 import yunjingl.cmu.edu.drwaker.adapter.SetLocation;
-//import yunjingl.cmu.edu.drwaker.entities.Alarm;
 
+/**
+ * Main Activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AlarmManager mgrAlarm;
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initializeAlarms() {
-        // Initialize alarms and locations, get all from database to LinkedHashMap
         new SetLocation().setContext(MainActivity.this);
         new SetLocation().initializeLocations();
         new SetAlarm().setContext(MainActivity.this);
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
             calendars.add(calendar);
 
-            // Compose the alarm string to display on main menu
             String alarm = "";
             if (hour < 10) {
                 alarm += "0" + hour;
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 alarm += minute;
             }
-            //String alarm=hour+" : "+minute;
 
             LayoutInflater layoutInflater =
                     (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     ((LinearLayout) addView.getParent()).removeView(addView);
                     new SetAlarm().deleteAlarm(thisid);
-//                    alarms.remove(thisalarm.getAlarmid());
                 }
             });
             Button buttonEdit = (Button) addView.findViewById(R.id.edit);
@@ -153,24 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
                 myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
             }
-//            if (new SetAlarm().isLocationSwitchOn(thisid)) {
-//                if (new SetAlarm().hasLocation(thisid)) {
-//                    myIntent.putExtra("loc_la", new SetAlarm().getLatitude(thisid));
-//                    myIntent.putExtra("loc_lo", new SetAlarm().getLongitude(thisid));
-//                } else {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                    builder.setTitle("Attention");
-//                    builder.setMessage("You need to add a new location");
-//                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                        }
-//                    }).create();
-//                    builder.show();
-//                }
-//            }
-
             PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, thisid, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             mgrAlarm.set(AlarmManager.RTC_WAKEUP,
                     calendars.get(i).getTimeInMillis(),
@@ -184,23 +163,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
