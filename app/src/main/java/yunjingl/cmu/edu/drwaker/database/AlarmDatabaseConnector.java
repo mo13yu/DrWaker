@@ -233,7 +233,6 @@ public class AlarmDatabaseConnector {
             String locTag = cursor.getString(locIndex);
             int mathId = Integer.valueOf(cursor.getString(mathIndex));
             alarm = new Alarm(id, hour, minute);
-            //TODO: add all other attributes if want to use this function
             alarm.setWake_up_method(wakeupmethod);
             alarm.setTag(tag);
             alarm.setTone(tune);
