@@ -135,6 +135,7 @@ public class Alarm {
             return true;
         }
     }
+    
     public boolean hasMath(){
         if(math==null){
             return false;
